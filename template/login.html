@@ -1,0 +1,66 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tutorias</title>
+        <link rel="stylesheet" type="text/css" href="../statics/css/styles.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body class="login">
+        <!-- Contenido -->
+        <div class="container" id="main">
+            <div class="sign-up">
+                <form action="test" class="login-sso">
+                    <img src="../statics/assets/img/logo_login.png" alt
+                        class="logo-login-sso">
+
+                    <input type="email" name="email" placeholder="Email"
+                        required class="inputs-login">
+                    <input type="password" name="pswd" placeholder="Password"
+                        required class="inputs-login">
+                    <button class="botones-login" id="signIn">Iniciar
+                        sesión</button>
+                </form>
+            </div>
+            <div class="sign-in">
+                <div class="login-principal">
+                    <h1 class="titulo-login">Iniciar sesión</h1>
+                    <input type="email" name="email" placeholder="Email"
+                        required class="inputs-login">
+                    <!-- <a href="#" class="txt-a">Forget your passowrd?</a> -->
+                    <button class="botones-login" id="signUp">Iniciars
+                        sesión</button>
+
+                </div>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-left">
+                        <h1 class="titulo-login">Bienvenido!!</h1>
+                        <p class="texto-login">Nos da gusto que estés aquí con
+                            nosotros. Ahora, por favor, ingresa tu correo
+                            electrónico y tu contraseña.</p>
+
+                    </div>
+                    <div class="overlay-right">
+                        <img src="../statics/assets/img/logo-utem.png" alt
+                            class="logo-login">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+
+        <script type="text/javascript"
+            src="{% static 'js/scripts.js' %}"></script>
+
+    </body>
+
+</html>

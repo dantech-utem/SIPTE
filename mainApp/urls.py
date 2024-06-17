@@ -7,5 +7,13 @@ from . import views
 urlpatterns = [
     path('', inicio.as_view(), name="inicio"),
     path('test/', loginTest.as_view(), name="test"),
+    path('actividadTutorial', views.actividadTutorial, name="actividadTutorial"),
+    path('agregarActividad', views.agregarActividadTutorial, name='agregarActividad'),
+    path('editarActividad', views.editarActividadTutorial, name='editarActividad'),
+    path('infoActividad', views.infoActividadTutorial, name='infoActividad'),
+    path('evaluarTutor', views.infoEvaluarTutor, name='infoTutor'),
+    path('atencionIndividual',views.infoatencionIndividual, name='atencionIndividual'),
+    path('editarAtencion',views.infoeditarAtencion, name='editarAtencion'),
+    path('registrarAtencion',views.inforegistrarAtencion, name='registrarAtencion')
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

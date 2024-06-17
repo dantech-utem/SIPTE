@@ -1,331 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorías - {% block title %}{% endblock %}</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'css/documentos.css' %}" />
 
-        <meta charset="utf-8">
-        <title>Tutorías</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin &amp; Dashboard Template"
-            name="description">
-        <meta content="Themesbrand" name="author">
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="/statics/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
+    <link href="/statics/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="/statics/css/app.min.css" id="app-style" rel="stylesheet" type="text/css">
+  </head>
 
-        <!-- Bootstrap Css -->
-        <link href="/statics/css/bootstrap.min.css" id="bootstrap-style"
-            rel="stylesheet" type="text/css">
-        <!-- Icons Css -->
-        <link href="/statics/css/icons.min.css" rel="stylesheet"
-            type="text/css">
-        <!-- App Css-->
-        <link href="/statics/css/app.min.css" id="app-style" rel="stylesheet"
-            type="text/css">
-    </head>
-
-    <body class="pace-done sidebar-enable" cz-shortcut-listen="true">
-        <div class="pace pace-inactive">
-            <div
-                class="pace-progress" data-progress-text="100%"
-                data-progress="99"
-                style="transform: translate3d(100%, 0px, 0px);">
-                <div class="pace-progress-inner"></div>
+  <body class="pace-done sidebar-enable">
+    <div id="layout-wrapper">
+      <header id="page-topbar">
+        <div class="navbar-header">
+          <div class="d-flex">
+            <div class="navbar-brand-box">
+              <a href="/" class="logo logo-dark">
+                <span class="logo-sm">
+                  <img src="/statics/assets/img/logo_login.png" alt height="24">
+                </span>
+                <span class="logo-lg">
+                  <img src="/statics/assets/img/logo_login.png" alt height="24">
+                  <span class="logo-txt">Tutorías</span>
+                </span>
+              </a>
+              <a href="/" class="logo logo-light">
+                <span class="logo-sm">
+                  <img src="/statics/assets/img/logo_login.png" alt height="24">
+                </span>
+                <span class="logo-lg">
+                  <img src="/statics/assets/img/logo_login.png" alt height="24">
+                  <span class="logo-txt">Tutorías</span>
+                </span>
+              </a>
             </div>
-            <div class="pace-activity"></div>
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="d-flex">
+            <div class="dropdown d-inline-block">
+              <button type="button" class="btn header-item bg-soft-light border-start border-end" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="d-none d-xl-inline-block ms-1 fw-medium">Jose Alberto</span>
+                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="#"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Cerrar sesión</a>
+              </div>
+            </div>
+          </div>
         </div>
-        <div id="layout-wrapper">
-            <header id="page-topbar">
-                <div class="navbar-header">
-                    <div class="d-flex">
+      </header>
 
-                        <div class="navbar-brand-box">
-                            <a href="/" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img
-                                        src="/statics/assets/img/logo_login.png"
-                                        alt
-                                        height="24">
-                                </span>
-                                <span class="logo-lg">
-                                    <img
-                                        src="/statics/assets/img/logo_login.png"
-                                        alt
-                                        height="24"> <span
-                                        class="logo-txt">Tutorías</span>
-                                </span>
-                            </a>
-
-                            <a href="/" class="logo logo-light">
-                                <span class="logo-sm">
-                                    <img
-                                        src="/statics/assets/img/logo_login.png"
-                                        alt
-                                        height="24">
-                                </span>
-                                <span class="logo-lg">
-                                    <img
-                                        src="/statics/assets/img/logo_login.png"
-                                        alt
-                                        height="24"> <span
-                                        class="logo-txt">Tutorías</span>
-                                </span>
-                            </a>
-                        </div>
-                        <button type="button"
-                            class="btn btn-sm px-3 font-size-16 header-item"
-                            id="vertical-menu-btn">
-                            <i class="fa fa-bars" aria-hidden="true"></i>
-                        </button>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="dropdown d-inline-block">
-                            <button type="button"
-                                class="btn header-item bg-soft-light border-start border-end"
-                                id="page-header-user-dropdown"
-                                data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <!-- <img class="rounded-circle header-profile-user"
-                                    src="/statics/assets/img/"
-                                    alt="Header Avatar"> -->
-                                <span
-                                    class="d-none d-xl-inline-block ms-1 fw-medium">Jose
-                                    Alberto</span>
-                                <i
-                                    class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <!-- item-->
-                                <!-- <a class="dropdown-item"
-                                    href="#"><i
-                                        class="mdi mdi-face-profile font-size-16 align-middle me-1"></i>
-                                    Profile</a>
-                                <div class="dropdown-divider"></div> -->
-                                <a class="dropdown-item" href="#"><i
-                                        class="mdi mdi-logout font-size-16 align-middle me-1"></i>
-                                    Cerrar sesión</a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </header>
-
-            <div class="vertical-menu">
-
-                <div data-simplebar="init" class="h-100"><div
-                        class="simplebar-wrapper" style="margin: 0px;"><div
-                            class="simplebar-height-auto-observer-wrapper"><div
-                                class="simplebar-height-auto-observer"></div></div><div
-                            class="simplebar-mask"><div class="simplebar-offset"
-                                style="right: 0px; bottom: 0px;"><div
-                                    class="simplebar-content-wrapper"
-                                    style="height: 100%; overflow: hidden;"><div
-                                        class="simplebar-content"
-                                        style="padding: 0px;">
-
-                                        <!--- Sidemenu -->
-                                        <div id="sidebar-menu">
-                                            <!-- Left Menu Start -->
-                                            <ul class="metismenu list-unstyled"
-                                                id="side-menu">
-
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa-solid fa-clipboard-question"></i>
-                                                        <span
-                                                            data-key="t-dashboard">Entrevista
-                                                            inicial
-                                                        </span>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa-solid fa-clipboard-list"></i>
-                                                        <span
-                                                            data-key="t-dashboard">Evaluación
-                                                            tutorial</span>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        class="has-arrow">
-                                                        <i class="fa-solid fa-user"></i>
-                                                        <span
-                                                            data-key="t-Canalizacion">Canalización</span>
-                                                    </a>
-                                                    <ul
-                                                        class="sub-menu mm-collapse"
-                                                        aria-expanded="false">
-                                                        <li>
-                                                            <a href="#"
-                                                                data-key="t-GenerarNuevo">Generar
-                                                                nuevo</a></li>
-                                                        <li><a
-                                                                href="#"
-                                                                data-key="t-Registro">Registro</a></li>
-                                                    </ul>
-                                                </li>
-
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        class="has-arrow">
-                                                        <i class="fa-solid fa-file"></i>
-                                                        <span
-                                                            data-key="t-Documentos">Documentos</span>
-                                                    </a>
-                                                    <ul
-                                                        class="sub-menu mm-collapse"
-                                                        aria-expanded="false">
-                                                        <li><a href="#"
-                                                                data-key="t-Reportes">Reportes</a></li>
-                                                        <li><a
-                                                                href="#"
-                                                                data-key="t-Informes">Informes</a></li>
-                                                    </ul>
-                                                </li>
-
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        class="has-arrow">
-                                                        <i class="fa-solid fa-book-open"></i>
-                                                        <span
-                                                            data-key="t-Canalizacion">Temas</span>
-                                                    </a>
-                                                    <ul
-                                                        class="sub-menu mm-collapse"
-                                                        aria-expanded="false">
-                                                        <li><a href="#"
-                                                                data-key="t-Clases">Clases</a></li>
-                                                        <li><a
-                                                                href="#"
-                                                                data-key="t-Tutorias">Tutorías</a></li>
-                                                    </ul>
-                                                </li>
-
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        class="has-arrow">
-                                                        <i class="fa-solid fa-copy"></i>
-                                                        <span
-                                                            data-key="t-Canalizacion">Reportes</span>
-                                                    </a>
-                                                    <ul
-                                                        class="sub-menu mm-collapse"
-                                                        aria-expanded="false">
-                                                        <li><a href="#"
-                                                                data-key="t-verReportes">Ver
-                                                                reportes</a></li>
-                                                        <li><a
-                                                                href="#"
-                                                                data-key="t-GenerarReportes">Generar</a></li>
-                                                    </ul>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa-solid fa-user-plus"></i>
-                                                        <span
-                                                            data-key="t-asignacionTutorial">Asignación
-                                                            tutorial</span>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa-solid fa-comment"></i>
-                                                        <span
-                                                            data-key="t-consultas">Consultas</span>
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-
-                                        </div>
-                                        <!-- Sidebar -->
-                                    </div></div></div></div><div
-                            class="simplebar-placeholder"
-                            style="width: auto; height: 711px;"></div></div><div
-                        class="simplebar-track simplebar-horizontal"
-                        style="visibility: hidden;"><div
-                            class="simplebar-scrollbar"
-                            style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div
-                        class="simplebar-track simplebar-vertical"
-                        style="visibility: hidden;"><div
-                            class="simplebar-scrollbar"
-                            style="height: 783px; transform: translate3d(0px, 0px, 0px); display: none;"></div></div></div>
+      <div class="vertical-menu">
+        <div data-simplebar="init" class="h-100">
+          <div class="simplebar-wrapper" style="margin: 0px;">
+            <div class="simplebar-height-auto-observer-wrapper">
+              <div class="simplebar-height-auto-observer"></div>
             </div>
-
-            <div class="main-content">
-
-                <div class="page-content">
-                    <div class="container-fluid">
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div
-                                    class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4
-                                        class="page-title mb-0 font-size-18">Dashboard</h4>
-
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <!-- <li class="breadcrumb-item">
-                                                <a href="javascript: void(0);">Inicio</a>
-                                            </li> -->
-                                            <li
-                                                class="breadcrumb-item active">Inicio</li>
-                                        </ol>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        {% block content %}
-                                        {% endblock %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="simplebar-mask">
+              <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden;">
+                  <div class="simplebar-content" style="padding: 0px;">
+                    <div id="sidebar-menu">
+                      <ul class="metismenu list-unstyled" id="side-menu">
+                        <li>
+                          <a href="#"><i class="fa-solid fa-clipboard-question"></i><span data-key="t-dashboard">Entrevista inicial</span></a>
+                        </li>
+                        <li>
+                          <a href="{% url 'infoTutor' %}"><i class="fa-solid fa-clipboard-list"></i><span data-key="t-dashboard">Evaluación tutorial</span></a>
+                        </li>
+                        <li>
+                          <a href="#" class="has-arrow"><i class="fa-solid fa-user"></i><span data-key="t-Canalizacion">Canalización</span></a>
+                          <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <li><a href="#" data-key="t-GenerarNuevo">Generar nuevo</a></li>
+                            <li><a href="#" data-key="t-Registro">Registro</a></li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a href="#" class="has-arrow"><i class="fa-solid fa-file"></i><span data-key="t-Documentos">Documentos</span></a>
+                          <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <li><a href="#" data-key="t-Reportes">Reportes</a></li>
+                            <li><a href="#" data-key="t-Informes">Informes</a></li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a href="#" class="has-arrow"><i class="fa-solid fa-book-open"></i><span data-key="t-Canalizacion">Temas</span></a>
+                          <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <li><a href="#" data-key="t-Clases">Clases</a></li>
+                            <li><a href="#" data-key="t-Tutorias">Tutorías</a></li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a href="#" class="has-arrow"><i class="fa-solid fa-copy"></i><span data-key="t-Canalizacion">Reportes</span></a>
+                          <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <li><a href="#" data-key="t-verReportes">Ver reportes</a></li>
+                            <li><a href="#" data-key="t-GenerarReportes">Generar</a></li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a href="{% url 'actividadTutorial' %}"><i class="fa-solid fa-chalkboard-user"></i><span data-key="t-dashboard">Actividad tutorial</span></a>
+                          </li>
+                        <li>
+                            <a href="{% url 'atencionIndividual' %}"><i class="fa-solid fa-circle-exclamation"></i><span data-key="t-dashboard">Atención individual</span></a>
+                        </li>
+                        <li>
+                          <a href="#"><i class="fa-solid fa-user-plus"></i><span data-key="t-asignacionTutorial">Asignación tutorial</span></a>
+                        </li>
+                        <li>
+                          <a href="#"><i class="fa-solid fa-comment"></i><span data-key="t-consultas">Consultas</span></a>
+                        </li>
+                      </ul>
                     </div>
+                  </div>
                 </div>
-
+              </div>
+              <div class="simplebar-placeholder" style="width: auto; height: 711px;"></div>
             </div>
-
+            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+              <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div>
+            </div>
+            <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
+              <div class="simplebar-scrollbar" style="height: 783px; transform: translate3d(0px, 0px, 0px); display: none;"></div>
+            </div>
+          </div>
         </div>
-        <script src="/statics/libs/jquery/jquery.min.js"></script>
-        <script
-            src="/statics/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="/statics/libs/metismenu/metisMenu.min.js"></script>
-        <script src="/statics/libs/simplebar/simplebar.min.js"></script>
-        <script src="/statics/libs/node-waves/waves.min.js"></script>
-        <script src="/statics/libs/feather-icons/feather.min.js"></script>
+      </div>
 
-        <script src="/statics/libs/apexcharts/apexcharts.min.js"></script>
-        <script
-            src="/statics/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script
-            src="/statics/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
-        <script src="/statics/js/pages/dashboard.init.js"></script>
-        <script src="/statics/js/app.js"></script>
-        <svg id="SvgjsSvg1401" width="2" height="0"
-            xmlns="http://www.w3.org/2000/svg" version="1.1"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xmlns:svgjs="http://svgjs.com/svgjs"
-            style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs
-                id="SvgjsDefs1402"></defs><polyline id="SvgjsPolyline1403"
-                points="0,0"></polyline><path id="SvgjsPath1404"
-                d="M0 0 "></path></svg>
-    </body>
+      <div class="main-content">
+        <div class="page-content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                  <h4 class="page-title mb-0 font-size-18">Dashboard</h4>
+                  <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item active">Inicio</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="
+
+card">
+                  <div class="card-body">
+                    {% block body %}{% endblock %}
+                    {% block content %}{% endblock %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container py-4">
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="{% static 'js/documentos.js' %}"></script>
+    <script src="/statics/libs/jquery/jquery.min.js"></script>
+    <script src="/statics/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/statics/libs/metismenu/metisMenu.min.js"></script>
+    <script src="/statics/libs/simplebar/simplebar.min.js"></script>
+    <script src="/statics/libs/node-waves/waves.min.js"></script>
+    <script src="/statics/libs/feather-icons/feather.min.js"></script>
+    <script src="/statics/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="/statics/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/statics/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="/statics/js/pages/dashboard.init.js"></script>
+    <script src="/statics/js/app.js"></script>
+    <svg id="SvgjsSvg1401" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;">
+      <defs id="SvgjsDefs1402"></defs>
+      <polyline id="SvgjsPolyline1403" points="0,0"></polyline>
+      <path id="SvgjsPath1404" d="M0 0 "></path>
+    </svg>
+  </body>
+</html>
+

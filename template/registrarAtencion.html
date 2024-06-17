@@ -1,0 +1,47 @@
+{% extends './dashboard.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+{% block title %}
+  Registro de atención individual
+{% endblock %} <!-- Se cambia el título -->
+
+{% block body %}
+  <!-- Esta es para el navbar -->
+  <div class="container py-4">
+    <div class="card border-primary">
+      <div class="card-header text-center bg-light">
+        <h4 class="card-title">Registro de atención individual</h4>
+      </div>
+      <div class="card-body bg-light">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <div class="input-group">
+                  <select class="form-select" id="nombre">
+                    <option>Juan</option>
+                    <!-- Más opciones pueden ser añadidas aquí -->
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="asunto" class="form-label">Asunto a tratar</label>
+                <textarea class="form-control" id="asunto" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="observaciones" class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <a class="btn btn-secondary me-2" href="{% url 'atencionIndividual' %}">Cerrar</a>
+            <button type="submit" class="btn btn-success">Registrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

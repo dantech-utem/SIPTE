@@ -1,0 +1,60 @@
+{% extends './dashboard.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+{% block title %}
+  Atención individual
+{% endblock %} <!-- Se cambia el título -->
+
+{% block body %}
+  <!-- Esta es para el navbar -->
+
+  <center>
+    <h3 class="titulos">Atención individual</h3>
+  </center>
+  <div class="container">
+    <div class="row">
+      <div class="col text-end">
+        <a href="{% url 'registrarAtencion' %}" class="btn btn-success botonesVerdes bi bi-clipboard2-plus">Registrar</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive py-2">
+    <!-- Hacemos responsiva -->
+    <table class="cell-border hover" cellspacing="0" width="100%" id="actividadTutorial">
+      <thead>
+        <!-- Encabezados -->
+        <tr class="text-center;">
+          <th style="text-align: center;">Nombre</th>
+          <th style="text-align: center;">Asunto a tratar</th>
+          <th style="text-align: center;">Observaciones</th>
+          <th style="text-align: center;">Fecha</th>
+          <th style="text-align: center;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="textosJustificados">Juan</td>
+          <td class="textosJustificados">Tareas</td>
+          <td class="textosJustificados">Lorem ipsum</td>
+          <td style="text-align: center;">17/05/2024</td>
+          <td style="text-align: center;">
+            <a href="{% url 'editarAtencion' %}" class="bi bi-pencil-square text-info-emphasis"></a>
+            <a href="" id="eliminar" onclick="return confirmarEliminacion()" class="bi bi-trash text-danger"></a>
+          </td>
+        </tr>
+        <!-- Repetir las filas según sea necesario -->
+        <tr>
+          <td class="textosJustificados">Juan</td>
+          <td class="textosJustificados">Tareas</td>
+          <td class="textosJustificados">Lorem ipsum</td>
+          <td style="text-align: center;">17/05/2024</td>
+          <td style="text-align: center;">
+            <a href="{% url 'editarAtencion' %}" class="bi bi-pencil-square text-info-emphasis"></a>
+            <a href="" id="eliminar" onclick="return confirmarEliminacion()" class="bi bi-trash text-danger"></a>
+          </td>
+        </tr>
+        <!-- Añadir más filas según sea necesario -->
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

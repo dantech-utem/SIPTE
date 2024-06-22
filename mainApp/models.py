@@ -13,7 +13,6 @@ class Usuarios(models.Model):
     tipo = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
     grupo = models.CharField(max_length=20)
     
-    
 class Periodo(models.Model):
     periodo = models.CharField(max_length=100)   
     anio = models.IntegerField() 
@@ -25,21 +24,22 @@ class AccionTutorial(models.Model):
     recursos = models.CharField(max_length=400)
     tutor = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
     cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
-    cierreTutorias= models.CharField(max_length=400)
+    cierreTutorias= models.TextField()
     
 class Evidencia(models.Model):
     evidencia = models.FileField(upload_to='evidenciaAccionTutorial/')
     accionRutorial = models.ForeignKey(AccionTutorial, on_delete=models.CASCADE)
     
-
 class EvaluacionTutor(models.Model):
     estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
     respuestaUno = models.IntegerField() 
 
-
 class BajaAlumnos(models.Model):
-    fecha= models.DateTimeField()
+    tipo = models.CharField(max_length=100)
+    observaciones = models.TextField()
+    motivo = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
 
 class AtencionIndividual(models.Model):
     estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
@@ -49,7 +49,10 @@ class AtencionIndividual(models.Model):
     estado = models.IntegerField() 
     bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE)
     
-
-
-    
-    
+class Canalizacion(models.Model):
+    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
+    area = models.CharField(max_length=150)
+    detalles = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+    FechaInicio = models.DateTimeField()
+    FechaFinal = models.DateTimeField()

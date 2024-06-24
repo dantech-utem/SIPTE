@@ -35,3 +35,6 @@ def infoeditarAtencion(request):
 
 def inforegistrarAtencion(request):
     return render (request, 'registrarAtencion.html')
+
+def reportePlanAccion(request):
+    return render (request, 'reporteAccion.html')

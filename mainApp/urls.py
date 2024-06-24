@@ -14,6 +14,7 @@ urlpatterns = [
     path('evaluarTutor', views.infoEvaluarTutor, name='infoTutor'),
     path('atencionIndividual',views.infoatencionIndividual, name='atencionIndividual'),
     path('editarAtencion',views.infoeditarAtencion, name='editarAtencion'),
-    path('registrarAtencion',views.inforegistrarAtencion, name='registrarAtencion')
+    path('registrarAtencion',views.inforegistrarAtencion, name='registrarAtencion'),
+    path('reportePlanAccion',views.reportePlanAccion, name = 'reportePlanAccion')
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

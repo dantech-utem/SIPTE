@@ -1,0 +1,86 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-regular fa-calendar-days"></i>Calendario</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="containerCalendario">
+    <div class="cardCalendario">
+        <div class="seccionEventos">
+            <h2>Eventos recientes</h2><br>
+            <p>No se encontraron eventos recientes.</p>
+        </div>
+        <div class="seccionCalendario">
+            <div class="headerCalendario">
+                <div class="GrupoBtnMeses">
+                    <button class="btnMes"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="btnMes"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="mesAnio">Junio 2024</div>
+                <div class="grupoBtnMostrar">
+                    <button class="btnMostrar">Mes</button>
+                    <button class="btnMostrar">Semana</button>
+                    <button class="btnMostrar">Día</button>
+                    <!-- <button class="btnMostrar">Lista</button> -->
+                </div>
+            </div>
+
+            <div class="calendarioCompleto">
+                <div class="calendarioSemanas">
+                    <div class="dias">Dom</div>
+                    <div class="dias">Lun</div>
+                    <div class="dias">Mar</div>
+                    <div class="dias">Mié</div>
+                    <div class="dias">Jue</div>
+                    <div class="dias">Vie</div>
+                    <div class="dias">Sáb</div>
+                </div>
+                <div class="calendarioFechas">
+                    <div class="fecha vacia">29</div>
+                    <div class="fecha vacia">30</div>
+                    <div class="fecha vacia">31</div>
+                    <div class="fecha">1</div>
+                    <div class="fecha">2</div>
+                    <div class="fecha">3</div>
+                    <div class="fecha">4</div>
+                    <div class="fecha">5</div>
+                    <div class="fecha">6</div>
+                    <div class="fecha">7</div>
+                    <div class="fecha">8</div>
+                    <div class="fecha">9</div>
+                    <div class="fecha">10</div>
+                    <div class="fecha">11</div>
+                    <div class="fecha">12</div>
+                    <div class="fecha">13</div>
+                    <div class="fecha">14</div>
+                    <div class="fecha">15</div>
+                    <div class="fecha">16</div>
+                    <div class="fecha">17</div>
+                    <div class="fecha">18</div>
+                    <div class="fecha">19</div>
+                    <div class="fecha">20</div>
+                    <div class="fecha">21</div>
+                    <div class="fecha">22</div>
+                    <div class="fecha">23</div>
+                    <div class="fecha">24</div>
+                    <div class="fecha">25</div>
+                    <div class="fecha">26</div>
+                    <div class="fecha">27</div>
+                    <div class="fecha">28</div>
+                    <div class="fecha">29</div>
+                    <div class="fecha">30</div>
+                    <div class="fecha vacia">1</div>
+                    <div class="fecha vacia">2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>

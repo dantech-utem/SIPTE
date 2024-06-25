@@ -1,0 +1,35 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'ResultadosCanalizacion' %}">Alumnos
+                    canalizados</a></li>
+            <li class="breadcrumb-item" aria-current="page">Completar sesión</li>
+        </ol>
+    </nav>
+
+    <div class="cardFormulario">
+
+        <h3 class="formTitulo">Cierre de sesión</h3>
+        <span style="font-size: small;">Rellena la información completa para el cierre de la sesión.</span><br><br>
+
+        <form action="">
+            <label class="labelFormCanalizacion">Resultado de la canalización:</label><br>
+            <textarea name="" id="" class="formTextarea" rows="10" required></textarea>
+
+            <div class="btnsFormCanalizacion">
+                <a class="btnRegresar" href="{% url 'ResultadosCanalizacion' %}">Regresar</a>
+                <button class="btnEnviar" type="submit">Enviar</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>

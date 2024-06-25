@@ -1,0 +1,154 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Dashboard' %}">Canalización</a></li>
+            <li class="breadcrumb-item" aria-current="page">Expediente</li>
+        </ol>
+    </nav>
+
+    <div class="encabezadoCanalizacionExpediente">
+        <h3>Carlos Antonio Hernández Sandoval</h3>
+
+        <select id="" name="" class="selectCiclo">
+            <option value="psicologia">Enero-Abril 2024</option>
+            <option value="medicina">Agosto-Diciembre 2023</option>
+        </select>
+        <div>
+            <a class="btnPerfiles" href="#">Perfiles</a>
+            <a class="btnPerfiles" href="{% url 'Reportes' %}"><i class="fa-solid fa-file-pdf"></i>Reportes</a>
+        </div>
+    </div>
+
+    <div class="cardExpediente">
+
+        <h2 style="text-align: center;">Atenciones individuales</h2>
+
+        <table id="tablaAtencionesIndividuales" class="tablaAtencionesIndividuales" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>ÁREA</th>
+                    <th>OBSERVACIONES</th>
+                    <th>MOTIVO</th>
+                    <th>FECHA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="cardExpediente" style="margin-top: 3em;">
+
+        <h2 style="text-align: center;">Canalizaciones</h2>
+
+        <table id="tablaCanalizaciones" class="tablaCanalizaciones" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>ÁREA</th>
+                    <th>DETALLES DE LA SESIÓN</th>
+                    <th>FECHA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+                <tr>
+                    <td>Psicología</td>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
+                    <td>12/03/2024</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+{% endblock %}
+<script src="../../static/js/datatables.min.js"></script>
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script>
+    let table = new DataTable('#tablaAtencionesIndividuales', {
+        responsive: true,
+        "columnDefs": [
+            { "className": "dt-center", "targets": "_all" }
+        ],
+        language: {
+            info: 'Página _PAGE_ de _PAGES_',
+            infoEmpty: 'No records available',
+            infoFiltered: '(filtered from _MAX_ total records)',
+            lengthMenu: '_MENU_ registros por página',
+            zeroRecords: 'Nothing found - sorry',
+            search: 'Buscar: '
+        }
+    });
+
+    let table2 = new DataTable('#tablaCanalizaciones', {
+        responsive: true,
+        "columnDefs": [
+            { "className": "dt-center", "targets": "_all" }
+        ],
+        language: {
+            info: 'Página _PAGE_ de _PAGES_',
+            infoEmpty: 'No records available',
+            infoFiltered: '(filtered from _MAX_ total records)',
+            lengthMenu: '_MENU_ registros por página',
+            zeroRecords: 'Nothing found - sorry',
+            search: 'Buscar: '
+        }
+    });
+</script>

@@ -1,0 +1,108 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
+<div class="containerReportes">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Dashboard' %}">Canalización</a>
+            </li>
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Expediente' %}">Expediente</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">Reportes</li>
+        </ol>
+    </nav>
+
+    <div class="encabezadoReportes">
+        <h3>9-IDG-1</h3>
+        <select id="" name="" class="selectCiclo">
+            <option value="psicologia">Enero-Abril 2024</option>
+            <option value="medicina">Agosto-Diciembre 2023</option>
+        </select>
+        <a class="btnReportes" href="#"><i class="fa-solid fa-file-pdf"></i>Reporte
+            general</a>
+    </div>
+
+    <div class="cardReportes">
+
+        <table id="tablaReportes" class="tablaReportes" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>AREA</th>
+                    <th>NOMBRE(S)</th>
+                    <th>APELLIDOS</th>
+                    <th>NO. DE CONTROL</th>
+                    <th>ASUNTO DE ATENCIÓN</th>
+                    <th>OBSERVACIONES</th>
+                    <th>DETALLES DE LA SESIÓNS</th>
+                    <th>FECHA</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: rgb(173, 173, 173);">
+                    <td>Psicologia</td>
+                    <td>Carlos Antonio</td>
+                    <td>Hernández Sandoval</td>
+                    <td>20210872</td>
+                    <td>Problemas personales</td>
+                    <td>Se nota distante con sus compañero</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores magnam officiis voluptates
+                        architecto illo incidunt sed maxime velit? Nobis perferendis minus harum quod corporis
+                        necessitatibus aut tenetur iusto accusantium velit!</td>
+                    <td>08/06/2024</td>
+                    <td><a class="btnReportesIcon" href="#"><i
+                                class="fa-solid fa-file-pdf"></i></td>
+                </tr>
+                <tr style="background-color: rgb(173, 173, 173);">
+                    <td>Becas</td>
+                    <td>Carlos Antonio</td>
+                    <td>Hernández Sandoval</td>
+                    <td>20210872</td>
+                    <td>Problema monetario</td>
+                    <td>Llega tarde por motivos de dinero</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam quidem beatae unde. Assumenda
+                        repudiandae tenetur aspernatur similique ad neque, iste sit harum aliquam repellendus eligendi
+                        corporis quisquam fugit velit. Soluta.</td>
+                    <td>08/06/2024</td>
+                    <td><a class="btnReportesIcon" href="#"><i
+                                class="fa-solid fa-file-pdf"></i></td>
+                </tr>
+                <tr style="background-color: rgb(173, 173, 173);">
+                    <td>Becas</td>
+                    <td>Carlos Antonio</td>
+                    <td>Hernández Sandoval</td>
+                    <td>20210872</td>
+                    <td>Problema monetario</td>
+                    <td>Llega tarde por motivos de dinero</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, suscipit iusto distinctio
+                        molestiae maxime voluptatibus quod officiis ipsa sint consequuntur, voluptate odit voluptates
+                        nulla soluta ad dolores consectetur eligendi cum?</td>
+                    <td>08/06/2024</td>
+                    <td><a class="btnReportesIcon" href="#"><i
+                                class="fa-solid fa-file-pdf"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% endblock %}
+    <script src="../../static/js/datatables.min.js"></script>
+    <script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+    <script>
+        let table = new DataTable('#tablaReportes', {
+            responsive: true,
+            "columnDefs": [
+                { "className": "dt-center", "targets": "_all" }
+            ],
+            language: {
+                info: 'Página _PAGE_ de _PAGES_',
+                infoEmpty: 'No records available',
+                infoFiltered: '(filtered from _MAX_ total records)',
+                lengthMenu: '_MENU_ registros por página',
+                zeroRecords: 'Nothing found - sorry',
+                search: 'Buscar: '
+            }
+        });
+    </script>

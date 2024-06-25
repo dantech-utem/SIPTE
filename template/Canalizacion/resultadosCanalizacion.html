@@ -1,0 +1,112 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i>Alumnos canalizados</li>
+        </ol>
+    </nav>
+
+    <!-- <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="../index.html">Alumnos canalizados</a></li>
+              <li class="breadcrumb-item" aria-current="page">Expediente</li>
+            </ol>
+        </nav> -->
+    <h2 style="text-align: center;">Canalizados</h2>
+
+    <table id="tablaCanalizados" class="tablaCanalizados" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>NOMBRE(S)</th>
+                <th>APELLIDOS</th>
+                <th>NO. DE CUENTA</th>
+                <th>GRUPO</th>
+                <th>FECHA</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td>9-IDG-1</td>
+                <td>12/03/2024</td>
+                <td>
+                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
+                            class="fa-solid fa-user-pen"></i>Completar</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td>9-IDG-1</td>
+                <td>12/03/2024</td>
+                <td>
+                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
+                            class="fa-solid fa-user-pen"></i>Completar</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872 <h1 style="display: none;">a</h1>
+                </td>
+                <td>9-IDG-1</td>
+                <td>12/03/2024</td>
+                <td>
+                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
+                            class="fa-solid fa-user-pen"></i>Completar</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td>9-IDG-1</td>
+                <td>12/03/2024</td>
+                <td>
+                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
+                            class="fa-solid fa-user-pen"></i>Completar</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td>9-IDG-1</td>
+                <td>12/03/2024</td>
+                <td>
+                    <a class="btnConsultarSesion" href="{% url 'CompletarSesion' %}"><i
+                            class="fa-solid fa-user-pen"></i>Consultar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
+<script src="../../static/js/datatables.min.js"></script>
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script>
+    let table = new DataTable('#tablaCanalizados', {
+        responsive: true,
+        "columnDefs": [
+            { "className": "dt-center", "targets": "_all" }
+        ],
+        language: {
+            info: 'Página _PAGE_ de _PAGES_',
+            infoEmpty: 'No records available',
+            infoFiltered: '(filtered from _MAX_ total records)',
+            lengthMenu: '_MENU_ registros por página',
+            zeroRecords: 'Nothing found - sorry',
+            search: 'Buscar: '
+        }
+    });
+</script>

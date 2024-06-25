@@ -1,0 +1,119 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i>Canalización</li>
+        </ol>
+    </nav>
+
+    <div class="encabezadoCanalizacion">
+        <h3>8-IDG-1</h3>
+        <h3>Enero-Abril 2024</h3>
+        <a class="btnCerrarTutorias" href="{% url 'FormCerrarTutorias' %}"><i class="fa-solid fa-lock"></i>Cerrar
+            tutorias</a>
+    </div>
+
+    <table id="tablaCanalizacion" class="tablaCanalizacion table-hover nowrap" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>NOMBRE(S)</th>
+                <th>APELLIDOS</th>
+                <th>NO. DE CONTROL</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color: rgb(121, 154, 255);">
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                    <a class="btnCanalizar" href="{% url 'FormCanalizar' %}"><i
+                            class="fa-solid fa-bezier-curve"></i>Canalizar</a>
+                </td>
+            </tr>
+            <tr style="background-color: rgb(255, 121, 121);">
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
+                    <a class="btnAlta" href="#"><i class="fa-solid fa-user-check"></i>Alta</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872 <h1 style="display: none;">a</h1>
+                </td>
+                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos Antonio</td>
+                <td>Hernández Sandoval</td>
+                <td>20210872</td>
+                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
+<script src="../../static/js/datatables.min.js"></script>
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script>
+    let table = new DataTable('#tablaCanalizacion', {
+        responsive: true,
+        "columnDefs": [
+            { "className": "dt-center", "targets": "_all" }
+        ],
+        language: {
+            info: 'Página _PAGE_ de _PAGES_',
+            infoEmpty: 'No records available',
+            infoFiltered: '(filtered from _MAX_ total records)',
+            lengthMenu: '_MENU_ registros por página',
+            zeroRecords: 'Nothing found - sorry',
+            search: 'Buscar: '
+        }
+    });
+</script>

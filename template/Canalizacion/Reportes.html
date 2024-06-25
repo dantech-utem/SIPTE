@@ -1,8 +1,10 @@
 {%extends '../dashboard.html'%}
 {%load static%}
-{%block content%}
+{% block stylecontent %}
 <link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{%block content%}
 <div class="containerReportes">
     <nav>
         <ol class="breadcrumb">

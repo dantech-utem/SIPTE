@@ -56,3 +56,4 @@ class Canalizacion(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     FechaInicio = models.DateTimeField()
     FechaFinal = models.DateTimeField()
+    estadoCanalizados = models.IntegerField()

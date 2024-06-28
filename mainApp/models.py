@@ -52,6 +52,8 @@ class AtencionIndividual(models.Model):
 class Canalizacion(models.Model):
     atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
     area = models.CharField(max_length=150)
+    observaciones = models.TextField()
+    motivo = models.TextField()
     detalles = models.TextField()
     fecha = models.DateTimeField(auto_now_add=True)
     FechaInicio = models.DateTimeField()

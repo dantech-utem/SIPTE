@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrevista Inicial</title>
+  <link href="/static/css/style.css" rel="stylesheet">
+  <!-- CSS de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-body">
+            <!-- PESTAÑAS -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="datos-identificacion-tab" data-bs-toggle="tab" data-bs-target="#datos-identificacion" type="button" role="tab" aria-controls="datos-identificacion" aria-selected="true">Datos de Identificación</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-familiares-tab" data-bs-toggle="tab" data-bs-target="#datos-familiares" type="button" role="tab" aria-controls="datos-familiares" aria-selected="false">Datos familiares</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-socioeconomicos-tab" data-bs-toggle="tab" data-bs-target="#datos-socioeconomicos" type="button" role="tab" aria-controls="datos-socioeconomicos" aria-selected="false">Datos socioeconómicos</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-academicos-tab" data-bs-toggle="tab" data-bs-target="#datos-academicos" type="button" role="tab" aria-controls="datos-academicos" aria-selected="false">Antecedentes académicos</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-estudio-tab" data-bs-toggle="tab" data-bs-target="#datos-estudio" type="button" role="tab" aria-controls="datos-estudio" aria-selected="false">Hábitos de estudio</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-aficiones-tab" data-bs-toggle="tab" data-bs-target="#datos-aficiones" type="button" role="tab" aria-controls="datos-aficiones" aria-selected="false">Aficiones</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-personalidad-tab" data-bs-toggle="tab" data-bs-target="#datos-personalidad" type="button" role="tab" aria-controls="datos-personalidad" aria-selected="false">Personalidad</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-rasgos-tab" data-bs-toggle="tab" data-bs-target="#datos-rasgos" type="button" role="tab" aria-controls="datos-rasgos" aria-selected="false">Rasgos</button>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="datos-salud-tab" data-bs-toggle="tab" data-bs-target="#datos-salud" type="button" role="tab" aria-controls="datos-salud" aria-selected="false">Salud</button>
+              </li>
+            </ul>
+            <!-- FORMULARIO DE DATOS DE IDENTIFICACION -->
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="datos-identificacion" role="tabpanel" aria-labelledby="datos-identificacion-tab">
+                <form id="formDatosIdentificacion">
+                  <div class="row">
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="carrera" class="form-label">Carrera</label>
+                      <select class="form-control" id="carrera" required>
+                        <option value="">Selecciona una carrera</option>
+                        <option value="Licenciatura en Diseño y Gestión de Redes Logísticas">Licenciatura en Diseño y Gestión de Redes Logísticas</option>
+                        <option value="Ingeniería en Energías Renovables">Ingeniería en Energías Renovables</option>
+                        <option value="Licenciatura en Contaduría">Licenciatura en Contaduría</option>
+                        <option value="Licenciatura en Gastronomía">Licenciatura en Gastronomía</option>
+                        <option value="Ingeniería en Logística Comercial Global">Ingeniería en Logística Comercial Global</option>
+                        <option value="Ingeniería en Mantenimiento Industrial">Ingeniería en Mantenimiento Industrial</option>
+                        <option value="Ingeniería en Procesos Químicos">Ingeniería en Procesos Químicos</option>
+                        <option value="Ingeniería en Desarrollo y Gestión de Software">Ingeniería en Desarrollo y Gestión de Software</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="tutor" class="form-label">Tutor</label>
+                      <select class="form-control" id="tutor" required>
+                        <option value="">Selecciona un tutor</option>
+                        <option value="Guillermo Jair Rincón Cruzado">Guillermo Jair Rincón Cruzado</option>
+                        <option value="Miriam Minerva Jiménez Lara">Miriam Minerva Jiménez Lara</option>
+                        <option value="Heriberto Pérez Romero">Heriberto Pérez Romero</option>
+                        <option value="Alicia Judith Figueroa García">Alicia Judith Figueroa García</option>
+                        <option value="Juan Ríos Hernández">Juan Ríos Hernández</option>
+                        <option value="Francisco Fortino Güereña Galaz">Francisco Fortino Güereña Galaz</option>
+                        <option value="David Manuel Ramos Sánchez">David Manuel Ramos Sánchez</option>
+                        <option value="Juan Manuel Fernández Álvarez">Juan Manuel Fernández Álvarez</option>    
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="grupo" class="form-label">Grupo</label>
+                      <select class="form-control" id="grupo" required>
+                        <option value="">Selecciona un grupo</option>
+                        <option value="1-GAS-1">1-GAS-1</option>
+                        <option value="9-IDG-1">9-IDG-1</option>
+                        <option value="4-TID-1">4-TID-1</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="fecha" class="form-label">Fecha</label>
+                      <input type="date" class="form-control" id="fecha" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="nombre" class="form-label">Nombre del Alumno</label>
+                      <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="telefono" class="form-label">Teléfono de Casa</label>
+                      <input type="text" class="form-control" id="telefono" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="correo" class="form-label">Correo Electrónico</label>
+                      <input type="email" class="form-control" id="correo" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="celular" class="form-label">Número de Celular</label>
+                      <input type="text" class="form-control" id="celular" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="edad" class="form-label">Edad</label>
+                      <select class="form-control" id="edad" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="Más de 30">Más de 30</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            <!-- FORMULARIO DE DATOS FAMILIARES -->
+            <div class="tab-pane fade" id="datos-familiares" role="tabpanel" aria-labelledby="datos-familiares-tab">
+                <form id="formDatosFamiliares">
+                  <div class="row">
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="con-quien-vives" class="form-label">¿Con quién vives?</label>
+                      <select class="form-control" id="con-quien-vives" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Mis papás">Mis papás</option>
+                        <option value="Con mi papá">Con mi papá</option>
+                        <option value="Con mi mamá">Con mi mamá</option>
+                        <option value="Con mis parientes(tíos,abuelos,etc.)">Con mis parientes(tíos,abuelos,etc.)</option>
+                        <option value="Con mis amigos">Con mis amigos</option>
+                        <option value="Solo">Solo</option>
+                        <option value="Otra situación">Otra situación</option>
+                      </select><br>
+                      <label for="otra-situacion" class="form-label">Si "otra situación", descríbela</label>
+                      <input type="text" class="form-control" id="otra-situacion">
+                    </div>
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="eres-huerfano" class="form-label">¿Eres huérfano?</label>
+                      <select class="form-control" id="eres-huerfano" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Si">Si</option>
+                        <option value="No">No</option>
+                      </select><br>
+                        <label for="de-quien" class="form-label">¿De?</label>
+                        <select class="form-control" id="de-quien" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="Padre">Padre</option>
+                          <option value="Madre">Madre</option>
+                          <option value="Ambos">Ambos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="num-hermanos" class="form-label">Número de hermanos(as)</label>
+                      <select class="form-control" id="num-hermanos" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="Más de 10">Más de 10</option>
+                      </select><br>
+                      <label for="lugar-ocupas" class="form-label">Lugar que ocupas</label>
+                        <select class="form-control" id="lugar-ocupas" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="1°">1°</option>
+                            <option value="2°">2°</option>
+                            <option value="3°">3°</option>
+                            <option value="4°">4°</option>
+                            <option value="5°">5°</option>
+                            <option value="6°">6°</option>
+                            <option value="7°">7°</option>
+                            <option value="8°">8°</option>
+                            <option value="9°">9°</option>
+                            <option value="10°">10°</option>
+                          </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="estado-civil" class="form-label">Estado civil</label>
+                        <select class="form-control" id="estado-civil" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="Soltero">Soltero</option>
+                          <option value="Casado">Casado</option>
+                          <option value="Unión libre">Unión libre</option>
+                          <option value="Divorciado(a)">Divorciado(a)</option>
+                        </select>
+                      </div>
+                  </div>
+                </form>
+              </div>
+              <!-- FORMULARIO DE DATOS SOCIOECONOMICOS -->
+              <div class="tab-pane fade" id="datos-socioeconomicos" role="tabpanel" aria-labelledby="datos-socioeconomicos-tab">
+                <form id="formDatosSocioeconomicos">
+                  <div class="row">
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="tipo-vivienda" class="form-label">Tipo de vivienda</label>
+                      <select class="form-control" id="tipo-vivienda" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Casa en coto privado">Casa en coto privado</option>
+                        <option value="Departamento">Departamento</option>
+                        <option value="Departamento multifamiliar">Departamento multifamiliar</option>
+                        <option value="Casa de huéspedes">Casa de huéspedes</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="trabajo-papa" class="form-label">Trabajo del papá</label>
+                      <select class="form-control" id="trabajo-papa" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Desempleado(a)">Desempleado(a)</option>
+                        <option value="Jubilado(a) o pensionado(a)">Jubilado(a) o pensionado(a)</option>
+                        <option value="Empleado del gobierno(a)">Empleado del gobierno(a)</option>
+                        <option value="Agroproductor(a)">Agroproductor(a)</option>
+                        <option value="Operario de producción(a)">Operario de producción(a)</option>
+                        <option value="Comerciante">Comerciante</option>
+                        <option value="Profesionista trabaja por cuenta propia">Profesionista trabaja por cuenta propia</option>
+                        <option value="Militar (ejército o armada)">Militar (ejército o armada)</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="tenencia-vivienda" class="form-label">Tenencia de la vivienda</label>
+                        <select class="form-control" id="tenencia-vivienda" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="Propia">Propia</option>
+                          <option value="Rentada">Rentada</option>
+                          <option value="Prestada">Prestada</option>
+                          <option value="Hipotecada">Hipotecada</option>
+                          <option value="Otra">Otra</option>
+                        </select>
+                      </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="num-habitaciones" class="form-label">Número de habitaciones</label>
+                        <select class="form-control" id="num-habitaciones" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="Más de 10">Más de 10</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="trabajo-mama" class="form-label">Trabajo de la mamá</label>
+                        <select class="form-control" id="trabajo-mama" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="Desempleado(a)">Desempleado(a)</option>
+                          <option value="Jubilado(a) o pensionado(a)">Jubilado(a) o pensionado(a)</option>
+                          <option value="Empleado del gobierno(a)">Empleado del gobierno(a)</option>
+                          <option value="Agroproductor(a)">Agroproductor(a)</option>
+                          <option value="Operario de producción(a)">Operario de producción(a)</option>
+                          <option value="Comerciante">Comerciante</option>
+                          <option value="Profesionista trabaja por cuenta propia">Profesionista trabaja por cuenta propia</option>
+                          <option value="Militar (ejército o armada)">Militar (ejército o armada)</option>
+                          <option value="Otro">Otro</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="num-vehiculos" class="form-label">Número de vehículos</label>
+                        <select class="form-control" id="num-vehiculos" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="Más de 10">Más de 10</option>
+                        </select>
+                    </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="manutencion" class="form-label">Manutención</label>
+                        <select class="form-control" id="manutencion" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Por cuenta propia">Por cuenta propia</option>
+                            <option value="Mis papás costean mis gastos">Mis papás costean mis gastos</option>
+                            <option value="Parte mis papás, parte yo">Parte mis papás, parte yo</option>
+                        </select>
+                    </div>
+                   
+                    <div class="col-md-12 mb-3">
+                        <label for="cuenta-con" class="form-label">Cuenta con</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="linea-telefonica" value="linea-telefonica">
+                            <label class="form-check-label" for="linea-telefonica">Línea telefónica</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="celular-propio" value="celular-propio">
+                            <label class="form-check-label" for="celular-propio">Celular propio</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="internet" value="internet">
+                            <label class="form-check-label" for="internet">Internet</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="servicio-tv" value="servicio-tv">
+                            <label class="form-check-label" for="servicio-tv">Servicio de TV por cable</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="computadora" value="computadora">
+                            <label class="form-check-label" for="computadora">Computadora</label>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                  </div>
+                </form>
+              </div>
+
+              <!-- BOTONES PARA DESPLAZAR DE PESTAÑA -->
+              <div class="d-flex justify-content-between mt-3">
+                <button type="button" class="btn btn-secondary" id="prevButton" style="display: none;">Anterior</button>
+                <button type="button" class="btn btn-primary" id="nextButton">Siguiente</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS de Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- Archivo botones.js -->
+  <script src="/static/js/botones.js"></script>
+</body>
+</html>

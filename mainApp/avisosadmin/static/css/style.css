@@ -1,0 +1,27 @@
+th {
+    background-color: #5AA86C !important; /* Color de fondo verde para los encabezados */
+    color: white !important; /* Texto en color blanco para los encabezados */
+    text-align: center;
+  }
+
+.table.dataTable{
+    text-align: center; /* Centrar el texto en las celdas */
+  }
+  
+.container {
+    margin: 110px auto 0 auto; /* Margen superior, derecho, inferior, izquierdo */
+  }
+
+ /* Cambia el color de los números de paginación activos */
+ .page-link {
+    color: #eff7f1 !important; /* Cambia color verde */
+    background-color: #5AA86C !important; /* Cambia color verde de fondo */
+    border-color: #5AA86C !important; /* Cambia color de borde*/
+}
+
+/* Cambia el color de los botones de paginación desactivados */
+ .page-item.disabled .page-link {
+    color: #888 !important; /* Cambia el color del texto del botón desactivado */
+    background-color: #e9ecef !important; /* Cambia el color de fondo del botón desactivado */
+    border-color: #dee2e6 !important; /* Cambia el color del borde del botón desactivado */
+}

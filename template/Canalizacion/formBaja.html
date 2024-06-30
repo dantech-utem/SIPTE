@@ -1,14 +1,13 @@
-{% extends '../dashboard.html' %}
-{% load static %}
-{% block content %}
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
 <link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
 
 <div class="containerCanalizacion">
 
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a
-                    href="{% url 'Dashboard' %}">Canalización</a></li>
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Dashboard' %}">Canalización</a></li>
             <li class="breadcrumb-item" aria-current="page">Dar de baja</li>
         </ol>
     </nav>
@@ -18,24 +17,23 @@
         <h3 class="formTitulo">Baja de alumno</h3>
         <span style="font-size: small;">Rellena la información completa para la baja del alumno.</span><br><br>
 
-        <form action="{% url 'canalizacionBajaAlumno' %}" method="POST">
-            {% csrf_token %}
+        <form action="">
             <label class="labelFormCanalizacion">Tipo:</label><br>
-            <select id="tipo" name="tipo" class="formSelect" required>
+            <select id="area" name="area" class="formSelect" required>
                 <option value="" style="display: none;"></option>
-                <option value="reprobacion">Reprobación</option>
-                <option value="problemas_economicos">Problemas económicos</option>
+                <option value="psicologia">Reprobación</option>
+                <option value="medicina">Problemas económicos</option>
             </select>
 
-            <label class="labelFormCanalizacion">Motivo:</label><br>
-            <textarea name="motivo" id="motivo" class="formTextarea" rows="7" required></textarea>
-
             <label class="labelFormCanalizacion">Observaciones:</label><br>
-            <textarea name="observaciones" id="observaciones" class="formTextarea" rows="7" required></textarea>
+            <textarea name="" id="" class="formTextarea" rows="7" required></textarea>
+
+            <label class="labelFormCanalizacion">Motivo:</label><br>
+            <textarea name="" id="" class="formTextarea" rows="7" required></textarea>
 
             <div class="btnsFormCanalizacion">
                 <a class="btnRegresar" href="{% url 'Dashboard' %}">Regresar</a>
-                <button class="btnEnviar" type="submit" id="save">Enviar</button>
+                <button class="btnEnviar" type="submit">Enviar</button>
             </div>
 
         </form>

@@ -27,8 +27,6 @@ $('#actividadTutorial').DataTable({
 
 function confirmarEliminacion() {
     if (confirm("¿Desea borrar la actividad?")) {
-      // Aquí va el código que ejecutará la acción de eliminación
-      alert("Elemento eliminado exitosamente.");
       return true; // Permite que se complete la acción
     } else {
       return false; // Cancela la acción
@@ -37,8 +35,7 @@ function confirmarEliminacion() {
 
   function confirmarAgregar() {
     if (confirm("¿Desea guardar el registro?")) {
-      // Aquí va el código que ejecutará la acción de eliminación
-      alert("Registro guardado");
+
       return true; // Permite que se complete la acción
     } else {
       return false; // Cancela la acción
@@ -47,10 +44,23 @@ function confirmarEliminacion() {
 
   function confirmarEditar() {
     if (confirm("¿Desea guardar los cambios?")) {
-      // Aquí va el código que ejecutará la acción de eliminación
-      alert("Registro guardado");
+
       return true; // Permite que se complete la acción
     } else {
       return false; // Cancela la acción
     }
   }
+
+
+   // Cierra los mensajes automáticamente después de 5 segundos
+   document.addEventListener('DOMContentLoaded', function () {
+    var alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+      setTimeout(function() {
+        alert.classList.add('fade-out');
+        setTimeout(function() {
+          alert.remove();
+        }, 500); // espera 0.5 segundos después de desvanecerse para eliminarlo del DOM
+      }, 5000); // 5 segundos antes de desvanecerse
+    });
+  });

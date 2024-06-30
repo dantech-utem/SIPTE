@@ -18,6 +18,8 @@
     </div>
   </div>
 
+
+
   <div class="table-responsive py-2">
     <!-- Hacemos responsiva -->
     <table class="cell-border hover" cellspacing="0" width="100%" id="actividadTutorial">
@@ -31,17 +33,46 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="textosJustificados">Lorem ipsum.</td>
-          <td class="textosJustificados">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe rerum fuga similique molestias repellendus magnam natus, nemo corrupti corporis quod aperiam soluta voluptate labore repellat cumque nobis perferendis, sed minima.</td>
-          <td class="textosJustificados">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe rerum fuga similique molestias repellendus magnam natus, nemo corrupti corporis quod aperiam soluta voluptate labore repellat cumque nobis perferendis, sed minima.</td>
+        
+          {% for actividad in actividades %}
+          <tr>
+          <td class="textosJustificados">{{actividad.tema}}</td>
+          <td class="textosJustificados">{{actividad.objetivos}}</td>
+          <td class="textosJustificados">{{actividad.recursos}}</td>
           <td style="text-align: center; ">
-            <a href="{% url 'infoActividad' %}" class="bi bi-info-circle text-black"></a>
-            <a href="{% url 'editarActividad' %}" class="bi bi-pencil-square text-info-emphasis"></a>
-            <a href="" id="eliminar" onclick="return confirmarEliminacion()" class="bi bi-trash text-danger"></a>
+            <a href="{% url 'infoActividad' id=actividad.id %}" class="bi bi-info-circle text-black"></a>
+            <a href="{% url 'editarActividad' id=actividad.id %}" class="bi bi-pencil-square text-info-emphasis"></a>
+            <a href="{% url 'eliminarActividad' id=actividad.id %}" id="eliminar" onclick="return confirmarEliminacion()" class="bi bi-trash text-danger"></a>
           </td>
         </tr>
+          {% endfor %}
+  
       </tbody>
     </table>
   </div>
-{% endblock %}
+
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5;">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "success" %}
+          <div id="box" class="alert alert-success alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% elif message.tags == "error" %}
+          <div id="box" class="alert alert-danger alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% else %}
+          <div id="box" class="alert alert-warning alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  
+  {% endblock %}

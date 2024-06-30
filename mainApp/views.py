@@ -22,8 +22,10 @@ def check_authentication(request):
         return JsonResponse({'authenticated': False})
     
 def logout_view(request):
+    response = render(request, 'login.html')
+    response.delete_cookie('sso_token')
     logout(request)
-    return render(request, 'login.html')
+    return response
      
 class loginTest(View):
     def get(self, request):

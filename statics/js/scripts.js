@@ -1,10 +1,15 @@
-const singUpButton = document.getElementById('signUp');
-const singInButton = document.getElementById('signIn');
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const returnButton = document.getElementById('boton-regreso');
 const main = document.getElementById('main');
 
-singUpButton.addEventListener('click', () =>{
+signUpButton.addEventListener('click', () => {
     main.classList.add("right-panel-active");
-})
-singInButton.addEventListener('click', () =>{
+});
+
+signInButton.addEventListener('click', () => {
     main.classList.remove("right-panel-active");
-})
+});
+returnButton.addEventListener('click', () => {
+    main.classList.remove("right-panel-active");
+});

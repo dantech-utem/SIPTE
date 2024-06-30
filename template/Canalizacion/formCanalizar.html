@@ -17,7 +17,8 @@
         <span style="font-size: small;">Rellena la información completa para el registro de la nueva
             canalización.</span><br><br>
 
-        <form action="">
+        <form action="{% url 'canalizacionFormCanalizarAlumno' %}" method="POST">
+            {% csrf_token %}
             <label class="labelFormCanalizacion">Área:</label><br>
             <select id="area" name="area" class="formSelect" required>
                 <option value="" style="display: none;"></option>
@@ -27,14 +28,15 @@
                 <option value="orientacion">Orientación</option>
             </select>
 
-            <label class="labelFormCanalizacion">Observaciones:</label><br>
-            <textarea name="" id="" class="formTextarea" rows="7" required></textarea>
-
             <label class="labelFormCanalizacion">Motivo:</label><br>
-            <textarea name="" id="" class="formTextarea" rows="7" required></textarea>
+            <textarea name="motivo" id="motivo" class="formTextarea" rows="7" required></textarea>
+
+            <label class="labelFormCanalizacion">Observaciones:</label><br>
+            <textarea name="observaciones" id="observaciones" class="formTextarea" rows="7" required></textarea>
 
             <div class="btnsFormCanalizacion">
                 <a class="btnRegresar" href="{% url 'Dashboard' %}">Regresar</a>
+
                 <button class="btnEnviar" type="submit">Enviar</button>
             </div>
 

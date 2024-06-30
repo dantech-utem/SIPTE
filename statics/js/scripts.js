@@ -33,3 +33,16 @@ singUpButton.addEventListener('click', () =>{
 returnButton.addEventListener('click', () => {
     main.classList.remove("right-panel-active");
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/check-auth/')
+    .then(response => response.json())
+    .then(data => {
+        if (data.authenticated) {
+            window.location.href = '/test/';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});

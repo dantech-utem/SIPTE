@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -15,30 +16,34 @@
         <!-- Contenido -->
         <div class="container" id="main">
             <div class="sign-up">
-                <div id="other" class="login-sso">
-                    <form action="test" >
-                        <img src="../statics/assets/img/logo_login.png" alt
-                            class="logo-login-sso">
-    
-                        <input type="email" name="email" placeholder="Email"
-                            required class="inputs-login">
-                        <input type="password" name="pswd" placeholder="Password"
-                            required class="inputs-login">
-                        <button class="botones-login" id="signIn">Iniciar
-                            sesión</button>
-                        <div class="botones-login" id="boton-regreso">Regreso</div>
-                    </form>
-                </div>
+                <form action="{% url 'login_sso' %}" method="post" class="login-sso" id="loginForm">
+                    <img src="../statics/assets/img/logo_login.png" alt="Logo" class="logo-login-sso">
+                
+                    <input type="email" name="email" placeholder="Email" required class="inputs-login" id="emailSSO" readonly>
+                    <input type="password" name="pswd" placeholder="Password" required class="inputs-login" id="password">
+                    <button type="submit" class="botones-login" id="signIn">Iniciar sesión</button>
+                    <div class="botones-login" id="boton-regreso">Regreso</div>
+                    {% csrf_token %}
+                </form>
+                
             </div>
             <div class="sign-in">
                 <div class="login-principal">
                     <h1 class="titulo-login">Iniciar sesión</h1>
                     <input type="email" name="email" placeholder="Email"
-                        required class="inputs-login">
+                        required class="inputs-login" id="email" value="{{ Email }}">
                     <!-- <a href="#" class="txt-a">Forget your passowrd?</a> -->
-                    <button class="botones-login" id="signUp">Iniciar
-                            sesión</button>
-                        
+                    <button class="botones-login" id="signUp">Iniciars
+                        sesión</button>
+                        <div id="error-container" class="col-lg-3">
+                            {% if Error %}
+                            <div class="mt-3">
+                                <div class="alert alert-danger" role="alert">
+                                    {{ Error }}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
                 </div>
             </div>
             <div class="overlay-container">
@@ -62,7 +67,9 @@
 
         <script type="text/javascript"
             src="{% static 'js/scripts.js' %}"></script>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     </body>
 
-</html> 
+</html>

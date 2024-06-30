@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'tutorias.urls'
+LOGIN_URL = '/'  # Define la URL de inicio de sesión personalizada
 
 TEMPLATES = [
     {

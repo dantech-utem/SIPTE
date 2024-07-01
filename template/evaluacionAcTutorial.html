@@ -10,127 +10,40 @@ Evaluar al tutor
 </center>
 <br>
 <form action="">
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <label for="Tutor">Nombre del tutor: Dante Noe Magaña Ortiz</label>
-            </div>
-            <div class="col-4">
-                <label for="Fecha">Fecha: </label>
-            </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col">
-                <label for="Alumno">Nombre del alumno:</label>
-            </div>
-        </div>
-    </div>
+    
     <div class="tabla-wrapp">
         <div class="tabla">
             <div class="container text-center">
                 <div class="row">
                     <div class="col">
                         <label for="Quest">Carrera</label>
-                        <select name="" class="cuestionario">
-                            <option value="">TSU en CNT</option>
-                            <option value="">TSU en ERE</option>
-                            <option value="">TSU en GAS</option>
-                            <option value="">TSU en LCS</option>
-                            <option value="">TSU en MMP</option>
-                            <option value="">TSU en OCI</option>
-                            <option value="">TSU en QAI</option>
-                            <option value="">TSU en TID</option>
-                            <option value="">Lic. en Contaduría</option>
-                            <option value="">Ing. en Energías Renovables</option>
-                            <option value="">Lic. en Diseño y Gestión de Redes Logísticas</option>
-                            <option value="">Ing. en Logística Comercial Global</option>
-                            <option value="">Ing. en Procesos Químicos</option>
-                            <option value="">Ing. en Mantenimiento Industrial</option>
-                            <option value="">Ing. en Tecnologías de la Información</option>
-                            <option value="">Ing. en Desarrollo y Gestión de Software</option>
-                            <option value="">Lic. en Gastronomía</option>
-
-                        </select>
+                       <input type="text" style="text-align: center;" disabled value="Ing. Desarrollo y Gestion de Software" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                     </div>
                     <div class="col">
                         <label for="Quest">Cuatrimestre</label>
-                        <select name="" class="cuestionario">
-                            <option value="">Enero-Abril  2023</option>
-                        </select>
+                        <input type="text" style="text-align: center;" disabled value="Enero-Abril 2023" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label for="Quest">Nombre del grupo</label>
-                        <select name="" class="cuestionario">
-                            <option value="">5-CNT-1</option>
-                            <option value="">5-CNT-2</option>
-                            <option value="">2-CNT-1</option>
-                            <option value="">2-CNT-2</option>
-                            <option value="">5-ERE-1</option>
-                            <option value="">5-LCS-1</option>
-                            <option value="">5-LCS-2</option>
-                            <option value="">5-MMP-1</option>
-                            <option value="">5-MMP-2</option>
-                            <option value="">2-MMP-1</option>
-                            <option value="">2-MMP-2</option>
-                            <option value="">2-MMP-3</option>
-                            <option value="">5-OCI-1</option>
-                            <option value="">5-OCI-2</option>
-                            <option value="">5-OCI-3</option>
-                            <option value="">5-QAI-1</option>
-                            <option value="">2-QAI-1</option>
-                            <option value="">5-TID-1</option>
-                            <option value="">2-TID-1</option>
-                            <option value="">2-TID-2</option>
-                            <option value="">8-IMI-1</option>
-                            <option value="">8-LDG-1</option>
-                            <option value="">8-LDG-2</option>
-                            <option value="">8-LGA-1</option>
-                            <option value="">8-IER-1</option>
-                            <option value="">8-ILC-1</option>
-                            <option value="">8-ILC-2</option>
-                            <option value="">8-IPQ-1</option>
-                            <option value="">8-IDG-1</option>
-                            <option value="">8-LCN-1</option>
-                            <option value="">2-GAS-1</option>
-                            <option value="">2-GAS-2</option>
-                            <option value="">2-GAS-3</option>
-                            <option value="">5-GAS-1</option>
-                            <option value="">2-OCI-1</option>
-                            <option value="">2-OCI-2</option>
-                            <option value="">2-OCI-3</option>
-                            <option value="">2-ERE-1</option>
-                            <option value="">2-LCS-1</option>
-                            <option value="">2-LCS-2</option>
-                            <option value="">2-LCS-3</option>
-                        </select>
+                        <input style="text-align: center;" type="text" disabled value="9-IDG-1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                     </div>
                     <div class="col">
                         <label for="Quest">Fecha</label>
-                        <select name="fecha" class="cuestionario" id="fechaSelect">
-                        </select>
+                            <input type="text" name="fecha" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="fechaInput" style="text-align: center;" disabled>
                     </div>
                     <script>
-                        const fechaSelect = document.getElementById('fechaSelect');
+                        const fechaInput = document.getElementById('fechaInput');
                         const today = new Date();
-                        const numDays = 1; // Número de días a partir de hoy
-                    
-                        for (let i = 0; i < numDays; i++) {
-                            const dateOption = new Date();
-                            dateOption.setDate(today.getDate() + i);
-                            const year = dateOption.getFullYear();
-                            const month = String(dateOption.getMonth() + 1).padStart(2, '0');
-                            const day = String(dateOption.getDate()).padStart(2, '0');
-                            const formattedDate = `${year}-${month}-${day}`;
-                            const displayDate = `${day} de ${month} de ${year}`;
-                            
-                            const optionElement = document.createElement('option');
-                            optionElement.value = formattedDate;
-                            optionElement.textContent = displayDate;
-                            fechaSelect.appendChild(optionElement);
-                        }
+                        
+                        const year = today.getFullYear();
+                        const month = String(today.getMonth() + 1).padStart(2, '0');
+                        const day = String(today.getDate()).padStart(2, '0');
+                        const formattedDate = `${year}-${month}-${day}`;
+                        const displayDate = `${day} de ${month} de ${year}`;
+                        
+                        fechaInput.value = displayDate;
                     </script>
                 </div>
                 <div class="row">

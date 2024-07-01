@@ -1,86 +1,217 @@
-{%extends '../dashboard.html'%}
-{%load static%}
-{%block content%}
-<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
-<div class="containerCanalizacion">
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><i class="fa-regular fa-calendar-days"></i>Calendario</li>
-        </ol>
-    </nav>
-</div>
+{% extends '../dashboard.html'%}
+{% load static %}
+{% block title %}Event Calendar{% endblock title %}
 
-<div class="containerCalendario">
-    <div class="cardCalendario">
-        <div class="seccionEventos">
-            <h2>Eventos recientes</h2><br>
-            <p>No se encontraron eventos recientes.</p>
-        </div>
-        <div class="seccionCalendario">
-            <div class="headerCalendario">
-                <div class="GrupoBtnMeses">
-                    <button class="btnMes"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="btnMes"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-                <div class="mesAnio">Junio 2024</div>
-                <div class="grupoBtnMostrar">
-                    <button class="btnMostrar">Mes</button>
-                    <button class="btnMostrar">Semana</button>
-                    <button class="btnMostrar">Día</button>
-                    <!-- <button class="btnMostrar">Lista</button> -->
+{% block breadcrumb %}
+  <div>
+      <h1><i class="fa fa-calendar"></i> Calendar</h1>
+      <p>Event Calendar</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item"><a href="#">Calendar</a></li>
+  </ul>
+{% endblock breadcrumb %}
+
+{% block content %}
+<link href="{% static 'css/styleCalendarioCanalizacion.css' %}" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile row">
+            <div class="col-md-3">
+                <div id="external-events">
+                    <h4 class="mb-4">Running Events</h4>
+                    {% for canalizacion in canalizaciones_mes %}
+                      <div class="fc-event">
+                          <h3>{{ canalizacion.atencionIndividual }}</h3>
+                          <p>{{ canalizacion.observaciones }}</p>
+                          <p>{{ canalizacion.motivo }}</p>
+                          <p>{{ canalizacion.detalles }}</p>
+                          <p>From: {{ canalizacion.FechaInicio }}</p>
+                          <p>To: {{ canalizacion.FechaFinal }}</p>
+                      </div>
+                    {% empty %}
+                      <p>No Running Events Found</p>
+                    {% endfor %}
                 </div>
             </div>
+            <div class="col-md-9">
+                <div id="calendar"></div>
+            </div>
 
-            <div class="calendarioCompleto">
-                <div class="calendarioSemanas">
-                    <div class="dias">Dom</div>
-                    <div class="dias">Lun</div>
-                    <div class="dias">Mar</div>
-                    <div class="dias">Mié</div>
-                    <div class="dias">Jue</div>
-                    <div class="dias">Vie</div>
-                    <div class="dias">Sáb</div>
-                </div>
-                <div class="calendarioFechas">
-                    <div class="fecha vacia">29</div>
-                    <div class="fecha vacia">30</div>
-                    <div class="fecha vacia">31</div>
-                    <div class="fecha">1</div>
-                    <div class="fecha">2</div>
-                    <div class="fecha">3</div>
-                    <div class="fecha">4</div>
-                    <div class="fecha">5</div>
-                    <div class="fecha">6</div>
-                    <div class="fecha">7</div>
-                    <div class="fecha">8</div>
-                    <div class="fecha">9</div>
-                    <div class="fecha">10</div>
-                    <div class="fecha">11</div>
-                    <div class="fecha">12</div>
-                    <div class="fecha">13</div>
-                    <div class="fecha">14</div>
-                    <div class="fecha">15</div>
-                    <div class="fecha">16</div>
-                    <div class="fecha">17</div>
-                    <div class="fecha">18</div>
-                    <div class="fecha">19</div>
-                    <div class="fecha">20</div>
-                    <div class="fecha">21</div>
-                    <div class="fecha">22</div>
-                    <div class="fecha">23</div>
-                    <div class="fecha">24</div>
-                    <div class="fecha">25</div>
-                    <div class="fecha">26</div>
-                    <div class="fecha">27</div>
-                    <div class="fecha">28</div>
-                    <div class="fecha">29</div>
-                    <div class="fecha">30</div>
-                    <div class="fecha vacia">1</div>
-                    <div class="fecha vacia">2</div>
+            <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Event</h5>
+                            <button id="modalClose1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Event Title:</label>
+                                    {{ form.title }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Description:</label>
+                                    {{ form.description }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Start Date:</label>
+                                    {{ form.start_time }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">End Date:</label>
+                                    {{ form.end_time }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="modalClose2" type="button" class="btn btn-danger">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="modal fade show" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header bg-primary">
+                          <h5 class="modal-title text-white" id="title_event_detail"></h5>
+                          <button id="modalDetailClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <form method="">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                              
+                              <div class="form-group">
+                                  <label for="message-text" class="col-form-label">Description:</label>
+                                  <p id = "description_event_detail">
+
+                                  </p>
+                              </div>
+                              <div class="form-group">
+                                  <label for="message-text" class="col-form-label">Start:</label>
+                                  <p id = "start_event_detail">
+                              </div>
+                              <div class="form-group">
+                                  <label for="message-text" class="col-form-label">End:</label>
+                                  <p id = "end_event_detail">
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button id="delete-event-button" data-event-id="" type="button" class="btn btn-danger">Delete</button>
+                              <button id="add-to-next-week" data-event-id-week="" type="button" class="btn btn-success">Next Week</button>
+                              <button id="add-to-next-day" data-event-id-day="" type="button" class="btn btn-primary">Next Day</button>
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
         </div>
     </div>
 </div>
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
+<script>
+    function converterDataParaDjangoFormat(data) {
+        const dataJS = new Date(data);
+        const ano = dataJS.getFullYear();
+        const mes = (dataJS.getMonth() + 1).toString().padStart(2, '0');
+        const dia = dataJS.getDate().toString().padStart(2, '0');
+        const hora = dataJS.getHours().toString().padStart(2, '0');
+        const minuto = dataJS.getMinutes().toString().padStart(2, '0');
+        const segundo = dataJS.getSeconds().toString().padStart(2, '0');
+        const formatoDjango = `${ano}-${mes}-${dia} ${hora}:${minuto}:${segundo}`;
+        return formatoDjango;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var today = new Date();
+  
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
+            },
+            initialDate: today,
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            selectMirror: true,
+            select: function(arg) {
+                console.log('clicked')
+                console.log(arg.start)
+                console.log(arg.end)
+                var modal = document.getElementById('eventModal')
+                modal.style.display = 'block'
+                document.getElementById('id_start_time').value = converterDataParaDjangoFormat(arg.start);
+                document.getElementById('id_end_time').value = converterDataParaDjangoFormat(arg.end);
+                calendar.unselect()
+            },
+            eventClick: function(arg) {
+                console.log('clicked')
+                var title = arg.event.title;
+                var start = formatDateTime(arg.event.start) ;
+                var end = formatDateTime(arg.event.end);
+                var description = arg.event.extendedProps.description || '';
+                var id = arg.event.id;
+    
+                var modalInputEnd = document.getElementById('end_event_detail'); 
+    
+                var modal = document.getElementById('detailModal')
+                var modalTitle = document.getElementById('title_event_detail'); 
+                var modalStart = document.getElementById('start_event_detail'); 
+                var modalEnd = document.getElementById('end_event_detail'); 
+                var modalDescripition = document.getElementById('description_event_detail'); 
+                var deleteButton = document.getElementById("delete-event-button");
+                var nextWeek = document.getElementById("add-to-next-week");
+                var nextDay = document.getElementById("add-to-next-day");
+    
+                deleteButton.setAttribute("data-event-id", id);
+                nextWeek.setAttribute("data-event-id-week", id);
+                nextDay.setAttribute("data-event-id-day", id);
+                modal.style.display = 'block' 
+                
+                modalTitle.textContent = title;
+                modalStart.textContent = start;
+                modalEnd.textContent = end;
+                modalDescripition.textContent = description;
+                
+                modal.style.display = 'block';
+            },
+            editable: true,
+            dayMaxEvents: true,
+        //   events: {{events|safe}},
+        });
+        calendar.render();
+    });
+    const closeBtn1 = document.getElementById('modalClose1');
+    const closeBtn2 = document.getElementById('modalClose2');
+    const closeBtn3 = document.getElementById('modalDetailClose');
+    closeBtn1.addEventListener('click',()=>{
+        const eventModal = document.getElementById('eventModal')
+        eventModal.style.display = 'none';
+    });
+    closeBtn2.addEventListener('click',()=>{
+        const eventModal = document.getElementById('eventModal')
+        eventModal.style.display = 'none';
+    });
+    closeBtn3.addEventListener('click',()=>{
+        const eventModal = document.getElementById('detailModal')
+        eventModal.style.display = 'none';
+    });
+    function formatDateTime(dateTime) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+        const dataFormatada = new Date(dateTime).toLocaleDateString('pt-BR', options);
+        return dataFormatada;
+    };
+  
+  </script>
 {% endblock %}
-<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>

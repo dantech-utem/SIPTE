@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Canalizacion, BajaAlumnos,Canalizar
 from django.views import View
 from django.views.decorators.http import require_http_methods
+from datetime import datetime
 
 # Create your views here.
 class inicio(View):
@@ -17,8 +18,32 @@ class canalizacionIndex(View):
       return render(request,'Canalizacion/index.html')
 
 class canalizacionCalendario(View):
+
    def get(self, request):
-      return render(request,'Canalizacion/calendario.html')
+      #sacar area del usuario
+      canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False)
+      canalizaciones_mes = Canalizacion.objects.filter(
+            FechaInicio__isnull=False, 
+            FechaFinal__isnull=False,
+            FechaInicio__gte=datetime.now().date()
+        ).order_by("FechaInicio")
+      
+      lista_canalizaciones = []
+      # start: '2020-09-16T16:00:00'
+      for canalizacion in canalizaciones:
+         lista_canalizaciones.append({   
+               "atencionIndividual": canalizacion.atencionIndividual,
+               "observaciones": canalizacion.observaciones,
+               "motivo": canalizacion.motivo,
+               "detalles": canalizacion.detalles,
+               "fecha": canalizacion.fecha,
+               "FechaInicio": canalizacion.FechaInicio.strftime("%Y-%m-%dT%H:%M:%S"),
+               "FechaFinal": canalizacion.FechaFinal.strftime("%Y-%m-%dT%H:%M:%S")
+            }
+         )
+        
+      context = {"canalizaciones": lista_canalizaciones,"canalizaciones_mes": canalizaciones_mes}
+      return render(request,'Canalizacion/calendario.html', context)
    
 class canalizacionCompletarSesion(View):
    def get(self, request):

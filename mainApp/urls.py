@@ -21,4 +21,6 @@ urlpatterns = [
     path('informePlanAccion', views.informePlanAccion, name='informePlanAccion'),
     path('descarga', views.descargarXLSX, name='descarga'),
     path('XLSXReportePlanAccion', views.descargarReporte, name='XLSXReporte'),
+        path('evaluacionAcTutorial', views.evaluacionAcTutorial, name='Evaluacion')
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

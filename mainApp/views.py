@@ -150,6 +150,9 @@ def informePlanAccion(request):
 def reportePlanAccion(request):
     return render (request, 'reportePlanAccion.html')
 
+def evaluacionAcTutorial(request):
+    return render (request, 'evaluacionAcTutorial.html')
+
 #Codigo orientado a libreria openpyxl
 
 def descargarXLSX(request):

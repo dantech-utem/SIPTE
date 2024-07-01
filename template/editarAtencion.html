@@ -1,46 +1,43 @@
 {% extends './dashboard.html' %}
-<!-- Se incluye en archivo de base con lo demás -->
 {% block title %}
-  Registro de atención individual
-{% endblock %} <!-- Se cambia el título -->
-
+  Editar atención individual
+{% endblock %}
 {% block body %}
-
 <div class="formsAgregar">
-
-  <div class="card-body ">
-    <h4 class="titulos mt-3 text-center" style="color: #00005e;">Editar atención individual</h4>
-    <form>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <div class="input-group">
-              <select class="form-select" id="nombre">
-                <option>Juan</option>
-
-              </select>
+    <div class="card-body ">
+        <h4 class="titulos mt-3 text-center" style="color: #00005e;">Editar atención individual</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <div class="input-group">
+                            <select class="form-select" id="nombre" name="estudiante" required>
+                                {% for estudiante in estudiantes %}
+                                <option value="{{ estudiante.id }}" {% if atencion.estudiante.id == estudiante.id %}selected{% endif %}>
+                                    {{ estudiante.noControl }} - {{ estudiante.User }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="asuntoTratar" class="form-label">Asunto a tratar</label>
+                        <textarea class="form-control" id="asuntoTratar" name="asuntoTratar" rows="3" required>{{ atencion.asuntoTratar }}</textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="observaciones" class="form-label">Observaciones</label>
+                        <textarea class="form-control" id="observaciones" name="observaciones" rows="5" required>{{ atencion.observaciones }}</textarea>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="mb-3">
-            <label for="asunto" class="form-label">Asunto a tratar</label>
-            <textarea class="form-control" id="asunto" rows="3"></textarea>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label for="observaciones" class="form-label">Observaciones</label>
-            <textarea class="form-control" id="observaciones" rows="5"></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="d-flex justify-content-end">
-        <a class="btn btn-secondary me-2" href="{% url 'atencionIndividual' %}">Cerrar</a>
-        <button type="submit" class="btn btn-success">Editar</button>
-      </div>
-    </form>
-  </div>
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-secondary me-2" href="{% url 'atencionIndividual' %}">Cerrar</a>
+                <button type="submit" class="btn btn-success" onclick="return confirmarEditar()">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
 </div>
-</div>
-
 {% endblock %}

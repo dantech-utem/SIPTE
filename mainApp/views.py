@@ -6,7 +6,7 @@ from openpyxl import Workbook, load_workbook
 from flask import Flask, send_file
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
-from .models import Periodo, AccionTutorial
+from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios
 from django.contrib import messages #Importamos para presentar mensajes
 # Create your views here.
 class inicio(View):
@@ -21,6 +21,7 @@ def actividadTutorial(request):
     actividades = AccionTutorial.objects.filter(cicloAccion__estado=True, tutor=request.user)
     messages.success(request, '¡Datos cargados!')
     return render(request, 'actividadTutorial.html', {"actividades":actividades})   
+
 
 def eliminarActividadTutorial(request,id):
     actividad = get_object_or_404(AccionTutorial, id=id)
@@ -85,13 +86,57 @@ def infoActividadTutorial(request, id):
     actividad = get_object_or_404(AccionTutorial, cicloAccion__estado=True, tutor=request.user, id=id)
     return render(request,'infoActividad.html', {"actividad":actividad})   
 
- 
+def infoatencionIndividual(request):
+    atenciones = AtencionIndividual.objects.all()
+    messages.success(request, '¡Datos cargados!')
+    return render(request, 'atencionIndividual.html', {"atenciones": atenciones})
+
+def agregarAtencionIndividual(request):
+    if request.method == 'POST':
+        estudiante_id = request.POST.get('estudiante')
+        asuntoTratar = request.POST.get('asuntoTratar')
+        observaciones = request.POST.get('observaciones')
+        
+
+        # Crear la instancia de AtencionIndividual
+        AtencionIndividual.objects.create(
+            estudiante_id=estudiante_id,
+            asuntoTratar=asuntoTratar,
+            observaciones=observaciones,
+        )
+
+        messages.success(request, '¡Atención individual registrada con éxito!')
+        return redirect('atencionIndividual')
+
+    estudiantes = Usuarios.objects.all()
+    return render(request, 'registrarAtencion.html', {'estudiantes': estudiantes})
+
+
+def editarAtencionIndividual(request, id):
+    atencion = get_object_or_404(AtencionIndividual, id=id)
+
+    if request.method == 'POST':
+        estudiante_id = request.POST.get('estudiante')
+        atencion.estudiante_id = estudiante_id  
+        atencion.asuntoTratar = request.POST.get('asuntoTratar')
+        atencion.observaciones = request.POST.get('observaciones')
+        atencion.save()
+
+        messages.success(request, '¡Atención individual editada con éxito!')
+        return redirect('editarAtencion', id=atencion.id)
+
+    estudiantes = Usuarios.objects.all()
+    return render(request, 'editarAtencion.html', {'atencion': atencion, 'estudiantes': estudiantes})
+
+def eliminarAtencionIndividual(request, id):
+    atencion = get_object_or_404(AtencionIndividual, id=id)
+    atencion.delete()
+    messages.success(request, '¡Atención individual eliminada con éxito!')
+    return render(request, 'atencionIndividual.html')
 
 def infoEvaluarTutor(request):
     return render(request, 'evaluarTutor.html') 
 
-def infoatencionIndividual(request):
-    return render (request, 'atencionIndividual.html')
 
 def infoeditarAtencion(request):
     return render (request,'editarAtencion.html')
@@ -105,6 +150,8 @@ def informePlanAccion(request):
 def reportePlanAccion(request):
     return render (request, 'reportePlanAccion.html')
 
+def evaluacionAcTutorial(request):
+    return render (request, 'evaluacionAcTutorial.html')
 
 #Codigo orientado a libreria openpyxl
 

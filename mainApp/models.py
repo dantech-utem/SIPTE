@@ -47,8 +47,9 @@ class AtencionIndividual(models.Model):
     asuntoTratar = models.CharField(max_length=400)
     observaciones = models.CharField(max_length=400)
     fecha = models.DateTimeField(auto_now_add=True)
-    estado = models.IntegerField() 
-    bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE)
+    estado = models.IntegerField(blank=True, null=True) 
+    bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE, null=True, blank=True)
+
     
 class Canalizacion(models.Model):
     atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)

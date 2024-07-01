@@ -1,0 +1,256 @@
+{% extends './dashboard.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+{% block title %}
+Evaluar al tutor
+{% endblock %}
+
+{% block body %}
+<center>
+    <h3 class="titulos">Evaluar Actividad Tutorial</h3>
+</center>
+<br>
+<form action="">
+    
+    <div class="tabla-wrapp">
+        <div class="tabla">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <label for="Quest">Carrera</label>
+                       <input type="text" style="text-align: center;" disabled value="Ing. Desarrollo y Gestion de Software" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <div class="col">
+                        <label for="Quest">Cuatrimestre</label>
+                        <input type="text" style="text-align: center;" disabled value="Enero-Abril 2023" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="Quest">Nombre del grupo</label>
+                        <input style="text-align: center;" type="text" disabled value="9-IDG-1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <div class="col">
+                        <label for="Quest">Fecha</label>
+                            <input type="text" name="fecha" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="fechaInput" style="text-align: center;" disabled>
+                    </div>
+                    <script>
+                        const fechaInput = document.getElementById('fechaInput');
+                        const today = new Date();
+                        
+                        const year = today.getFullYear();
+                        const month = String(today.getMonth() + 1).padStart(2, '0');
+                        const day = String(today.getDate()).padStart(2, '0');
+                        const formattedDate = `${year}-${month}-${day}`;
+                        const displayDate = `${day} de ${month} de ${year}`;
+                        
+                        fechaInput.value = displayDate;
+                    </script>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="Quest">El tutor se presentó de manera puntual al grupo?.</label>
+                        <div class="cuestionario" style="display: flex; gap: 10px;">
+                            <label>
+                                <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="Quest">Explicó el propósito de las tutorías?</label>
+                        <div class="cuestionario" style="display: flex; gap: 10px;">
+                            <label>
+                                <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="Quest">El tutor presentó un plan de trabajo (temas) para las sesiones grupales?</label>
+                        <div class="cuestionario" style="display: flex; gap: 10px;">
+                            <label>
+                                <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="Quest"> Los temas propuestos para las sesiones grupales fueron abordados según lo previsto?</label>
+                        <div class="cuestionario" style="display: flex; gap: 10px;">
+                            <label>
+                                <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                            </label>
+                        </div>
+                    </div>
+                                       
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="Quest">En las sesiones de tutorías se abordaron temas de interés o problemáticas grupales.</label>
+                        <div class="cuestionario" style="display: flex; gap: 10px;">
+                            <label>
+                                <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="Quest"> El tutor mostró disposición para atenderte cuando tenías una preocupación o problema individual sea de carácter personal o académico.</label>
+                        <div class="cuestionario" style="display: flex; gap: 10px;">
+                            <label>
+                                <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                            </label>
+                            <label>
+                                <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                            </label>
+                        </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="Quest"> El tutor mostró cordialidad y capacidad para crear una clima de confianza para exponer problemáticas individuales.</label>
+                <div class="cuestionario" style="display: flex; gap: 10px;">
+                    <label>
+                        <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <label for="Quest"> El tutor pudo atender adecuadamente las problemáticas presentadas ofreciendo orientación para resolverlas.</label>
+                <div class="cuestionario" style="display: flex; gap: 10px;">
+                    <label>
+                        <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                    </label>
+                </div>
+    </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="Quest"> El tutor mostró dominio de temas pedagógicos para la atención grupal e individualizada como por ejemplo en relación a técnicas de estudio, de lectura, etc.</label>
+                <div class="cuestionario" style="display: flex; gap: 10px;">
+                    <label>
+                        <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <label for="Quest">  Las tutorías impactaron de manera positiva en mi desempeño académico y/o en mi desarrollo personal y profesional.</label>
+                <div class="cuestionario" style="display: flex; gap: 10px;">
+                    <label>
+                        <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="Quest"> l personal de los servicios de apoyo (psicopedagógico, enfermería, becas, incubadora,) atendió adecuadamente mis necesidades.</label>
+                <div class="cuestionario" style="display: flex; gap: 10px;">
+                    <label>
+                        <input type="radio" name="valoracion" value="1"> 1 = Nunca (No)
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="2"> 2 = Casi nunca
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="3"> 3 = Casi siempre
+                    </label>
+                    <label>
+                        <input type="radio" name="valoracion" value="4"> 4 = Siempre (Sí)
+                    </label>
+                </div>
+            </div>
+    <div id="botonEnvio">
+        <button type="button" class="btn btn-success">Guardar</button>
+    </div>
+</form>
+
+
+
+
+{% endblock %}

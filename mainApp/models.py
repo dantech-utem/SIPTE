@@ -51,19 +51,15 @@ class AtencionIndividual(models.Model):
     bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE)
     
 class Canalizacion(models.Model):
-    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
+    #estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    #atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
     area = models.CharField(max_length=150)
     observaciones = models.TextField()
     motivo = models.TextField()
-    detalles = models.TextField()
+    detalles = models.TextField(null=True)
     fecha = models.DateTimeField(auto_now_add=True)
     FechaInicio = models.DateTimeField(null=True)
     FechaFinal = models.DateTimeField(null=True)
-    estadoCanalizados = models.IntegerField()
+    estadoCanalizados = models.IntegerField(default=1)
     
-class Canalizar(models.Model):
-    area = models.CharField( max_length=150)
-    motivo = models.TextField()
-    observaciones = models.TextField()
-    fecha = models.DateTimeField(auto_now_add=True)
     

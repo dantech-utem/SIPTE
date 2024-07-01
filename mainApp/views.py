@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Canalizacion, BajaAlumnos,Canalizar
+from .models import Canalizacion, BajaAlumnos
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
@@ -81,8 +81,8 @@ def canalizacionFormCanalizarAlumno(request):
       observaciones = request.POST['observaciones']
       motivo = request.POST['motivo']
       # Crear un nuevo registro en la base de datos
-      canalizacion  = Canalizar.objects.create(area=area, observaciones=observaciones, motivo=motivo)
-      canalizacion.save()
+      Canalizar  = Canalizacion.objects.create(area=area, observaciones=observaciones, motivo=motivo)
+      Canalizar.save()
       # Redirigir a una página de éxito o de lista después de la creación
       return redirect('Dashboard')
    #TERMINA CRUD CANALIZAR CANALIZACION

@@ -67,4 +67,5 @@ class Canalizar(models.Model):
     area = models.CharField( max_length=150)
     motivo = models.TextField()
     observaciones = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
     

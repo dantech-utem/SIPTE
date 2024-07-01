@@ -41,8 +41,6 @@ class BajaAlumnos(models.Model):
     observaciones = models.TextField()
     motivo = models.TextField()
     fecha = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return self.tipo
 
 class AtencionIndividual(models.Model):
     estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
@@ -59,8 +57,8 @@ class Canalizacion(models.Model):
     motivo = models.TextField()
     detalles = models.TextField()
     fecha = models.DateTimeField(auto_now_add=True)
-    FechaInicio = models.DateTimeField()
-    FechaFinal = models.DateTimeField()
+    FechaInicio = models.DateTimeField(null=True)
+    FechaFinal = models.DateTimeField(null=True)
     estadoCanalizados = models.IntegerField()
     
 class Canalizar(models.Model):

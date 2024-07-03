@@ -1,0 +1,35 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mb-4">Avisos</h1>
+    <a href="{% url 'registro' %}" type="button" class="btn btn-success">Agregar</a><br><br>
+    <div class="table-responsive">
+      <table id="avisosTable" class="table table-striped" style="width:100%">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- datos de prueba -->
+          <tr>
+            <td>Aviso de prueba</td>
+            <td>Descripción del aviso de prueba</td>
+            <td>2024-06-01</td>
+            <td>2024-06-30</td>
+            <td>
+              <a href="{% url 'editar' %}" class="btn btn-warning btn-sm">Editar</a>
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

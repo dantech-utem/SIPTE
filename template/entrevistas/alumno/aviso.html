@@ -1,0 +1,46 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<!-- contenido -->
+<div class="container">
+  <h1 class="mb-4">Avisos</h1>
+  <div class="table-responsive">
+  <table id="avisoAlum" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- datos de pruebaa -->
+      <tr>
+        <td>Aviso de prueba</td>
+        <td>Descripción del aviso de prueba</td>
+        <td>2024-06-01</td>
+        <td>2024-06-30</td>
+      </tr>
+      <tr>
+          <td>Aviso de prueba</td>
+          <td>Descripción del aviso de prueba</td>
+          <td>2024-06-01</td>
+          <td>2024-06-30</td>
+        </tr>
+        <tr>
+          <td>Aviso de prueba</td>
+          <td>Descripción del aviso de prueba</td>
+          <td>2024-06-01</td>
+          <td>2024-06-30</td>
+        </tr>
+    </tbody>
+  </table>
+</div><br><br>
+<h5>No haz respondido la entrevista inicial</h5>
+<a href="{% url 'formulario' %}" type="button" class="btn btn-success">Entrevista Inicial</a>
+
+</div>
+
+{% endblock %}

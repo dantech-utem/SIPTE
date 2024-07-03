@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-
         <meta charset="utf-8">
         <title>Tutorías</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,16 +11,27 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <!-- REFERENCIAS PARA PROYECTO ENTREVISTAS-->
+        <!-- CSS de DataTables -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+        
 
-        <!-- Bootstrap Css -->
-        <link href="/statics/css/bootstrap.min.css" id="bootstrap-style"
-            rel="stylesheet" type="text/css">
-        <!-- Icons Css -->
-        <link href="/statics/css/icons.min.css" rel="stylesheet"
+            <!-- Bootstrap Css -->
+            <link href="/statics/css/bootstrap.min.css" id="bootstrap-style"
+                rel="stylesheet" type="text/css"> 
+            <!-- Icons Css -->
+            <link href="/statics/css/icons.min.css" rel="stylesheet"
             type="text/css">
-        <!-- App Css-->
-        <link href="/statics/css/app.min.css" id="app-style" rel="stylesheet"
-            type="text/css">
+            <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+            <!--  Json Español DataTables -->
+            <link href="/statics/js/Spanish.json" rel="stylesheet">
+            <!-- CSS de entrevistas -->
+            <link href="/statics/css/style.css" rel="stylesheet">
+            <!-- App Css-->
+            <link href="/statics/css/app.min.css" id="app-style" rel="stylesheet"
+                type="text/css">
+            
     </head>
 
     <body class="pace-done sidebar-enable" cz-shortcut-listen="true">
@@ -132,13 +142,29 @@
                                                 id="side-menu">
 
                                                 <li>
-                                                    <a href="#">
+                                                    <a href="#"
+                                                        class="has-arrow">
                                                         <i class="fa-solid fa-clipboard-question"></i>
                                                         <span
                                                             data-key="t-dashboard">Entrevista
                                                             inicial
                                                         </span>
                                                     </a>
+                                                    <ul
+                                                        class="sub-menu mm-collapse"
+                                                        aria-expanded="false">
+                                                        <li><a href="{% url 'aviso'  %}"
+                                                                data-key="t-Aviso">Aviso</a></li>
+                                                        
+                                                        <li><a href="{% url 'resumenresp' %}"
+                                                                data-key="t-Resumen">Resumen</a></li>
+                                                        
+                                                        <li><a href="{% url 'index' %}"
+                                                                    data-key="t-index">Registro de avisos</a></li>
+
+                                                        <li><a href="{% url 'informe' %}"
+                                                                    data-key="t-informe">Informe de respuestas</a></li>     
+                                                    </ul>
                                                 </li>
 
                                                 <li>
@@ -306,8 +332,7 @@
 
         </div>
         <script src="/statics/libs/jquery/jquery.min.js"></script>
-        <script
-            src="/statics/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/statics/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="/statics/libs/metismenu/metisMenu.min.js"></script>
         <script src="/statics/libs/simplebar/simplebar.min.js"></script>
         <script src="/statics/libs/node-waves/waves.min.js"></script>
@@ -318,8 +343,14 @@
             src="/statics/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
         <script
             src="/statics/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+        <!-- JS de DataTables -->
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+        <!-- JS Español DataTables De Informe,Index y avisos alumno -->
+        <script src="/statics/js/lenguaje.js"></script>
         <script src="/statics/js/pages/dashboard.init.js"></script>
         <script src="/statics/js/app.js"></script>
+        
         <svg id="SvgjsSvg1401" width="2" height="0"
             xmlns="http://www.w3.org/2000/svg" version="1.1"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -328,4 +359,8 @@
                 id="SvgjsDefs1402"></defs><polyline id="SvgjsPolyline1403"
                 points="0,0"></polyline><path id="SvgjsPath1404"
                 d="M0 0 "></path></svg>
+       
+         
+  
+        
     </body>

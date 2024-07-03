@@ -11,7 +11,6 @@ urlpatterns = [
     path('agregarActividad', views.agregarActividadTutorial, name='agregarActividad'),
     path('editarActividad/<int:id>/', views.editarActividadTutorial, name='editarActividad'),
     path('infoActividad/<int:id>/', views.infoActividadTutorial, name='infoActividad'),
-    path('evaluarTutor', views.infoEvaluarTutor, name='infoTutor'),
     path('eliminarActividad/<int:id>/', views.eliminarActividadTutorial, name='eliminarActividad'),
     path('atencionIndividual/', views.infoatencionIndividual, name='atencionIndividual'),
     path('atencionIndividual/agregar/', views.agregarAtencionIndividual, name='registrarAtencion'),

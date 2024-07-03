@@ -6,7 +6,7 @@ from openpyxl import Workbook, load_workbook
 from flask import Flask, send_file
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
-from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios
+from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor
 from django.contrib import messages #Importamos para presentar mensajes
 # Create your views here.
 class inicio(View):
@@ -134,8 +134,7 @@ def eliminarAtencionIndividual(request, id):
     messages.success(request, '¡Atención individual eliminada con éxito!')
     return render(request, 'atencionIndividual.html')
 
-def infoEvaluarTutor(request):
-    return render(request, 'evaluarTutor.html') 
+
 
 
 def infoeditarAtencion(request):
@@ -151,7 +150,30 @@ def reportePlanAccion(request):
     return render (request, 'reportePlanAccion.html')
 
 def evaluacionAcTutorial(request):
-    return render (request, 'evaluacionAcTutorial.html')
+        if request.method == 'POST':
+            estudiante = request.user  # Asignar el estudiante actual (suponiendo que esté autenticado)
+            evaluacion = EvaluacionTutor(
+                estudiante=estudiante,
+                puntualidad=request.POST.get('puntualidad'),
+                proposito=request.POST.get('proposito'),
+                planTrabajo=request.POST.get('planTrabajo'),
+                temasPrevistos=request.POST.get('temasPrevistos'),
+                temasInteres=request.POST.get('temasInteres'),
+                disposicionTutor=request.POST.get('disposicionTutor'),
+                cordialidad=request.POST.get('cordialidad'),
+                orientacion=request.POST.get('orientacion'),
+                dominio=request.POST.get('dominio'),
+                impacto=request.POST.get('impacto'),
+                serviciosApoyo=request.POST.get('serviciosApoyo'),
+            )
+            
+            evaluacion.save()
+            messages.success(request, '¡Encuesta guardada con éxito!')
+            return redirect( 'evaluacionAcTutorial.html')
+
+        # Si es un método GET o cualquier otro, simplemente renderizar el formulario
+        return render(request, 'evaluacionAcTutorial.html')
+
 
 #Codigo orientado a libreria openpyxl
 

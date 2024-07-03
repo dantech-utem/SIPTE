@@ -64,3 +64,14 @@ function confirmarEliminacion() {
       }, 5000); // 5 segundos antes de desvanecerse
     });
   });
+
+  const fechaParagraph = document.getElementById('fecha');
+  const today = new Date();
+
+  const day = today.getDate();
+  const month = today.toLocaleString('default', { month: 'long' });
+  const year = today.getFullYear();
+
+  const displayDate = `${day} de ${month} de ${year}`;
+
+  fechaParagraph.textContent = displayDate;

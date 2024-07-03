@@ -31,10 +31,22 @@ class Evidencia(models.Model):
     evidencia = models.FileField(upload_to='evidenciaAccionTutorial/')
     accionRutorial = models.ForeignKey(AccionTutorial, on_delete=models.CASCADE)
     
+
+respuestas=[1,'Nunca'],[2,'Casi nunca'],[3,'Casi siempre'],[4,'Siempre']
 class EvaluacionTutor(models.Model):
-    estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    estudiante = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     fecha = models.DateTimeField(auto_now_add=True)
-    respuestaUno = models.IntegerField() 
+    puntualidad = models.IntegerField(choices=respuestas,default=4)
+    proposito = models.IntegerField(choices=respuestas,default=4)
+    planTrabajo = models.IntegerField(choices=respuestas,default=4)
+    temasPrevistos = models.IntegerField(choices=respuestas,default=4)
+    temasInteres = models.IntegerField(choices=respuestas,default=4)
+    disposicionTutor = models.IntegerField(choices=respuestas,default=4)
+    cordialidad = models.IntegerField(choices=respuestas,default=4)
+    orientacion = models.IntegerField(choices=respuestas,default=4)
+    dominio = models.IntegerField(choices=respuestas,default=4)
+    impacto = models.IntegerField(choices=respuestas,default=4)
+    serviciosApoyo = models.IntegerField(choices=respuestas,default=4)
 
 class BajaAlumnos(models.Model):
     tipo = models.CharField(max_length=100)

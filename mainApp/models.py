@@ -50,7 +50,7 @@ class AtencionIndividual(models.Model):
     bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE)
 
 class Canalizacion(models.Model):
-    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
+    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE, null=True)
     area = models.CharField(max_length=150)
     observaciones = models.TextField()
     motivo = models.TextField()

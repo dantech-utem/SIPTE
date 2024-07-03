@@ -36,7 +36,6 @@ class EvaluacionTutor(models.Model):
     respuestaUno = models.IntegerField() 
 
 class BajaAlumnos(models.Model):
-    id = models.AutoField(primary_key=True)
     tipo = models.CharField(max_length=100)
     observaciones = models.TextField()
     motivo = models.TextField()
@@ -49,17 +48,16 @@ class AtencionIndividual(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     estado = models.IntegerField() 
     bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE)
-    
+
 class Canalizacion(models.Model):
-    #estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
-    #atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
+    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
     area = models.CharField(max_length=150)
     observaciones = models.TextField()
     motivo = models.TextField()
     detalles = models.TextField(null=True)
     fecha = models.DateTimeField(auto_now_add=True)
+    estadoCanalizados = models.IntegerField(default=1)
+    titulo = models.CharField(max_length=100, null=True)
+    descripcion = models.TextField(null=True)
     FechaInicio = models.DateTimeField(null=True)
     FechaFinal = models.DateTimeField(null=True)
-    estadoCanalizados = models.IntegerField(default=1)
-    
-    

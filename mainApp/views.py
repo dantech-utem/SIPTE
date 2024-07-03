@@ -153,6 +153,7 @@ def evaluacionAcTutorial(request):
     nombre_maestro = None  # Inicializar la variable nombre_maestro
     estudiante = request.user
     grupo_estudiante = estudiante.usuarios.grupo
+    
 
     maestro = Usuarios.objects.filter(
                 tipo__tipo='tutor',  # Ajusta según tu modelo TipoUsuario
@@ -163,7 +164,23 @@ def evaluacionAcTutorial(request):
                 nombre_maestro = maestro.User.get_full_name()
     else:
                 nombre_maestro = "Tutor no encontrado"  # Manejo de caso sin maestro
-                
+     
+    periodo_activo = Periodo.objects.filter(estado=True).first()
+
+    if not periodo_activo:
+            messages.error(request, 'No hay un período activo disponible.')
+            return render(request, 'evaluacionAcTutorial.html')
+
+        # Verificar si el usuario ya ha contestado la encuesta para el período activo
+    evaluacion_existente = EvaluacionTutor.objects.filter(
+            estudiante=estudiante,
+            cicloEvaluacion=periodo_activo
+        ).exists()
+
+    if evaluacion_existente:
+            messages.error(request, 'Ya has contestado la encuesta previamente.')
+            return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
+                   
     if request.method == 'POST':
         # Guardar la evaluación del tutor
         evaluacion = EvaluacionTutor(
@@ -178,10 +195,15 @@ def evaluacionAcTutorial(request):
             orientacion=request.POST.get('orientacion'),
             dominio=request.POST.get('dominio'),
             impacto=request.POST.get('impacto'),
-            serviciosApoyo=request.POST.get('serviciosApoyo')
+            serviciosApoyo=request.POST.get('serviciosApoyo'),
+            cicloEvaluacion=periodo_activo
             
         )
-        evaluacion.save()
+        if evaluacion_existente:
+            messages.error(request, 'Ya has contestado la encuesta previamente.')
+            return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
+        else:
+            evaluacion.save()
 
 
         messages.success(request, '¡Encuesta guardada con éxito!')

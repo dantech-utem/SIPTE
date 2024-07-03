@@ -150,30 +150,45 @@ def reportePlanAccion(request):
     return render (request, 'reportePlanAccion.html')
 
 def evaluacionAcTutorial(request):
-        if request.method == 'POST':
-            estudiante = request.user  # Asignar el estudiante actual (suponiendo que esté autenticado)
-            evaluacion = EvaluacionTutor(
-                estudiante=estudiante,
-                puntualidad=request.POST.get('puntualidad'),
-                proposito=request.POST.get('proposito'),
-                planTrabajo=request.POST.get('planTrabajo'),
-                temasPrevistos=request.POST.get('temasPrevistos'),
-                temasInteres=request.POST.get('temasInteres'),
-                disposicionTutor=request.POST.get('disposicionTutor'),
-                cordialidad=request.POST.get('cordialidad'),
-                orientacion=request.POST.get('orientacion'),
-                dominio=request.POST.get('dominio'),
-                impacto=request.POST.get('impacto'),
-                serviciosApoyo=request.POST.get('serviciosApoyo'),
-            )
+    nombre_maestro = None  # Inicializar la variable nombre_maestro
+    estudiante = request.user
+    grupo_estudiante = estudiante.usuarios.grupo
+
+    maestro = Usuarios.objects.filter(
+                tipo__tipo='tutor',  # Ajusta según tu modelo TipoUsuario
+                grupo=grupo_estudiante
+            ).first()
+
+    if maestro:
+                nombre_maestro = maestro.User.get_full_name()
+    else:
+                nombre_maestro = "Tutor no encontrado"  # Manejo de caso sin maestro
+                
+    if request.method == 'POST':
+        # Guardar la evaluación del tutor
+        evaluacion = EvaluacionTutor(
+            estudiante=estudiante,
+            puntualidad=request.POST.get('puntualidad'),
+            proposito=request.POST.get('proposito'),
+            planTrabajo=request.POST.get('planTrabajo'),
+            temasPrevistos=request.POST.get('temasPrevistos'),
+            temasInteres=request.POST.get('temasInteres'),
+            disposicionTutor=request.POST.get('disposicionTutor'),
+            cordialidad=request.POST.get('cordialidad'),
+            orientacion=request.POST.get('orientacion'),
+            dominio=request.POST.get('dominio'),
+            impacto=request.POST.get('impacto'),
+            serviciosApoyo=request.POST.get('serviciosApoyo')
             
-            evaluacion.save()
-            messages.success(request, '¡Encuesta guardada con éxito!')
-            return redirect( 'evaluacionAcTutorial.html')
+        )
+        evaluacion.save()
 
-        # Si es un método GET o cualquier otro, simplemente renderizar el formulario
-        return render(request, 'evaluacionAcTutorial.html')
 
+        messages.success(request, '¡Encuesta guardada con éxito!')
+        return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
+
+    # Si es un método GET o cualquier otro, simplemente renderizar el formulario
+    return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
 
 #Codigo orientado a libreria openpyxl
 

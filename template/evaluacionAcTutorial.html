@@ -9,11 +9,11 @@ Evaluar al tutor
     <h3 class="titulos">Evaluar Actividad Tutorial</h3>
 </center>
 <br>
-<form action=""> {% csrf_token %}
+<form action="" method="post"> {% csrf_token %}
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <label for="Tutor">Nombre del tutor:</label>
+                <label for="Tutor">Nombre del tutor: {{nombre_maestro}}</label>
             </div>
             <div class="col-4">
                 <label for="Fecha">Fecha:</label>
@@ -23,7 +23,7 @@ Evaluar al tutor
 
         <div class="row ">
             <div class="col">
-                <label for="Alumno">Nombre del alumno:</label>
+                <label for="Alumno">Nombre del alumno: {{ user.get_full_name }}</label>
             </div>
         </div>
     </div>
@@ -240,7 +240,7 @@ Evaluar al tutor
                         </div>
                     </div>
                     <div id="botonEnvio">
-                        <button type="button" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
 
                 </div>
@@ -251,6 +251,27 @@ Evaluar al tutor
 </form>
 
 
-
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5;">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "success" %}
+          <div id="box" class="alert alert-success alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% elif message.tags == "error" %}
+          <div id="box" class="alert alert-danger alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% else %}
+          <div id="box" class="alert alert-warning alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+</div>
 
 {% endblock %}

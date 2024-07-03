@@ -47,6 +47,7 @@ class EvaluacionTutor(models.Model):
     dominio = models.IntegerField(choices=respuestas,default=4)
     impacto = models.IntegerField(choices=respuestas,default=4)
     serviciosApoyo = models.IntegerField(choices=respuestas,default=4)
+    cicloEvaluacion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
 
 class BajaAlumnos(models.Model):
     tipo = models.CharField(max_length=100)
@@ -59,7 +60,7 @@ class AtencionIndividual(models.Model):
     asuntoTratar = models.CharField(max_length=400)
     observaciones = models.CharField(max_length=400)
     fecha = models.DateTimeField(auto_now_add=True)
-    estado = models.IntegerField(blank=True, null=True) 
+    estado = models.IntegerField(default = 1) 
     bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE, null=True, blank=True)
 
     

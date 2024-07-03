@@ -197,7 +197,6 @@ def evaluacionAcTutorial(request):
             impacto=request.POST.get('impacto'),
             serviciosApoyo=request.POST.get('serviciosApoyo'),
             cicloEvaluacion=periodo_activo
-            
         )
         if evaluacion_existente:
             messages.error(request, 'Ya has contestado la encuesta previamente.')

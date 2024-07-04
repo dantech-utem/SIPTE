@@ -16,13 +16,12 @@
         <!-- Contenido -->
         <div class="container" id="main">
             <div class="sign-up">
-                <form action="{% url 'login_sso' %}" method="post" class="login-sso" id="loginForm">
+                <form action="/login_sso/" method="post" class="login-sso" id="loginForm" >
                     <img src="../statics/assets/img/logo_login.png" alt="Logo" class="logo-login-sso">
-                
-                    <input type="email" name="email" placeholder="Email" required class="inputs-login" id="emailSSO" readonly>
+                    <input type="email" name="email2" placeholder="Email" required class="inputs-login" id="emailSSO" readonly>
                     <input type="password" name="pswd" placeholder="Password" required class="inputs-login" id="password">
                     <button type="submit" class="botones-login" id="signIn">Iniciar sesión</button>
-                    <div class="botones-login" id="boton-regreso">Regreso</div>
+                    <div class="boton-regreso" id="boton-regreso">¿No eres tu?</div>
                     {% csrf_token %}
                 </form>
                 
@@ -31,9 +30,9 @@
                 <div class="login-principal">
                     <h1 class="titulo-login">Iniciar sesión</h1>
                     <input type="email" name="email" placeholder="Email"
-                        required class="inputs-login" id="email" value="{{ Email }}">
+                        required class="inputs-login" id="email" value="{{ email }}">
                     <!-- <a href="#" class="txt-a">Forget your passowrd?</a> -->
-                    <button class="botones-login" id="signUp">Iniciars
+                    <button class="botones-login" id="signUp">Iniciar
                         sesión</button>
                         <div id="error-container" class="col-lg-3">
                             {% if Error %}
@@ -53,7 +52,6 @@
                         <p class="texto-login">Nos da gusto que estés aquí con
                             nosotros. Ahora, por favor, ingresa tu correo
                             electrónico y tu contraseña.</p>
-
                     </div>
                     <div class="overlay-right">
                         <img src="../statics/assets/img/logo-utem.png" alt

@@ -9,7 +9,8 @@ class Usuarios(models.Model):
     noControl = models.CharField(max_length=20)
     tipo = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
     grupo = models.CharField(max_length=20)
-    
+    token = models.CharField(max_length=225, blank=True, null=True)  # Campo para almacenar el token
+
 class Periodo(models.Model):
     periodo = models.CharField(max_length=100)   
     anio = models.IntegerField() 

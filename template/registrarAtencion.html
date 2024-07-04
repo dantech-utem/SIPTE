@@ -13,12 +13,20 @@ Registro de atención individual
           <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <div class="input-group">
-              <select class="form-control" id="nombre" name="estudiante" required>
+              <!-- <select class="form-control" id="nombre" name="estudiante" required>
                 {% for estudiante in estudiantes %}
                 <option value="{{ estudiante.id }}">{{ estudiante.noControl }} - {{ estudiante.User }}</option>
                 {% endfor %}
-              </select>
+              </select> -->
               
+              <select id="selectid" style="width: 100%;" class="form-control form-control-sm" required>
+                <option value="" selected disabled>Seleccione un estudiante</option>
+                {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante.noControl }} - {{ estudiante.User }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="hidden" id="estudianteAtencion" name="estudianteAtencion" >
             </div>
           </div>
           <div class="mb-3">
@@ -40,4 +48,6 @@ Registro de atención individual
     </form>
   </div>
 </div>
+
+
 {% endblock %}

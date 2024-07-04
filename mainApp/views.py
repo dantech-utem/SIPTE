@@ -27,7 +27,7 @@ def eliminarActividadTutorial(request,id):
     actividad = get_object_or_404(AccionTutorial, id=id)
     actividad.delete()
     messages.success(request, '¡Actividad eliminada!')
-    return render(request, 'actividadTutorial.html')  
+    return redirect('actividadTutorial')
 
 def agregarActividadTutorial(request):
     if request.method == 'POST':
@@ -92,8 +92,11 @@ def infoatencionIndividual(request):
     return render(request, 'atencionIndividual.html', {"atenciones": atenciones})
 
 def agregarAtencionIndividual(request):
+            
+    tutor = request.user
+    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
     if request.method == 'POST':
-        estudiante_id = request.POST.get('estudiante')
+        estudiante_id = request.POST.get('estudianteAtencion')
         asuntoTratar = request.POST.get('asuntoTratar')
         observaciones = request.POST.get('observaciones')
         
@@ -108,7 +111,7 @@ def agregarAtencionIndividual(request):
         messages.success(request, '¡Atención individual registrada con éxito!')
         return redirect('atencionIndividual')
 
-    estudiantes = Usuarios.objects.all()
+
     return render(request, 'registrarAtencion.html', {'estudiantes': estudiantes})
 
 
@@ -132,7 +135,7 @@ def eliminarAtencionIndividual(request, id):
     atencion = get_object_or_404(AtencionIndividual, id=id)
     atencion.delete()
     messages.success(request, '¡Atención individual eliminada con éxito!')
-    return render(request, 'atencionIndividual.html')
+    return redirect('atencionIndividual')
 
 
 

@@ -25,6 +25,7 @@ $('#actividadTutorial').DataTable({
 
 
 
+
 function confirmarEliminacion() {
     if (confirm("¿Desea borrar la actividad?")) {
       return true; // Permite que se complete la acción
@@ -75,3 +76,7 @@ function confirmarEliminacion() {
   const displayDate = `${day} de ${month} de ${year}`;
 
   fechaParagraph.textContent = displayDate;
+
+
+
+  

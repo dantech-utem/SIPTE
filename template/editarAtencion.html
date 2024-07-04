@@ -13,12 +13,15 @@
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <div class="input-group">
-                            <select class="form-select" id="nombre" name="estudiante" required>
+
+                            <select id="selectid" style="width: 100%;" class="form-control form-control-sm" required>
                                 {% for estudiante in estudiantes %}
                                 <option value="{{ estudiante.id }}" {% if atencion.estudiante.id == estudiante.id %}selected{% endif %}>
                                     {{ estudiante.noControl }} - {{ estudiante.User }}</option>
                                 {% endfor %}
                             </select>
+                
+                            <input type="hidden" id="estudianteAtencion" name="estudianteAtencion" >
                         </div>
                     </div>
                     <div class="mb-3">

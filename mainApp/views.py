@@ -119,9 +119,11 @@ def agregarAtencionIndividual(request):
 
 def editarAtencionIndividual(request, id):
     atencion = get_object_or_404(AtencionIndividual, id=id)
-
+    tutor = request.user
+    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+    
     if request.method == 'POST':
-        estudiante_id = request.POST.get('estudiante')
+        estudiante_id = request.POST.get('estudianteAtencion')
         atencion.estudiante_id = estudiante_id  
         atencion.asuntoTratar = request.POST.get('asuntoTratar')
         atencion.observaciones = request.POST.get('observaciones')
@@ -130,7 +132,6 @@ def editarAtencionIndividual(request, id):
         messages.success(request, '¡Atención individual editada con éxito!')
         return redirect('editarAtencion', id=atencion.id)
 
-    estudiantes = Usuarios.objects.all()
     return render(request, 'editarAtencion.html', {'atencion': atencion, 'estudiantes': estudiantes})
 
 def eliminarAtencionIndividual(request, id):

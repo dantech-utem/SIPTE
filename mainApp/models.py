@@ -18,12 +18,12 @@ class Periodo(models.Model):
     anio = models.IntegerField() 
 
 class AccionTutorial(models.Model):
-    tema = models.CharField(max_length=100)
-    objetivos = models.CharField(max_length=400)
-    actividades = models.CharField(max_length=400)
-    recursos = models.CharField(max_length=400)
-    tutor = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
-    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    tema = models.CharField(max_length=100, null=True)
+    objetivos = models.CharField(max_length=400, null=True)
+    actividades = models.CharField(max_length=400, null=True)
+    recursos = models.CharField(max_length=400, null=True)
+    tutor = models.ForeignKey(Usuarios, on_delete=models.CASCADE, null=True)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
     cierreTutorias= models.TextField()
     
 class Evidencia(models.Model):

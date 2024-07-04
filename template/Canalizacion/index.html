@@ -28,10 +28,11 @@
             </tr>
         </thead>
         <tbody>
+            {% for x in TablaDashboard %}
             <tr style="background-color: rgb(121, 154, 255);">
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
+                <td>{{ x.nombre }}</td>
+                <td>{{ x.apellidos }}</td>
+                <td>{{ x.no_de_control }}</td>
                 <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
                             class="fa-solid fa-clipboard-user"></i>Expediente</a>
                     <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
@@ -39,61 +40,7 @@
                             class="fa-solid fa-bezier-curve"></i>Canalizar</a>
                 </td>
             </tr>
-            <tr style="background-color: rgb(255, 121, 121);">
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
-                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnAlta" href="#"><i class="fa-solid fa-user-check"></i>Alta</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
-                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
-                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872 <h1 style="display: none;">a</h1>
-                </td>
-                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
-                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
-                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
-                            class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 

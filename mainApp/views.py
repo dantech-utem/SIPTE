@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Canalizacion, BajaAlumnos
+from .models import Canalizacion, BajaAlumnos, AccionTutorial,Usuarios,AtencionIndividual
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
@@ -63,14 +63,10 @@ def canalizacionBajaAlumno(request):
       tipo = request.POST['tipo']
       observaciones = request.POST['observaciones']
       motivo = request.POST['motivo']
-      # Crear un nuevo registro en la base de datos
       Baja  = BajaAlumnos.objects.create(tipo=tipo, observaciones=observaciones, motivo=motivo)
       Baja.save()
-      # Redirigir a una página de éxito o de lista después de la creación
       return redirect('Dashboard')
-   #TERMINA CRUD BAJAS CANALIZACION
    
-   #CRUD CANALIZAR CANALIZACION
 class canalizacionFormCanalizar(View):
    def get(self, request):
       return render(request,'Canalizacion/formCanalizar.html')
@@ -80,17 +76,22 @@ def canalizacionFormCanalizarAlumno(request):
       area = request.POST['area']
       observaciones = request.POST['observaciones']
       motivo = request.POST['motivo']
-      # Crear un nuevo registro en la base de datos
       Canalizar  = Canalizacion.objects.create(area=area, observaciones=observaciones, motivo=motivo)
       Canalizar.save()
-      # Redirigir a una página de éxito o de lista después de la creación
       return redirect('Dashboard')
-   #TERMINA CRUD CANALIZAR CANALIZACION
    
 class canalizacionFormCerrarTutorias(View):
    def get(self, request):
       return render(request,'Canalizacion/formCerrarTutorias.html')
    
+def cerrarTurorias(request):
+   if request.method == "POST":
+      cierreTutorias = request.POST['cierreTutorias']
+      cierre  = AccionTutorial.objects.create(cierreTutorias=cierreTutorias)
+      cierre.save()
+      return redirect('Dashboard')
+     
+     
 class canalizacionReportes(View):
    def get(self, request):
       return render(request,'Canalizacion/reportes.html')
@@ -98,3 +99,11 @@ class canalizacionReportes(View):
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):
       return render(request,'Canalizacion/resultadosCanalizacion.html')
+
+class canalizacion_view(View):
+   def get(request):
+      TablaDashboard = Usuarios.objects.all()
+      context = {
+         'TablaDashboard': TablaDashboard
+      } 
+      return render(request, 'Dashboard', context)

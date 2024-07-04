@@ -97,7 +97,6 @@ def agregarAtencionIndividual(request):
         asuntoTratar = request.POST.get('asuntoTratar')
         observaciones = request.POST.get('observaciones')
         
-
         # Crear la instancia de AtencionIndividual
         AtencionIndividual.objects.create(
             estudiante_id=estudiante_id,
@@ -108,7 +107,10 @@ def agregarAtencionIndividual(request):
         messages.success(request, '¡Atención individual registrada con éxito!')
         return redirect('atencionIndividual')
 
-    estudiantes = Usuarios.objects.all()
+    # Filtrar estudiantes que pertenecen al grupo del tutor actual y que son de tipo 'estudiante'
+    tutor = request.user
+    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+    
     return render(request, 'registrarAtencion.html', {'estudiantes': estudiantes})
 
 

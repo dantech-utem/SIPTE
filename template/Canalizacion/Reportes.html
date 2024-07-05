@@ -43,48 +43,19 @@
                 </tr>
             </thead>
             <tbody>
+                {% for reporte in reportes_data %}
                 <tr style="background-color: rgb(173, 173, 173);">
-                    <td>Psicologia</td>
-                    <td>Carlos Antonio</td>
-                    <td>Hernández Sandoval</td>
-                    <td>20210872</td>
-                    <td>Problemas personales</td>
-                    <td>Se nota distante con sus compañero</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores magnam officiis voluptates
-                        architecto illo incidunt sed maxime velit? Nobis perferendis minus harum quod corporis
-                        necessitatibus aut tenetur iusto accusantium velit!</td>
-                    <td>08/06/2024</td>
-                    <td><a class="btnReportesIcon" href="#"><i
-                                class="fa-solid fa-file-pdf"></i></td>
+                    <td>{{ reporte.area }}</td>
+                    <td>{{ reporte.nombre }}</td>
+                    <td>{{ reporte.apellidos }}</td>
+                    <td>{{ reporte.no_control }}</td>
+                    <td>{{ reporte.asunto_atencion }}</td>
+                    <td>{{ reporte.observaciones }}</td>
+                    <td>{{ reporte.detalles }}</td>
+                    <td>{{ reporte.fecha }}</td>
+                    <td><a class="btnReportesIcon" href="#"><i class="fa-solid fa-file-pdf"></i></a></td>
                 </tr>
-                <tr style="background-color: rgb(173, 173, 173);">
-                    <td>Becas</td>
-                    <td>Carlos Antonio</td>
-                    <td>Hernández Sandoval</td>
-                    <td>20210872</td>
-                    <td>Problema monetario</td>
-                    <td>Llega tarde por motivos de dinero</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam quidem beatae unde. Assumenda
-                        repudiandae tenetur aspernatur similique ad neque, iste sit harum aliquam repellendus eligendi
-                        corporis quisquam fugit velit. Soluta.</td>
-                    <td>08/06/2024</td>
-                    <td><a class="btnReportesIcon" href="#"><i
-                                class="fa-solid fa-file-pdf"></i></td>
-                </tr>
-                <tr style="background-color: rgb(173, 173, 173);">
-                    <td>Becas</td>
-                    <td>Carlos Antonio</td>
-                    <td>Hernández Sandoval</td>
-                    <td>20210872</td>
-                    <td>Problema monetario</td>
-                    <td>Llega tarde por motivos de dinero</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, suscipit iusto distinctio
-                        molestiae maxime voluptatibus quod officiis ipsa sint consequuntur, voluptate odit voluptates
-                        nulla soluta ad dolores consectetur eligendi cum?</td>
-                    <td>08/06/2024</td>
-                    <td><a class="btnReportesIcon" href="#"><i
-                                class="fa-solid fa-file-pdf"></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

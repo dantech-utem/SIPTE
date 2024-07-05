@@ -60,4 +60,4 @@ class Canalizacion(models.Model):
     titulo = models.CharField(max_length=100, null=True)
     descripcion = models.TextField(null=True)
     FechaInicio = models.DateTimeField(null=True)
-    FechaFinal = models.DateTimeField(null=True)
+    FechaFinal = models.DateTimeField(null=True)    

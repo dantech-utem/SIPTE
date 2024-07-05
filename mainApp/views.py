@@ -92,8 +92,25 @@ class canalizacionFormCerrarTutorias(View):
       return render(request,'Canalizacion/formCerrarTutorias.html')
    
 class canalizacionReportes(View):
-   def get(self, request):
-      return render(request,'Canalizacion/reportes.html')
+    def get(self, request):
+        canalizaciones = Canalizacion.objects.all().select_related('atencionIndividual', 'atencionIndividual__estudiante')
+        
+        reportes_data = []
+        for canalizacion in canalizaciones:
+            reportes_data.append({
+                'area': canalizacion.area,
+                'nombre': canalizacion.atencionIndividual.estudiante.nombre,
+                'apellidos': canalizacion.atencionIndividual.estudiante.apellido,
+                'no_control': canalizacion.atencionIndividual.estudiante.noControl,
+                'asunto_atencion': canalizacion.motivo,
+                'observaciones': canalizacion.observaciones,
+                'detalles': canalizacion.detalles,
+                'fecha': canalizacion.atencionIndividual.fecha,
+            })
+        
+        context = {'reportes_data': reportes_data}
+        
+        return render(request, 'Canalizacion/reportes.html', context)
    
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):

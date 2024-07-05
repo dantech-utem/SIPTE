@@ -427,7 +427,7 @@ i{
     height: 3em;
 }
 
-.btnCompletarSesion, .btnConsultarSesion {
+.btnCompletarSesion, .btnConsultarSesion, .btnCalendarioSesion{
     display: inline-block;
     white-space: nowrap; 
     font-size: 0.9em;
@@ -446,6 +446,14 @@ i{
 
 .btnCompletarSesion:hover {
     background-color: #007b1b;
+}
+
+.btnCalendarioSesion {
+    background-color: #ffe046;
+}
+
+.btnCalendarioSesion:hover {
+    background-color: #d6c808;
 }
 
 .btnConsultarSesion {

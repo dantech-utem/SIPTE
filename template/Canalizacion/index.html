@@ -12,7 +12,9 @@
     </nav>
 
     <div class="encabezadoCanalizacion">
-        <h3>8-IDG-1</h3>
+        
+        <h3>{{TablaViews.grupoEstudiante}}</h3>
+        
         <h3>Enero-Abril 2024</h3>
         <a class="btnCerrarTutorias" href="{% url 'FormCerrarTutorias' %}"><i class="fa-solid fa-lock"></i>Cerrar
             tutorias</a>
@@ -28,11 +30,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for x in TablaDashboard %}
-            <tr style="background-color: rgb(121, 154, 255);">
-                <td>{{ x.nombre }}</td>
-                <td>{{ x.apellidos }}</td>
-                <td>{{ x.no_de_control }}</td>
+            {% for x in TablaViews %}
+            <!--cambiar  x.estadoCanalizados/x.estado seguen el estado que ocupemes ya sea canalizacion o usuarios-->
+            <tr {% if x.estadoCanalizados == 1 %} style="background-color: rgb(121, 154, 255);" 
+            {% elif x.estadoCanalizados == 2 %} style="background-color: rgb(255, 121, 121);"
+            {% else %} {% endif %}>
+                <td>{{ x.nombreEstudiante }}</td>
+                <td>{{ x.apellidosEstudiante }}</td>
+                <td>{{ x.noControlEstudiante }}</td>
                 <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
                             class="fa-solid fa-clipboard-user"></i>Expediente</a>
                     <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>

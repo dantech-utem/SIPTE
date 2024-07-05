@@ -3,6 +3,8 @@ from .models import Canalizacion, BajaAlumnos, AccionTutorial,Usuarios,AtencionI
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
+from django.db.models import Count, F, Value
+
 
 # Create your views here.
 class inicio(View):
@@ -53,7 +55,6 @@ class canalizacionExpedientes(View):
    def get(self, request):
       return render(request,'Canalizacion/expediente.html')
    
-   #CRUD BAJAS CANALIZACION
 class canalizacionBajas(View):
    def get(self, request):
       return render(request,'Canalizacion/formBaja.html')
@@ -100,10 +101,45 @@ class canalizacionResultadosCanalizacion(View):
    def get(self, request):
       return render(request,'Canalizacion/resultadosCanalizacion.html')
 
-class canalizacion_view(View):
-   def get(request):
-      TablaDashboard = Usuarios.objects.all()
+class canalizacionIndex(View):
+   def get(self, request):
+      TablaViews = Canalizacion.objects.all().annotate(
+         estadoEstudiante = F('atencionIndividual__estudiante__estado'),
+         nombreEstudiante = F('atencionIndividual__estudiante__nombre'),
+         apellidosEstudiante = F('atencionIndividual__estudiante__apellido'),
+         noControlEstudiante = F('atencionIndividual__estudiante__noControl'),
+         grupoEstudiante = F('atencionIndividual__estudiante__grupo'),
+      )
       context = {
-         'TablaDashboard': TablaDashboard
+         'TablaViews': TablaViews
       } 
-      return render(request, 'Dashboard', context)
+      return render(request, 'Canalizacion/index.html', context)
+   
+class canalizacionExpedientes(View):
+   def get(self, request):
+      TablaExpedientes = Canalizacion.objects.all().annotate(
+         observacionesIndividual = F('atencionIndividual__observaciones'),
+         asuntoTratarIndividual = F('atencionIndividual__asuntoTratar'),
+         fechaIndividual = F('atencionIndividual__fecha'),
+      )
+      context = {
+         'TablaExpedientes': TablaExpedientes,
+      }
+      return render(request, 'Canalizacion/expediente.html', context)
+   
+class canalizacionResultadosCanalizacion(View):
+   def get(self, request):
+      TablaResultados = Canalizacion.objects.all().annotate(
+         estadoEstudiante = F('atencionIndividual__estudiante__estado'),
+         nombreEstudiante = F('atencionIndividual__estudiante__nombre'),
+         apellidosEstudiante = F('atencionIndividual__estudiante__apellido'),
+         noControlEstudiante = F('atencionIndividual__estudiante__noControl'),
+         grupoEstudiante = F('atencionIndividual__estudiante__grupo'),
+         fechaIndividual = F('atencionIndividual__fecha'),
+         
+      )
+      context = {
+         'TablaResultados': TablaResultados
+      } 
+      return render(request, 'Canalizacion/resultadosCanalizacion.html', context)
+      

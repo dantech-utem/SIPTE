@@ -19,5 +19,4 @@ urlpatterns = [
     path('Reportes', canalizacionReportes.as_view(), name="Reportes"),
     path('ResultadosCanalizacion', canalizacionResultadosCanalizacion.as_view(), name="ResultadosCanalizacion"),
     path("cerrarTurorias/" , views.cerrarTurorias,name="cerrarTurorias"),
-    path('canalizacion/', canalizacion_view.as_view(), name='canalizacion'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -38,36 +38,14 @@
                 </tr>
             </thead>
             <tbody>
+                {% for x in TablaExpedientes %}
                 <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
+                    <td>{{x.area}}</td>
+                    <td>{{x.observacionesIndividual}}</td>
+                    <td>{{x.asuntoTratarIndividual}}</td>
+                    <td>{{x.fechaIndividual}}</td>
                 </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, similique!</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
 
@@ -86,31 +64,13 @@
                 </tr>
             </thead>
             <tbody>
+                {% for x in TablaExpedientes %}
                 <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
+                    <td>{{x.area}}</td>
+                    <td>{{x.detalles}}</td>
+                    <td>{{x.fecha}}</td>
                 </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
-                <tr>
-                    <td>Psicología</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque, blanditiis!</td>
-                    <td>12/03/2024</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
 

@@ -12,6 +12,7 @@ class Usuarios(models.Model):
     contrasena = models.CharField(max_length=100)
     tipo = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
     grupo = models.CharField(max_length=20)
+    estado = models.IntegerField() 
     
 class Periodo(models.Model):
     periodo = models.CharField(max_length=100)   
@@ -46,7 +47,6 @@ class AtencionIndividual(models.Model):
     asuntoTratar = models.CharField(max_length=400)
     observaciones = models.CharField(max_length=400)
     fecha = models.DateTimeField(auto_now_add=True)
-    estado = models.IntegerField() 
     bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE)
 
 class Canalizacion(models.Model):

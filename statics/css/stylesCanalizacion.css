@@ -155,6 +155,18 @@ i{
     margin-bottom: 1em;
 }
 
+.formInput {
+    font-family: Arial;
+    font-size: medium;
+    width: 100%;
+    height: 2em;
+    background-color: #F3F4F6;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #47474746;
+    margin-bottom: 1em;
+}
+
 .labelFormCanalizacion {
     color: #000000;
 }

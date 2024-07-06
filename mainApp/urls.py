@@ -10,6 +10,7 @@ urlpatterns = [
     path('Dashboard', canalizacionIndex.as_view(), name="Dashboard"),
     path('Calendario', canalizacionCalendario.as_view(), name="Calendario"),
     path('CompletarSesion', canalizacionCompletarSesion.as_view(), name="CompletarSesion"),
+    path('formCalendario', formCalendario.as_view(), name="formCalendario"),
     path('Expediente', canalizacionExpedientes.as_view(), name="Expediente"),
     path('FormBaja', canalizacionBajas.as_view(), name="FormBaja"),
     path("canalizacionBajaAlumno/" , views.canalizacionBajaAlumno,name="canalizacionBajaAlumno"),

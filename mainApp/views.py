@@ -51,6 +51,10 @@ class canalizacionCompletarSesion(View):
    def get(self, request):
       return render(request,'Canalizacion/completarSesion.html')
    
+class formCalendario(View):
+   def get(self, request):
+      return render(request,'Canalizacion/formCalendario.html')
+   
 class canalizacionExpedientes(View):
    def get(self, request):
       return render(request,'Canalizacion/expediente.html')

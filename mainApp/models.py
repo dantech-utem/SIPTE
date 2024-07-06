@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class TipoUsuario(models.Model):
@@ -56,3 +57,14 @@ class Canalizacion(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     FechaInicio = models.DateTimeField()
     FechaFinal = models.DateTimeField()
+
+class Aviso(models.Model):
+    idAvisos = models.AutoField(primary_key=True)
+    #id_Usuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='avisos')
+    titulo = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    fechaInicio = models.DateField()
+    fechaFin = models.DateField()
+    
+    def __str__(self):
+        return self.titulo

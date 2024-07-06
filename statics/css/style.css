@@ -1,8 +1,10 @@
-th {
+th{
     background-color: #5AA86C !important; /* Color de fondo verde para los encabezados */
     color: white !important; /* Texto en color blanco para los encabezados */
     text-align: center;
+    vertical-align: middle;
   }
+ 
 
 .table.dataTable{
     text-align: center; /* Centrar el texto en las celdas */

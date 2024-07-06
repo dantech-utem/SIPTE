@@ -12,8 +12,11 @@ urlpatterns = [
     path('resumenresp/', resumenresp.as_view(), name="resumenresp"),
     path('index/', index.as_view(), name="index"),
     path('registro/', registro.as_view(), name="registro"),
-    path('editar/', editar.as_view(), name="editar"),
     path('informe/', informe.as_view(), name="informe"),
+    path('registrarAviso/', views.registrarAviso, name="registrarAviso"),
+    path('edicionAviso/<int:idAvisos>', views.edicionAviso, name="edicionAviso"),
+    path('editarAviso/', views.editarAviso),
+    path('eliminarAviso/<int:idAvisos>', views.eliminarAviso, name="eliminarAviso"),
     
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

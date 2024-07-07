@@ -8,3 +8,5 @@ singUpButton.addEventListener('click', () =>{
 singInButton.addEventListener('click', () =>{
     main.classList.remove("right-panel-active");
 })
+
+

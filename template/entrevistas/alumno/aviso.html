@@ -16,25 +16,14 @@
       </tr>
     </thead>
     <tbody>
-      <!-- datos de pruebaa -->
-      <tr>
-        <td>Aviso de prueba</td>
-        <td>Descripción del aviso de prueba</td>
-        <td>2024-06-01</td>
-        <td>2024-06-30</td>
-      </tr>
-      <tr>
-          <td>Aviso de prueba</td>
-          <td>Descripción del aviso de prueba</td>
-          <td>2024-06-01</td>
-          <td>2024-06-30</td>
-        </tr>
+      {% for aviso in avisos %}
         <tr>
-          <td>Aviso de prueba</td>
-          <td>Descripción del aviso de prueba</td>
-          <td>2024-06-01</td>
-          <td>2024-06-30</td>
+          <td>{{ aviso.titulo }}</td>
+          <td>{{ aviso.descripcion }}</td>
+          <td>{{ aviso.fechaInicio }}</td>
+          <td>{{ aviso.fechaFin }}</td>
         </tr>
+        {% endfor %}
     </tbody>
   </table>
 </div><br><br>

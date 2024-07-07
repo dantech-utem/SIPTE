@@ -68,3 +68,19 @@ class Aviso(models.Model):
     
     def __str__(self):
         return self.titulo
+    
+class Estudiante(models.Model):
+    idEstudiante = models.AutoField(primary_key=True)
+    carrera = models.CharField(max_length=255)
+    tutor = models.CharField(max_length=255)
+    grupo = models.CharField(max_length=50)
+    fechaR = models.DateField()
+    nombre = models.CharField(max_length=255)
+    noControl = models.CharField(max_length=8, unique=True)
+    telCasa = models.CharField(max_length=10)
+    correo = models.EmailField(unique=True)
+    telCelular = models.CharField(max_length=10)
+    edad = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.nombre  

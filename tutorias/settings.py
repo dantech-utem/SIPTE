@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+}
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'tutorias.urls'
+LOGIN_URL = '/'  # Define la URL de inicio de sesión personalizada
 
 TEMPLATES = [
     {

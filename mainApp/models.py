@@ -1,18 +1,16 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class TipoUsuario(models.Model):
     tipo = models.CharField(max_length=100)
     
 class Usuarios(models.Model):
-    nombre = models.CharField(max_length=100)
-    apellido = models.CharField(max_length=100)
+    User = models.OneToOneField(User, on_delete=models.CASCADE)
     noControl = models.CharField(max_length=20)
-    correo = models.CharField(max_length=100)
-    contrasena = models.CharField(max_length=100)
     tipo = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
     grupo = models.CharField(max_length=20)
-    
+    token = models.CharField(max_length=225, blank=True, null=True)  # Campo para almacenar el token
+
 class Periodo(models.Model):
     periodo = models.CharField(max_length=100)   
     anio = models.IntegerField() 

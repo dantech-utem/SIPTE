@@ -88,6 +88,15 @@
     margin: 15px 0;
 }
 
+#boton-regreso {
+    color: rgb(0, 0, 0); 
+    cursor: pointer; 
+}
+
+#boton-regreso:hover {
+    color: rgb(0, 255, 0); 
+}
+
 .botones-login {
     color: #fff;
     background: #ff4b2b;

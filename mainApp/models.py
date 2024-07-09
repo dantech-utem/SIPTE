@@ -19,6 +19,11 @@ class Periodo(models.Model):
     anio = models.IntegerField() 
     estado =models.BooleanField(default=True)
 
+class CierreTutorias(models.Model):
+    cierreTutorias= models.TextField(blank=True, null=True)
+    tutor = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    
 class AccionTutorial(models.Model):
     tema = models.CharField(max_length=100)
     objetivos = models.CharField(max_length=400)
@@ -26,13 +31,8 @@ class AccionTutorial(models.Model):
     recursos = models.CharField(max_length=400)
     tutor = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
-    cierreTutorias= models.TextField(blank=True, null=True)
     evidencias = models.CharField(max_length=400, blank=True)
     
-    
-class Evidencia(models.Model):
-    evidencia = models.FileField(upload_to='evidenciaAccionTutorial/')
-    accionRutorial = models.ForeignKey(AccionTutorial, on_delete=models.CASCADE)
     
 
 respuestas=[1,'Nunca'],[2,'Casi nunca'],[3,'Casi siempre'],[4,'Siempre']
@@ -53,6 +53,7 @@ class EvaluacionTutor(models.Model):
     cicloEvaluacion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
 
 class BajaAlumnos(models.Model):
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=100)
     observaciones = models.TextField()
     motivo = models.TextField()
@@ -60,6 +61,7 @@ class BajaAlumnos(models.Model):
 
 class AtencionIndividual(models.Model):
     estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     asuntoTratar = models.CharField(max_length=400)
     observaciones = models.CharField(max_length=400)
     fecha = models.DateTimeField(auto_now_add=True)
@@ -68,9 +70,15 @@ class AtencionIndividual(models.Model):
 
     
 class Canalizacion(models.Model):
-    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
+    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE, null=True)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     area = models.CharField(max_length=150)
-    detalles = models.TextField()
+    observaciones = models.TextField()
+    motivo = models.TextField()
+    detalles = models.TextField(null=True)
     fecha = models.DateTimeField(auto_now_add=True)
-    FechaInicio = models.DateTimeField()
-    FechaFinal = models.DateTimeField()
+    estadoCanalizados = models.IntegerField(default=1)
+    titulo = models.CharField(max_length=100, null=True)
+    descripcion = models.TextField(null=True)
+    FechaInicio = models.DateTimeField(null=True)
+    FechaFinal = models.DateTimeField(null=True)

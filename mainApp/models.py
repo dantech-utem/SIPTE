@@ -30,11 +30,6 @@ class AccionTutorial(models.Model):
     recursos = models.CharField(max_length=400)
     tutor = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     evidencias = models.CharField(max_length=400, blank=True)
-    tema = models.CharField(max_length=100, null=True)
-    objetivos = models.CharField(max_length=400, null=True)
-    actividades = models.CharField(max_length=400, null=True)
-    recursos = models.CharField(max_length=400, null=True)
-    tutor = models.ForeignKey(Usuarios, on_delete=models.CASCADE, null=True)
     cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
 
 respuestas=[1,'Nunca'],[2,'Casi nunca'],[3,'Casi siempre'],[4,'Siempre']

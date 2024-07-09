@@ -92,9 +92,6 @@ def infoatencionIndividual(request):
     return render(request, 'atencionIndividual.html', {"atenciones": atenciones})
 
 def agregarAtencionIndividual(request):
-            
-    tutor = request.user
-    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
     if request.method == 'POST':
         estudiante_id = request.POST.get('estudianteAtencion')
         asuntoTratar = request.POST.get('asuntoTratar')

@@ -12,7 +12,6 @@ from django.conf import settings
 from .models import Canalizacion, BajaAlumnos, AccionTutorial,Usuarios,AtencionIndividual
 from django.views import View
 from django.views.decorators.http import require_http_methods
-from datetime import datetime
 from django.db.models import Count, F, Value
 
 class TokenSerializer(serializers.ModelSerializer):
@@ -147,7 +146,7 @@ class canalizacionCalendario(View):
       canalizaciones_mes = Canalizacion.objects.filter(
             FechaInicio__isnull=False, 
             FechaFinal__isnull=False,
-            FechaInicio__gte=datetime.now().date()
+            FechaInicio__gte=datetime.datetime.now().date()
         ).order_by("FechaInicio")
       
       lista_canalizaciones = []

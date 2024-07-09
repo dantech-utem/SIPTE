@@ -146,7 +146,7 @@ class canalizacionCalendario(View):
       canalizaciones_mes = Canalizacion.objects.filter(
             FechaInicio__isnull=False, 
             FechaFinal__isnull=False,
-            FechaInicio__gte=datetime.now().date()
+            FechaInicio__gte=datetime.datetime.now().date()
         ).order_by("FechaInicio")
       
       lista_canalizaciones = []

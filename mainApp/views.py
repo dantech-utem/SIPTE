@@ -34,17 +34,17 @@ class canalizacionCalendario(View):
       # start: '2020-09-16T16:00:00'
       for canalizacion in canalizaciones:
          lista_canalizaciones.append({   
-               "atencionIndividual": canalizacion.atencionIndividual,
-               "observaciones": canalizacion.observaciones,
-               "motivo": canalizacion.motivo,
-               "detalles": canalizacion.detalles,
-               "fecha": canalizacion.fecha,
-               "FechaInicio": canalizacion.FechaInicio.strftime("%Y-%m-%dT%H:%M:%S"),
-               "FechaFinal": canalizacion.FechaFinal.strftime("%Y-%m-%dT%H:%M:%S")
+               'efe': 1,
+               'title': canalizacion.observaciones,
+               'motivo': canalizacion.motivo,
+               'detalles': canalizacion.detalles,
+               'fecha': canalizacion.fecha.strftime("%Y-%m-%dT%H:%M:%S"),
+               'start': canalizacion.FechaInicio.strftime("%Y-%m-%dT%H:%M:%S"),
+               'end': canalizacion.FechaFinal.strftime("%Y-%m-%dT%H:%M:%S")
             }
          )
         
-      context = {"canalizaciones": lista_canalizaciones,"canalizaciones_mes": canalizaciones_mes}
+      context = {'canalizaciones': lista_canalizaciones,'canalizaciones_mes': canalizaciones_mes}
       return render(request,'Canalizacion/calendario.html', context)
    
 class canalizacionCompletarSesion(View):

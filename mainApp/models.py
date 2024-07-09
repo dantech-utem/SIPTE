@@ -27,6 +27,17 @@ class AccionTutorial(models.Model):
     cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     cierreTutorias= models.TextField(blank=True, null=True)
     evidencias = models.CharField(max_length=400, blank=True)
+    tema = models.CharField(max_length=100, null=True)
+    objetivos = models.CharField(max_length=400, null=True)
+    actividades = models.CharField(max_length=400, null=True)
+    recursos = models.CharField(max_length=400, null=True)
+    tutor = models.ForeignKey(Usuarios, on_delete=models.CASCADE, null=True)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
+    cierreTutorias= models.TextField()
+    
+class Evidencia(models.Model):
+    evidencia = models.FileField(upload_to='evidenciaAccionTutorial/')
+    accionRutorial = models.ForeignKey(AccionTutorial, on_delete=models.CASCADE)
     
 respuestas=[1,'Nunca'],[2,'Casi nunca'],[3,'Casi siempre'],[4,'Siempre']
 class EvaluacionTutor(models.Model):
@@ -60,7 +71,7 @@ class AtencionIndividual(models.Model):
     
 
 class Canalizacion(models.Model):
-    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE)
+    atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE, null=True)
     area = models.CharField(max_length=150)
     observaciones = models.TextField()
     motivo = models.TextField()

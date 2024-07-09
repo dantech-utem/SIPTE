@@ -31,62 +31,43 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td>9-IDG-1</td>
-                <td>12/03/2024</td>
+            {% for x in TablaResultados %}
+            <tr {% if x.estadoCanalizados == 1 %}>
+                <td>{{x.nombreEstudiante}}</td>
+                <td>{{x.apellidosEstudiante}}</td>
+                <td>{{x.noControlEstudiante}}</td>
+                <td>{{x.grupoEstudiante}}</td>
+                <td>{{x.fechaIndividual}}</td>
+                <td>
+                    <a class="btnCalendarioSesion" href="{% url 'formCalendario' %}"><i
+                            class="fa-solid fa-user-pen"></i>Calendario</a>
+                </td>
+            </tr>
+            <tr {% elif x.estadoCanalizados == 2 %}>
+                <td>{{x.nombreEstudiante}}</td>
+                <td>{{x.apellidosEstudiante}}</td>
+                <td>{{x.noControlEstudiante}}</td>
+                <td>{{x.grupoEstudiante}}</td>
+                <td>{{x.fechaIndividual}}</td>
                 <td>
                     <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
                             class="fa-solid fa-user-pen"></i>Completar</a>
                 </td>
             </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td>9-IDG-1</td>
-                <td>12/03/2024</td>
-                <td>
-                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
-                            class="fa-solid fa-user-pen"></i>Completar</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872 <h1 style="display: none;">a</h1>
-                </td>
-                <td>9-IDG-1</td>
-                <td>12/03/2024</td>
-                <td>
-                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
-                            class="fa-solid fa-user-pen"></i>Completar</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td>9-IDG-1</td>
-                <td>12/03/2024</td>
-                <td>
-                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
-                            class="fa-solid fa-user-pen"></i>Completar</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Carlos Antonio</td>
-                <td>Hernández Sandoval</td>
-                <td>20210872</td>
-                <td>9-IDG-1</td>
-                <td>12/03/2024</td>
+
+            <tr {% elif x.estadoCanalizados == 3 %}>
+                <td>{{x.nombreEstudiante}}</td>
+                <td>{{x.apellidosEstudiante}}</td>
+                <td>{{x.noControlEstudiante}}</td>
+                <td>{{x.grupoEstudiante}}</td>
+                <td>{{x.fechaIndividual}}</td>
                 <td>
                     <a class="btnConsultarSesion" href="{% url 'CompletarSesion' %}"><i
                             class="fa-solid fa-user-pen"></i>Consultar</a>
                 </td>
             </tr>
+            {% endif %}
+            {% endfor %}
         </tbody>
     </table>
 

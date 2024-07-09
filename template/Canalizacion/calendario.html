@@ -38,44 +38,6 @@
             <div class="col-md-9">
                 <div id="calendar"></div>
             </div>
-
-            <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary">
-                            <h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Event</h5>
-                            <button id="modalClose1" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Event Title:</label>
-                                    {{ form.title }}
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Description:</label>
-                                    {{ form.description }}
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Start Date:</label>
-                                    {{ form.start_time }}
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">End Date:</label>
-                                    {{ form.end_time }}
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="modalClose2" type="button" class="btn btn-danger">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <div class="modal fade show" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
@@ -103,12 +65,6 @@
                                   <label for="message-text" class="col-form-label">End:</label>
                                   <p id = "end_event_detail">
                               </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button id="delete-event-button" data-event-id="" type="button" class="btn btn-danger">Delete</button>
-                              <button id="add-to-next-week" data-event-id-week="" type="button" class="btn btn-success">Next Week</button>
-                              <button id="add-to-next-day" data-event-id-day="" type="button" class="btn btn-primary">Next Day</button>
-
                           </div>
                       </form>
                   </div>
@@ -139,7 +95,7 @@
             headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             initialDate: today,
             navLinks: true, // can click day/week names to navigate views
@@ -149,11 +105,8 @@
                 console.log('clicked')
                 console.log(arg.start)
                 console.log(arg.end)
-                var modal = document.getElementById('eventModal')
-                modal.style.display = 'block'
-                document.getElementById('id_start_time').value = converterDataParaDjangoFormat(arg.start);
-                document.getElementById('id_end_time').value = converterDataParaDjangoFormat(arg.end);
-                calendar.unselect()
+                // //funcion
+                // calendar.unselect()
             },
             eventClick: function(arg) {
                 console.log('clicked')
@@ -170,13 +123,6 @@
                 var modalStart = document.getElementById('start_event_detail'); 
                 var modalEnd = document.getElementById('end_event_detail'); 
                 var modalDescripition = document.getElementById('description_event_detail'); 
-                var deleteButton = document.getElementById("delete-event-button");
-                var nextWeek = document.getElementById("add-to-next-week");
-                var nextDay = document.getElementById("add-to-next-day");
-    
-                deleteButton.setAttribute("data-event-id", id);
-                nextWeek.setAttribute("data-event-id-week", id);
-                nextDay.setAttribute("data-event-id-day", id);
                 modal.style.display = 'block' 
                 
                 modalTitle.textContent = title;
@@ -188,21 +134,11 @@
             },
             editable: true,
             dayMaxEvents: true,
-        //   events: {{events|safe}},
+          events: {{canalizaciones|safe}},
         });
         calendar.render();
     });
-    const closeBtn1 = document.getElementById('modalClose1');
-    const closeBtn2 = document.getElementById('modalClose2');
     const closeBtn3 = document.getElementById('modalDetailClose');
-    closeBtn1.addEventListener('click',()=>{
-        const eventModal = document.getElementById('eventModal')
-        eventModal.style.display = 'none';
-    });
-    closeBtn2.addEventListener('click',()=>{
-        const eventModal = document.getElementById('eventModal')
-        eventModal.style.display = 'none';
-    });
     closeBtn3.addEventListener('click',()=>{
         const eventModal = document.getElementById('detailModal')
         eventModal.style.display = 'none';

@@ -19,6 +19,17 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),  # No necesitas `views.` aquí
     path('validate_token/', views.validate_token, name='validate_token'),  # Nueva ruta para validar el token
 
-
-    
+    path('Dashboard', canalizacionIndex.as_view(), name="Dashboard"),
+    path('Calendario', canalizacionCalendario.as_view(), name="Calendario"),
+    path('CompletarSesion', canalizacionCompletarSesion.as_view(), name="CompletarSesion"),
+    path('formCalendario', formCalendario.as_view(), name="formCalendario"),
+    path('Expediente', canalizacionExpedientes.as_view(), name="Expediente"),
+    path('FormBaja', canalizacionBajas.as_view(), name="FormBaja"),
+    path("canalizacionBajaAlumno/" , views.canalizacionBajaAlumno,name="canalizacionBajaAlumno"),
+    path("canalizacionFormCanalizarAlumno/", views.canalizacionFormCanalizarAlumno, name ="canalizacionFormCanalizarAlumno"),
+    path('FormCanalizar', canalizacionFormCanalizar.as_view(), name="FormCanalizar"),
+    path('FormCerrarTutorias', canalizacionFormCerrarTutorias.as_view(), name="FormCerrarTutorias"),
+    path('Reportes', canalizacionReportes.as_view(), name="Reportes"),
+    path('ResultadosCanalizacion', canalizacionResultadosCanalizacion.as_view(), name="ResultadosCanalizacion"),
+    path("cerrarTurorias/" , views.cerrarTurorias,name="cerrarTurorias"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

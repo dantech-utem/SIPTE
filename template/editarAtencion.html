@@ -17,7 +17,7 @@
                             <select id="selectid" style="width: 100%;" class="form-control form-control-sm" required>
                                 {% for estudiante in estudiantes %}
                                 <option value="{{ estudiante.id }}" {% if atencion.estudiante.id == estudiante.id %}selected{% endif %}>
-                                    {{ estudiante.noControl }} - {{ estudiante.User }}</option>
+                                    {{ estudiante.noControl }} - {{ estudiante.User.get_full_name }}</option>
                                 {% endfor %}
                             </select>
                 

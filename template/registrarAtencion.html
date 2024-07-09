@@ -22,7 +22,7 @@ Registro de atención individual
               <select id="selectid" style="width: 100%;" class="form-control form-control-sm" required>
                 <option value="" selected disabled>Seleccione un estudiante</option>
                 {% for estudiante in estudiantes %}
-                <option value="{{ estudiante.id }}">{{ estudiante.noControl }} - {{ estudiante.User }}</option>
+                <option value="{{ estudiante.id }}">{{ estudiante.noControl }} - {{ estudiante.User.get_full_name }}</option>
                 {% endfor %}
             </select>
 

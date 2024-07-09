@@ -27,7 +27,7 @@
         <tbody>
             {% for atencion in atenciones %}
             <tr>
-                <td class="textosJustificados">{{ atencion.estudiante.User }}</td>
+                <td class="textosJustificados">{{ atencion.estudiante.User.get_full_name }}</td>
                 <td class="textosJustificados">{{ atencion.asuntoTratar }}</td>
                 <td class="textosJustificados">{{ atencion.observaciones }}</td>
                 <td style="text-align: center;">{{ atencion.fecha }}</td>

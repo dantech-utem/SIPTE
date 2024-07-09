@@ -47,7 +47,7 @@ table.dataTable thead th, table.dataTable thead td { border-bottom: 2px solid #3
 
 
 .tabla {
-  margin-top: 50px; 
+  margin-top: 10px; 
   border: 2px solid #37BFA8;
 }
 .tabla .col {

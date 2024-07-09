@@ -6,7 +6,7 @@ from openpyxl import Workbook, load_workbook
 from flask import Flask, send_file
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
-from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios
+from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor
 from django.contrib import messages #Importamos para presentar mensajes
 # Create your views here.
 class inicio(View):
@@ -27,7 +27,7 @@ def eliminarActividadTutorial(request,id):
     actividad = get_object_or_404(AccionTutorial, id=id)
     actividad.delete()
     messages.success(request, '¡Actividad eliminada!')
-    return render(request, 'actividadTutorial.html')  
+    return redirect('actividadTutorial')
 
 def agregarActividadTutorial(request):
     if request.method == 'POST':
@@ -93,11 +93,10 @@ def infoatencionIndividual(request):
 
 def agregarAtencionIndividual(request):
     if request.method == 'POST':
-        estudiante_id = request.POST.get('estudiante')
+        estudiante_id = request.POST.get('estudianteAtencion')
         asuntoTratar = request.POST.get('asuntoTratar')
         observaciones = request.POST.get('observaciones')
         
-
         # Crear la instancia de AtencionIndividual
         AtencionIndividual.objects.create(
             estudiante_id=estudiante_id,
@@ -108,15 +107,20 @@ def agregarAtencionIndividual(request):
         messages.success(request, '¡Atención individual registrada con éxito!')
         return redirect('atencionIndividual')
 
-    estudiantes = Usuarios.objects.all()
+    # Filtrar estudiantes que pertenecen al grupo del tutor actual y que son de tipo 'estudiante'
+    tutor = request.user
+    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+    
     return render(request, 'registrarAtencion.html', {'estudiantes': estudiantes})
 
 
 def editarAtencionIndividual(request, id):
     atencion = get_object_or_404(AtencionIndividual, id=id)
-
+    tutor = request.user
+    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+    
     if request.method == 'POST':
-        estudiante_id = request.POST.get('estudiante')
+        estudiante_id = request.POST.get('estudianteAtencion')
         atencion.estudiante_id = estudiante_id  
         atencion.asuntoTratar = request.POST.get('asuntoTratar')
         atencion.observaciones = request.POST.get('observaciones')
@@ -125,17 +129,15 @@ def editarAtencionIndividual(request, id):
         messages.success(request, '¡Atención individual editada con éxito!')
         return redirect('editarAtencion', id=atencion.id)
 
-    estudiantes = Usuarios.objects.all()
     return render(request, 'editarAtencion.html', {'atencion': atencion, 'estudiantes': estudiantes})
 
 def eliminarAtencionIndividual(request, id):
     atencion = get_object_or_404(AtencionIndividual, id=id)
     atencion.delete()
     messages.success(request, '¡Atención individual eliminada con éxito!')
-    return render(request, 'atencionIndividual.html')
+    return redirect('atencionIndividual')
 
-def infoEvaluarTutor(request):
-    return render(request, 'evaluarTutor.html') 
+
 
 
 def infoeditarAtencion(request):
@@ -151,7 +153,66 @@ def reportePlanAccion(request):
     return render (request, 'reportePlanAccion.html')
 
 def evaluacionAcTutorial(request):
-    return render (request, 'evaluacionAcTutorial.html')
+    nombre_maestro = None  # Inicializar la variable nombre_maestro
+    estudiante = request.user
+    grupo_estudiante = estudiante.usuarios.grupo
+    
+
+    maestro = Usuarios.objects.filter(
+                tipo__tipo='tutor',  # Ajusta según tu modelo TipoUsuario
+                grupo=grupo_estudiante
+            ).first()
+
+    if maestro:
+                nombre_maestro = maestro.User.get_full_name()
+    else:
+                nombre_maestro = "Tutor no encontrado"  # Manejo de caso sin maestro
+     
+    periodo_activo = Periodo.objects.filter(estado=True).first()
+
+    if not periodo_activo:
+            messages.error(request, 'No hay un período activo disponible.')
+            return render(request, 'evaluacionAcTutorial.html')
+
+        # Verificar si el usuario ya ha contestado la encuesta para el período activo
+    evaluacion_existente = EvaluacionTutor.objects.filter(
+            estudiante=estudiante,
+            cicloEvaluacion=periodo_activo
+        ).exists()
+
+    if evaluacion_existente:
+            messages.error(request, 'Ya has contestado la encuesta previamente.')
+            return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
+                   
+    if request.method == 'POST':
+        # Guardar la evaluación del tutor
+        evaluacion = EvaluacionTutor(
+            estudiante=estudiante,
+            puntualidad=request.POST.get('puntualidad'),
+            proposito=request.POST.get('proposito'),
+            planTrabajo=request.POST.get('planTrabajo'),
+            temasPrevistos=request.POST.get('temasPrevistos'),
+            temasInteres=request.POST.get('temasInteres'),
+            disposicionTutor=request.POST.get('disposicionTutor'),
+            cordialidad=request.POST.get('cordialidad'),
+            orientacion=request.POST.get('orientacion'),
+            dominio=request.POST.get('dominio'),
+            impacto=request.POST.get('impacto'),
+            serviciosApoyo=request.POST.get('serviciosApoyo'),
+            cicloEvaluacion=periodo_activo
+        )
+        if evaluacion_existente:
+            messages.error(request, 'Ya has contestado la encuesta previamente.')
+            return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
+        else:
+            evaluacion.save()
+
+
+        messages.success(request, '¡Encuesta guardada con éxito!')
+        return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
+
+    # Si es un método GET o cualquier otro, simplemente renderizar el formulario
+    return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
 
 #Codigo orientado a libreria openpyxl
 

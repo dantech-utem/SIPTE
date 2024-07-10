@@ -224,9 +224,8 @@ def evaluacionAcTutorial(request):
     # Si es un método GET o cualquier otro, simplemente renderizar el formulario
     return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
 
-
-
 def descargarXLSX(request):
+
     wb = Workbook()
     ws = wb.active
 
@@ -426,18 +425,23 @@ def descargarReporte(request):
     FuenteRemarcada = Font(bold = True)
 
     hilera1 = ['Programa', 'Realizada', 'Canalizada']
+
     for col in range(1, 4):
         cell = ws.cell(row=6, column=col)
         cell.value = hilera1[col - 1]
         cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
 
-    AreasCanalizacion = ['Psicologo', 'Pedagogo', 'Becas', 'Enfermeria', 'Incubadora', 'Bolsa de trabajo', 'Asesor Academico']
+    AreasCanalizacion = ['Psicólogo', 'Pedagogo', 'Becas', 'Enfermería', 'Incubadora', 'Bolsa de trabajo', 'Asesor Académico']
     for row in range(7, 15):
-        ws[f'D{row}'].value = AreasCanalizacion[row - 8] 
+        ws[f'D{row}'].value = AreasCanalizacion[row - 8]
+        ws[f'D{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
 
-    Motivos = ['No se cumplieron expectativas', 'Reprobacion', 'Problemas economicos', 'Dificultades para el transporte', 'Problemas de trabajo', 'Cambio de carrera', 'Incompatibilidad de horario', 'Faltas al reglamento', 'Cambio de residencia', 'Cambio de universidad', 'Problemas familiares', 'Problemas personales', 'Otras']
+    Motivos = ['No se cumplieron expectativas', 'Reprobación', 'Problemas económicos', 'Dificultades para el transporte', 'Problemas de trabajo', 'Cambio de carrera', 'Incompatibilidad de horario', 'Faltas al reglamento', 'Cambio de residencia', 'Cambio de universidad', 'Problemas familiares', 'Problemas personales', 'Otras']
     for row in range(7, 21):
-        ws[f'J{row}'].value = Motivos[row - 8]
+        ws[f'H{row}'].value = Motivos[row - 8]
+        ws[f'H{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+        ws[f'I{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+        ws[f'J{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
 
     hilera2 = ['Cantidad', 'Tipo de baja']
     for col in range(11, 13):
@@ -445,35 +449,96 @@ def descargarReporte(request):
         cell.value = hilera2[col - 11]
         cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
 
-    ws['A15'] = 'No programada'
-    ws['A15'].alignment = Alignment(vertical='center', text_rotation=90)
-
-    ws['D6'] = 'Areas de canalizacion'
-    ws['D15'] = 'Asunto de atencion'
-
-    ws['B15'] = 'Asunto de atencion'
-
-    ws['C15'] = 'Cantidad'
-    ws['C15'].alignment = Alignment(vertical='center', text_rotation=90)
-
-    ws['D15'] = 'Observaciones'
-
-    ws['J21'] = 'Dificultades para ejercer la tutoria'
-
-    ws['G6'] = 'Cantidad'
-    ws['G6'].alignment = Alignment(vertical='center', text_rotation=90)
-
-    ws['H6'] = 'Resultado de la canalizacion'
-
-    ws['I6'] = 'Total'
-    ws['I6'].alignment = Alignment(vertical='center', text_rotation=90)
 
 
-    ws['J6'] = 'Motivo de baja'
+    ws['A6'].font = FuenteRemarcada
+    ws.column_dimensions['A'].width = 3
+    ws['A6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['A15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
 
-    ws['M6'] = 'Observaciones'    
+    ws['B6'].font = FuenteRemarcada
+    ws['B6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws.column_dimensions['B'].width = 3
+    ws['B15'] = 'No programada'
+    ws['B15'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
+    ws['B15'].font = FuenteRemarcada
+    ws['B15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
 
+    ws['C6'].font = FuenteRemarcada
+    ws['C6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws.column_dimensions['C'].width = 3
+    ws['C15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
 
+    ws.column_dimensions['D'].width = 20
+    ws['D6'] = 'Áreas de canalización'
+    ws['D6'].font = FuenteRemarcada
+    ws['D6'].alignment = Alignment(vertical='center')
+    ws['D6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['D15'] = 'Asunto de atención'
+    ws['D15'].alignment = Alignment(vertical='center')
+    ws['D15'].font = FuenteRemarcada
+    ws['D15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    ws['E6'] = 'Cantidad'
+    ws['E6'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
+    ws['E6'].font = FuenteRemarcada
+    ws.column_dimensions['E'].width = 3
+    ws['E6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['E15'] = 'Cantidad'
+    ws['E15'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
+    ws['E15'].font = FuenteRemarcada
+    ws['E15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    ws.column_dimensions['F'].width = 25
+    ws['F6'] = 'Resultado de la canalización'
+    ws['F6'].alignment = Alignment(vertical='center')
+    ws['F6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['F6'].font = FuenteRemarcada
+    ws['F15'].alignment = Alignment(vertical='center')
+    ws['F15'].font = FuenteRemarcada
+    ws['F15'] = 'Observaciones'
+    ws['F15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    ws['G6'] = 'Total'
+    ws['G6'].font = FuenteRemarcada
+    ws['G6'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
+    ws['G6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['G21'] = 'Dificultades para ejercer la tutoria'
+    ws['G21'].alignment = Alignment(vertical='center')
+    ws['G21'].font = FuenteRemarcada
+    ws['G21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws.column_dimensions['G'].width = 3
+
+    ws['H6'] = 'Motivo de baja'
+    ws['H6'].alignment = Alignment(vertical='center')
+    ws['H6'].font = FuenteRemarcada
+    ws['H6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['H21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    ws['I6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['I21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    ws['J6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['J21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    ws['K6'].font = FuenteRemarcada
+    ws['K6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['K21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws.column_dimensions['K'].width = 3
+
+    ws['L6'].font = FuenteRemarcada
+    ws['L6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['L21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws.column_dimensions['L'].width = 3
+
+    ws['M6'] = 'Observaciones'
+    ws['M6'].alignment = Alignment(vertical='center')
+    ws['M6'].font = FuenteRemarcada
+    ws['M6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['M21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    ws['N6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['N21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Reporte.xlsx'

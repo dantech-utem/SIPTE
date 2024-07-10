@@ -33,22 +33,22 @@
         <tbody>
             {% for x in TablaResultados %}
             <tr {% if x.estadoCanalizados == 1 %}>
-                <td>{{x.nombreEstudiante}}</td>
-                <td>{{x.apellidosEstudiante}}</td>
-                <td>{{x.noControlEstudiante}}</td>
-                <td>{{x.grupoEstudiante}}</td>
-                <td>{{x.fechaIndividual}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
+                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
+                <td>{{x.fecha}}</td>
                 <td>
                     <a class="btnCalendarioSesion" href="{% url 'formCalendario' %}"><i
                             class="fa-solid fa-user-pen"></i>Calendario</a>
                 </td>
             </tr>
             <tr {% elif x.estadoCanalizados == 2 %}>
-                <td>{{x.nombreEstudiante}}</td>
-                <td>{{x.apellidosEstudiante}}</td>
-                <td>{{x.noControlEstudiante}}</td>
-                <td>{{x.grupoEstudiante}}</td>
-                <td>{{x.fechaIndividual}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
+                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
+                <td>{{x.fecha}}</td>
                 <td>
                     <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
                             class="fa-solid fa-user-pen"></i>Completar</a>
@@ -56,11 +56,11 @@
             </tr>
 
             <tr {% elif x.estadoCanalizados == 3 %}>
-                <td>{{x.nombreEstudiante}}</td>
-                <td>{{x.apellidosEstudiante}}</td>
-                <td>{{x.noControlEstudiante}}</td>
-                <td>{{x.grupoEstudiante}}</td>
-                <td>{{x.fechaIndividual}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
+                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
+                <td>{{x.fecha}}</td>
                 <td>
                     <a class="btnConsultarSesion" href="{% url 'CompletarSesion' %}"><i
                             class="fa-solid fa-user-pen"></i>Consultar</a>

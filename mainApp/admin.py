@@ -10,3 +10,5 @@ admin.site.register(EvaluacionTutor)
 admin.site.register(AtencionIndividual)
 admin.site.register(BajaAlumnos)
 admin.site.register(Canalizacion)
+admin.site.register(CierreTutorias)
+

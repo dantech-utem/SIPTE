@@ -9,7 +9,7 @@ from .models import Usuarios
 import jwt
 import datetime
 from django.conf import settings
-from .models import Canalizacion, BajaAlumnos, AccionTutorial,Usuarios,AtencionIndividual
+from .models import *
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from django.db.models import Count, F, Value
@@ -187,7 +187,8 @@ def canalizacionBajaAlumno(request):
       tipo = request.POST['tipo']
       observaciones = request.POST['observaciones']
       motivo = request.POST['motivo']
-      Baja  = BajaAlumnos.objects.create(tipo=tipo, observaciones=observaciones, motivo=motivo)
+      cicloActual = Periodo.objects.filter(estado = True)
+      Baja  = BajaAlumnos.objects.create(tipo=tipo, observaciones=observaciones, motivo=motivo, cicloAccion=cicloActual)
       Baja.save()
       return redirect('Dashboard')
    
@@ -200,18 +201,20 @@ def canalizacionFormCanalizarAlumno(request):
       area = request.POST['area']
       observaciones = request.POST['observaciones']
       motivo = request.POST['motivo']
-      Canalizar  = Canalizacion.objects.create(area=area, observaciones=observaciones, motivo=motivo)
+      cicloActual = Periodo.objects.filter(estado = True)
+      Canalizar  = Canalizacion.objects.create(area=area, observaciones=observaciones, motivo=motivo, cicloAccion=cicloActual)
       Canalizar.save()
       return redirect('Dashboard')
    
 class canalizacionFormCerrarTutorias(View):
    def get(self, request):
       return render(request,'Canalizacion/formCerrarTutorias.html')
-   
 def cerrarTurorias(request):
    if request.method == "POST":
       cierreTutorias = request.POST['cierreTutorias']
-      cierre  = AccionTutorial.objects.create(cierreTutorias=cierreTutorias)
+      cicloActual = Periodo.objects.filter(estado = True)
+      userActual = request.user
+      cierre  = CierreTutorias.objects.create(cierreTutorias=cierreTutorias, cicloAccion=cicloActual[0], tutor=userActual)
       cierre.save()
       return redirect('Dashboard')
      
@@ -240,18 +243,16 @@ class canalizacionReportes(View):
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):
       return render(request,'Canalizacion/resultadosCanalizacion.html')
-
 class canalizacionIndex(View):
    def get(self, request):
-      TablaViews = Canalizacion.objects.all().annotate(
-         estadoEstudiante = F('atencionIndividual__estudiante__estado'),
-         nombreEstudiante = F('atencionIndividual__estudiante__nombre'),
-         apellidosEstudiante = F('atencionIndividual__estudiante__apellido'),
-         noControlEstudiante = F('atencionIndividual__estudiante__noControl'),
-         grupoEstudiante = F('atencionIndividual__estudiante__grupo'),
-      )
+      tutor = request.user
+      print("datos del tutor",tutor)
+      estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+      periodo = Periodo.objects.filter(estado=1)
       context = {
-         'TablaViews': TablaViews
+         'TablaViews': estudiantes,
+         'Periodo': periodo
+
       } 
       return render(request, 'Canalizacion/index.html', context)
    
@@ -269,17 +270,11 @@ class canalizacionExpedientes(View):
    
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):
-      TablaResultados = Canalizacion.objects.all().annotate(
-         estadoEstudiante = F('atencionIndividual__estudiante__estado'),
-         nombreEstudiante = F('atencionIndividual__estudiante__nombre'),
-         apellidosEstudiante = F('atencionIndividual__estudiante__apellido'),
-         noControlEstudiante = F('atencionIndividual__estudiante__noControl'),
-         grupoEstudiante = F('atencionIndividual__estudiante__grupo'),
-         fechaIndividual = F('atencionIndividual__fecha'),
-         
-      )
+      user = request.user.usuarios.tipo
+
+      tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=user)
+
       context = {
-         'TablaResultados': TablaResultados
-      } 
-      return render(request, 'Canalizacion/resultadosCanalizacion.html', context)
-      
+         'TablaResultados': tabla,
+      }
+      return render(request,'Canalizacion/resultadosCanalizacion.html', context)

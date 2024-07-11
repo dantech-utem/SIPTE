@@ -1,37 +1,26 @@
+
 {% extends '../dashboard.html'%}
 {% load static %}
-{% block title %}Event Calendar{% endblock title %}
-
-{% block breadcrumb %}
-  <div>
-      <h1><i class="fa fa-calendar"></i> Calendar</h1>
-      <p>Event Calendar</p>
-  </div>
-  <ul class="app-breadcrumb breadcrumb">
-      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-      <li class="breadcrumb-item"><a href="#">Calendar</a></li>
-  </ul>
-{% endblock breadcrumb %}
-
 {% block content %}
 <link href="{% static 'css/styleCalendarioCanalizacion.css' %}" rel="stylesheet" />
+<!-- Main CSS-->
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <div class="row">
     <div class="col-md-12">
         <div class="tile row">
             <div class="col-md-3">
                 <div id="external-events">
-                    <h4 class="mb-4">Running Events</h4>
+                    <h4 class="mb-4">Citas de hoy</h4>
                     {% for canalizacion in canalizaciones_mes %}
                       <div class="fc-event">
-                          <h3>{{ canalizacion.atencionIndividual }}</h3>
-                          <p>{{ canalizacion.observaciones }}</p>
+                          <h5>{{ canalizacion.atencionIndividual.estudiante.User.first_name }}{{ canalizacion.atencionIndividual.estudiante.User.last_name }}</h5>
                           <p>{{ canalizacion.motivo }}</p>
-                          <p>{{ canalizacion.detalles }}</p>
                           <p>From: {{ canalizacion.FechaInicio }}</p>
                           <p>To: {{ canalizacion.FechaFinal }}</p>
                       </div>
                     {% empty %}
-                      <p>No Running Events Found</p>
+                      <p>No hay ninguna cita programada para hoy.</p>
                     {% endfor %}
                 </div>
             </div>
@@ -145,9 +134,15 @@
     });
     function formatDateTime(dateTime) {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
-        const dataFormatada = new Date(dateTime).toLocaleDateString('pt-BR', options);
+        const dataFormatada = new Date(dateTime).toLocaleDateString('es-MX', options);
         return dataFormatada;
     };
   
   </script>
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+   crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+   crossorigin="anonymous"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+   crossorigin="anonymous"></script>
 {% endblock %}

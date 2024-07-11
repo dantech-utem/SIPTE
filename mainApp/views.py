@@ -9,11 +9,11 @@ from .models import Usuarios
 import jwt
 import datetime
 from django.conf import settings
-from .models import Canalizacion, BajaAlumnos, AccionTutorial,Usuarios,AtencionIndividual
+from .models import Canalizacion, BajaAlumnos, AccionTutorial,Usuarios,AtencionIndividual,Periodo,CierreTutorias
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from django.db.models import Count, F, Value
-
+from django.utils.timezone import make_aware
 class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuarios
@@ -142,29 +142,51 @@ class canalizacionCalendario(View):
 
    def get(self, request):
       #sacar area del usuario
-      canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False)
-      canalizaciones_mes = Canalizacion.objects.filter(
-            FechaInicio__isnull=False, 
-            FechaFinal__isnull=False,
-            FechaInicio__gte=datetime.datetime.now().date()
-        ).order_by("FechaInicio")
-      
-      lista_canalizaciones = []
-      # start: '2020-09-16T16:00:00'
-      for canalizacion in canalizaciones:
-         lista_canalizaciones.append({   
-               'efe': 1,
-               'title': canalizacion.observaciones,
-               'motivo': canalizacion.motivo,
-               'detalles': canalizacion.detalles,
-               'fecha': canalizacion.fecha.strftime("%Y-%m-%dT%H:%M:%S"),
-               'start': canalizacion.FechaInicio.strftime("%Y-%m-%dT%H:%M:%S"),
-               'end': canalizacion.FechaFinal.strftime("%Y-%m-%dT%H:%M:%S")
-            }
-         )
+        tipo = request.user.usuarios.tipo.tipo
+        canalizaciones = 0
+        canalizaciones_mes = 0
+
+       
+        end_of_today = make_aware(datetime.datetime.now()).replace(hour=23, minute=59, second=59, microsecond=999999)
+        # Realizar el filtro con el rango de fechas
+        #añadir filtro por grupo si es tutor
+        if(tipo == 'tutor'):
+            canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False)
+            canalizaciones_mes = Canalizacion.objects.filter(
+                FechaInicio__isnull=False, 
+                FechaFinal__isnull=False,
+                FechaInicio__lte=end_of_today
+            ).order_by("FechaInicio")
+        else:
+            canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False,area=tipo)
+            canalizaciones_mes = Canalizacion.objects.filter(
+                FechaInicio__isnull=False, 
+                FechaFinal__isnull=False,
+                FechaInicio__lte=end_of_today,
+                area=tipo
+            ).order_by("FechaInicio")
         
-      context = {'canalizaciones': lista_canalizaciones,'canalizaciones_mes': canalizaciones_mes}
-      return render(request,'Canalizacion/calendario.html', context)
+        lista_canalizaciones = []
+        # start: '2020-09-16T16:00:00'
+        for canalizacion in canalizaciones:
+            lista_canalizaciones.append({   
+                'estudiante': {
+                    'id': canalizacion.atencionIndividual.estudiante.User_id,
+                    'nombre': canalizacion.atencionIndividual.estudiante.User.first_name,
+                    'apellido': canalizacion.atencionIndividual.estudiante.User.last_name,
+                    'correo': canalizacion.atencionIndividual.estudiante.User.email
+                },
+                'title': canalizacion.atencionIndividual.estudiante.User.first_name,
+                'observaciones':canalizacion.observaciones,
+                'motivo': canalizacion.motivo,
+                'detalles': canalizacion.detalles,
+                'fecha': canalizacion.fecha.strftime("%Y-%m-%dT%H:%M:%S"),
+                'start': canalizacion.FechaInicio.strftime("%Y-%m-%dT%H:%M:%S"),
+                'end': canalizacion.FechaFinal.strftime("%Y-%m-%dT%H:%M:%S")
+                }
+            )
+        context = {'canalizaciones': lista_canalizaciones,'canalizaciones_mes': canalizaciones_mes}
+        return render(request,'Canalizacion/calendario.html', context)
    
 class canalizacionCompletarSesion(View):
    def get(self, request):

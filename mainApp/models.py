@@ -83,4 +83,20 @@ class Estudiante(models.Model):
     edad = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.nombre  
+        return self.nombre 
+
+class DatosFamiliares(models.Model):
+    idEstudiante = models.ForeignKey(Estudiante, null=True, blank=True, on_delete=models.CASCADE)
+    conviveCon = models.CharField(max_length=100)
+    otra_situacion = models.CharField(max_length=100, blank=True)
+    huerfano = models.BooleanField()
+    huerfanoQuien = models.CharField(max_length=100)
+    totalHermanos = models.IntegerField()
+    lugarHermano = models.IntegerField()
+    estadoCivil = models.CharField(max_length=50)
+
+    def __str__(self):
+        if self.idEstudiante:
+            return "Datos familiares de estudiante con No. de control {self.idEstudiante.noControl}"
+        else:
+            return "Datos familiares sin estudiante asociado"

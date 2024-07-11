@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from audioop import reverse
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from .models import Aviso
 from .models import Estudiante
+from .models import *
 from django.db import IntegrityError
 
 # Create your views here.
@@ -77,41 +80,4 @@ class aviso(View):
     def get(self, request):
         avisos = Aviso.objects.all()
         return render(request, "entrevistas/alumno/aviso.html", {'avisos': avisos})
-    
-def formularioEstudiante(request):
-    if request.method == 'POST':
-        noControl = request.POST.get('noControl')
-        nombre = request.POST.get('nombre')
-        carrera = request.POST.get('carrera')
-        tutor = request.POST.get('tutor')
-        grupo = request.POST.get('grupo')
-        fechaR = request.POST.get('fechaR')
-        telCasa = request.POST.get('telCasa')
-        correo = request.POST.get('correo')
-        telCelular = request.POST.get('telCelular')
-        edad = request.POST.get('edad')
-
-        try:
-            estudiante = Estudiante.objects.create(
-                noControl=noControl,
-                nombre=nombre,
-                carrera=carrera,
-                tutor=tutor,
-                grupo=grupo,
-                fechaR=fechaR,
-                telCasa=telCasa,
-                correo=correo,
-                telCelular=telCelular,
-                edad=edad
-            )
-            estudiante.save()
-            # Redireccionar a alguna página de éxito
-            return redirect('resumenresp')
-        except IntegrityError:
-            # Manejar el error de unicidad
-            return render(request, "entrevistas/alumno/formulario.html", {
-                'error_message': 'El correo ya está registrado. Por favor, use otro correo.'
-            })
-
-    return render(request, "entrevistas/alumno/formulario.html") 
 

@@ -15,7 +15,7 @@
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="datos-familiares-tab" data-bs-toggle="tab" data-bs-target="#datos-familiares" type="button" role="tab" aria-controls="datos-familiares" aria-selected="false">Datos familiares</button>
               </li>
-              <li class="nav-item" role="presentation">
+             <!--  <li class="nav-item" role="presentation">
                 <button class="nav-link" id="datos-socioeconomicos-tab" data-bs-toggle="tab" data-bs-target="#datos-socioeconomicos" type="button" role="tab" aria-controls="datos-socioeconomicos" aria-selected="false">Datos socioeconómicos</button>
               </li>
               <li class="nav-item" role="presentation">
@@ -35,12 +35,12 @@
               </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="datos-salud-tab" data-bs-toggle="tab" data-bs-target="#datos-salud" type="button" role="tab" aria-controls="datos-salud" aria-selected="false">Salud</button>
-              </li>
+              </li> -->
             </ul>
             <!-- FORMULARIO DE DATOS DE IDENTIFICACION -->
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="datos-identificacion" role="tabpanel" aria-labelledby="datos-identificacion-tab">
-                <form id="formDatosIdentificacion" action="{% url 'formularioEstudiante' %}" method="POST">
+                <form id="formDatosIdentificacion" action="" method="POST">
                   {% csrf_token %}
                   <div class="row">
                     <div class="col-md-6 mb-3"><br>
@@ -124,7 +124,8 @@
               </div> 
              <!-- FORMULARIO DE DATOS FAMILIARES -->
              <div class="tab-pane fade" id="datos-familiares" role="tabpanel" aria-labelledby="datos-familiares-tab">
-              <form id="formDatosFamiliares" action="" method="POST">
+              <form method="POST" action="">
+                {% csrf_token %}
                 <div class="row">
                   <div class="col-md-6 mb-3"><br>
                     <label for="conviveCon" class="form-label">¿Con quién vives?</label>
@@ -138,19 +139,20 @@
                       <option value="Solo">Solo</option>
                       <option value="Otra situación">Otra situación</option>
                     </select><br>
-                    <label for="otra-situacion" class="form-label">Si "otra situación", descríbela</label>
-                    <input type="text" class="form-control" id="otra-situacion" name="otra-situacion">
+                    <label for="otra_situacion" class="form-label">Si "otra situación", descríbela</label>
+                    <input type="text" class="form-control" id="otra_situacion" name="otra_situacion">
                   </div>
                   <div class="col-md-6 mb-3"><br>
                     <label for="huerfano" class="form-label">¿Eres huérfano?</label>
                     <select class="form-control" id="huerfano" name="huerfano" required>
                       <option value="">Selecciona una opción</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
+                      <option value="1">Si</option>
+                      <option value="0">No</option>
                     </select><br>
                       <label for="huerfanoQuien" class="form-label">¿De?</label>
                       <select class="form-control" id="huerfanoQuien" name="huerfanoQuien" required>
                         <option value="">Selecciona una opción</option>
+                        <option value="No aplica">No aplica</option>
                         <option value="Padre">Padre</option>
                         <option value="Madre">Madre</option>
                         <option value="Ambos">Ambos</option>
@@ -170,21 +172,21 @@
                       <option value="8">8</option>
                       <option value="9">9</option>
                       <option value="10">10</option>
-                      <option value="Más de 10">Más de 10</option>
+                      <option value="11">Más de 10</option>
                     </select><br>
                     <label for="lugarHermano" class="form-label">Lugar que ocupas</label>
                       <select class="form-control" id="lugarHermano" name="lugarHermano" required>
                           <option value="">Selecciona una opción</option>
-                          <option value="1°">1°</option>
-                          <option value="2°">2°</option>
-                          <option value="3°">3°</option>
-                          <option value="4°">4°</option>
-                          <option value="5°">5°</option>
-                          <option value="6°">6°</option>
-                          <option value="7°">7°</option>
-                          <option value="8°">8°</option>
-                          <option value="9°">9°</option>
-                          <option value="10°">10°</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
                         </select>
                   </div>
                   <div class="col-md-6 mb-3">
@@ -198,793 +200,17 @@
                       </select>
                     </div>
                 </div>
-              </form>
-            </div>
-            <!-- FORMULARIO DE DATOS SOCIOECONOMICOS -->
-            <div class="tab-pane fade" id="datos-socioeconomicos" role="tabpanel" aria-labelledby="datos-socioeconomicos-tab">
-              <form id="formDatosSocioeconomicos">
-                <div class="row">
-                  <div class="col-md-6 mb-3"><br>
-                    <label for="vivienda" class="form-label">Tipo de vivienda</label>
-                    <select class="form-control" id="vivienda" name="vivienda" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="Casa">Casa</option>
-                      <option value="Casa en coto privado">Casa en coto privado</option>
-                      <option value="Departamento">Departamento</option>
-                      <option value="Departamento multifamiliar">Departamento multifamiliar</option>
-                      <option value="Casa de huéspedes">Casa de huéspedes</option>
-                    </select>
-                    <br>
-                    <label for="tenencia" class="form-label">Tenencia de la vivienda</label>
-                      <select class="form-control" id="tenencia" name="tenencia" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Propia">Propia</option>
-                        <option value="Rentada">Rentada</option>
-                        <option value="Prestada">Prestada</option>
-                        <option value="Hipotecada">Hipotecada</option>
-                        <option value="Otra">Otra</option>
-                      </select>
-                      <br>
-                      <label for="habitaciones" class="form-label">Número de habitaciones</label>
-                      <select class="form-control" id="habitaciones" name="habitaciones" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="Más de 10">Más de 10</option>
-                      </select>
-                      <br>
-                      <label for="vehiculos" class="form-label">Número de vehículos</label>
-                    <select class="form-control" id="vehiculos" name="vehiculos" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="Más de 10">Más de 10</option>
-                    </select>
-                  </div>
-                
-                  <div class="col-md-6 mb-3"><br>
-                    <label for="trabajoPapa" class="form-label">Trabajo del papá</label>
-                    <select class="form-control" id="trabajoPapa" name="trabajoPapa" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="Desempleado(a)">Desempleado(a)</option>
-                      <option value="Jubilado(a) o pensionado(a)">Jubilado(a) o pensionado(a)</option>
-                      <option value="Empleado del gobierno(a)">Empleado del gobierno(a)</option>
-                      <option value="Agroproductor(a)">Agroproductor(a)</option>
-                      <option value="Operario de producción(a)">Operario de producción(a)</option>
-                      <option value="Comerciante">Comerciante</option>
-                      <option value="Profesionista trabaja por cuenta propia">Profesionista trabaja por cuenta propia</option>
-                      <option value="Militar (ejército o armada)">Militar (ejército o armada)</option>
-                      <option value="Otro">Otro</option>
-                    </select><br>
-                    <label for="trabajoextraPapa" class="form-label">Si "otra situación", descríbela</label>
-                    <input type="text" class="form-control" id="trabajoextraPapa" name="trabajoextraPapa">
-                    <br>
-                    <label for="trabajoMama" class="form-label">Trabajo de la mamá</label>
-                      <select class="form-control" id="trabajoMama" name="trabajoMama" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Desempleado(a)">Desempleado(a)</option>
-                        <option value="Jubilado(a) o pensionado(a)">Jubilado(a) o pensionado(a)</option>
-                        <option value="Empleado del gobierno(a)">Empleado del gobierno(a)</option>
-                        <option value="Agroproductor(a)">Agroproductor(a)</option>
-                        <option value="Operario de producción(a)">Operario de producción(a)</option>
-                        <option value="Comerciante">Comerciante</option>
-                        <option value="Profesionista trabaja por cuenta propia">Profesionista trabaja por cuenta propia</option>
-                        <option value="Militar (ejército o armada)">Militar (ejército o armada)</option>
-                        <option value="Otro">Otro</option>
-                      </select><br>
-                      <label for="trabajoextraMama" class="form-label">Si "otra situación", descríbela</label>
-                      <input type="text" class="form-control" id="trabajoextraMama" name="trabajoextraMama">
-                  </div>
-
-                    <div class="col-md-6 mb-3">
-                      <label for="manutencion" class="form-label">Manutención</label>
-                      <select class="form-control" id="manutencion" name="manutencion" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Por cuenta propia">Por cuenta propia</option>
-                          <option value="Mis papás costean mis gastos">Mis papás costean mis gastos</option>
-                          <option value="Parte mis papás, parte yo">Parte mis papás, parte yo</option>
-                      </select>
-                      <br>
-                      <label for="trabajas" class="form-label">¿Trabajas?</label>
-                      <select class="form-control" id="trabajas" name="trabajas" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                      </select>
-                      <br>
-                      <label for="relacionCarerra" class="form-label">¿Tiene relación con la carrera?</label>
-                      <select class="form-control" id="relacionCarerra" name="relacionCarerra" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Mucho">Mucho</option>
-                          <option value="Algo">Algo</option>
-                          <option value="Nada">Nada</option>
-                      </select>
-                  </div>
-
-                  <div class="col-md-6 mb-3">
-                    <label for="ingresoFam" class="form-label">Ingresos familiares</label>
-                    <select class="form-control" id="ingresoFam" name="ingresoFam" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="De 3,000 a 5,000">De 3,000 a 5,000</option>
-                        <option value="De 5,001 a 10,000">De 5,001 a 10,000</option>
-                        <option value="De 10,001 a 15,000">De 10,001 a 15,000</option>
-                        <option value="De 15,001 a 20,000">De 15,001 a 20,000</option>
-                        <option value="De 20,001 a 25,000">De 20,001 a 25,000</option>
-                        <option value="De 25,001 a 26,000">De 25,001 a 26,000</option>
-                        <option value="De 26,001 a 30,000">De 26,001 a 30,000</option>
-                        <option value="Más de 30,000">Más de 30,000</option>
-                    </select>
-                    <br>
-                    <label for="contribuyentes" class="form-label">Número de personas que contribuyen a esos ingresos</label>
-                      <select class="form-control" id="contribuyentes" name="contribuyentes" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="Más de 5">Más de 5</option>
-                      </select>
-                      <br>
-                    <label for="dependientesIngresos" class="form-label">Número de personas que dependen de esos ingresos</label>
-                      <select class="form-control" id="dependientesIngresos" name="dependientesIngresos" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="Más de 5">Más de 5</option>
-                      </select>
-                </div>
-                  <div class="col-md-12 mb-3">
-                      <label for="cuenta-con" class="form-label">Cuenta con</label><br>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="linea-telefonica" value="linea-telefonica">
-                          <label class="form-check-label" for="linea-telefonica">Línea telefónica</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="celular-propio" value="celular-propio">
-                          <label class="form-check-label" for="celular-propio">Celular propio</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="internet" value="internet">
-                          <label class="form-check-label" for="internet">Internet</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="servicio-tv" value="servicio-tv">
-                          <label class="form-check-label" for="servicio-tv">Servicio de TV por cable</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="computadora" value="computadora">
-                          <label class="form-check-label" for="computadora">Computadora</label>
-                      </div>
-                  </div>
-                </div>
+                <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Enviar</button>
               </form>
             </div>
             
-            <!-- FORMULARIO DE ANTCEDENTES ACADEMICOS -->
-            <div class="tab-pane fade" id="datos-academicos" role="tabpanel" aria-labelledby="datos-academicos-tab">
-                <form id="formDatosAcademicos">
-                  <div class="row">
-                    <div class="col-md-6 mb-3"><br>
-                      <label for="bachillerato" class="form-label">Bachillerato de procedencia:</label>
-                      <input type="text" class="form-control" id="bachillerato">
-                      <br>
-                        <label for="modalidad" class="form-label">Modalidad</label>
-                        <select class="form-control" id="modalidad" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Escolarizada">Escolarizada</option>
-                          <option value="Semiescolarizada">Semiescolarizada</option>
-                          <option value="Abierta">Abierta</option>
-                          <option value="A distancia">A distancia</option>
-                          <option value="Examen único">Examen único</option>
-                        </select>
-                        <br>
-                        <label for="duracionbachillerato" class="form-label">Duración en años para terminarlo</label>
-                        <select class="form-control" id="duracionbachillerato" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Menos de uno">Menos de uno</option>
-                          <option value="Alrededor de un año">Alrededor de un año</option>
-                          <option value="Más de un año">Más de un año</option>
-                          <option value="Dos años">Dos años</option>
-                          <option value="Tres años">Tres años</option>
-                          <option value="Más de tres años">Más de tres años</option>
-                        </select>
-                        <br>
-                        <label for="promediobtenido" class="form-label">Promedio obtenido</label>
-                        <select class="form-control" id="promediobtenido" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Entre 10 y 9.5">Entre 10 y 9.5</option>
-                          <option value="Entre 9.4 y 9.0">Entre 9.4 y 9.0</option>
-                          <option value="Entre 8.9 y 8.5">Entre 8.9 y 8.5</option>
-                          <option value="Entre 8.4 y 8.0">Entre 8.4 y 8.0</option>
-                          <option value="Entre 7.9 y 7.5">Entre 7.9 y 7.5</option>
-                          <option value="Entre 7.4 y 6.0">Entre 7.4 y 6.0</option>
-                          <option value="Menos de 6">Menos de 6</option>
-                        </select>
-                        <br>
-                      <label for="rendimientoescolar" class="form-label">¿Cómo consideras tu rendimiento escolar? </label>
-                      <select class="form-control" id="rendimientoescolar" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Muy bueno">Muy bueno</option>
-                        <option value="Bueno">Bueno</option>
-                        <option value="Regular">Regular</option>
-                        <option value="Malo">Malo</option>
-                      </select>
-                      <br>
-                      <label for="materiasFaciles" class="form-label">¿Qué materias consideras que se te facilitan más?</label>
-                      <div class="row">
-                          <div class="col-md-4 mb-3">
-                              <input type="text" class="form-control" id="materiaFacil1" placeholder="Materia 1">
-                          </div>
-                          <div class="col-md-4 mb-3">
-                              <input type="text" class="form-control" id="materiaFacil2" placeholder="Materia 2">
-                          </div>
-                          <div class="col-md-4 mb-3">
-                              <input type="text" class="form-control" id="materiaFacil3" placeholder="Materia 3">
-                          </div>
-                      </div>
-                    </div>
-              <div class="col-md-6 mb-3"><br>
-              <label for="materiasComplicadas" class="form-label">¿Qué materias consideras que te cuestan más trabajo?</label>
-              <div class="row">
-                  <div class="col-md-4 mb-3">
-                      <input type="text" class="form-control" id="materiaComplicada1" placeholder="Materia 1">
-                  </div>
-                  <div class="col-md-4 mb-3">
-                      <input type="text" class="form-control" id="materiaComplicada2" placeholder="Materia 2">
-                  </div>
-                  <div class="col-md-4 mb-3">
-                      <input type="text" class="form-control" id="materiaComplicada3" placeholder="Materia 3">
-                  </div>
-              </div>
-              <label for="acreditarextra" class="form-label">¿Cuántas materias acreditaste en extraordinario?</label>
-                      <select class="form-control" id="acreditarextra" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="Más de 5">Más de 5</option>
-                      </select>
-                   <br>
-              <label for="cuales" class="form-label">¿Cuáles?</label>
-              <div class="row">
-                  <div class="col-md-4 mb-3">
-                      <input type="text" class="form-control" id="materiaacreditada1" placeholder="Materia 1">
-                  </div>
-                  <div class="col-md-4 mb-3">
-                      <input type="text" class="form-control" id="materiaacreditada2" placeholder="Materia 2">
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <input type="text" class="form-control" id="materiaacreditada3" placeholder="Materia 3">
-                </div>
-              </div>
-              <br>
-              <label for="repetiranio" class="form-label">¿Repetiste algún año o grado en niveles anteriores?</label>
-                      <select class="form-control" id="repetiranio" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Si">Si</option>
-                        <option value="No">No</option>
-                      </select>
-                      <br>
-              <label for="en-que-nivel" class="form-label">¿En qué nivel?</label>
-                      <select class="form-control" id="en-que-nivel" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Primaria">Primaria</option>
-                        <option value="Secundaria">Secundaria</option>
-                        <option value="Bachillerato">Bachillerato</option>
-                        <option value="Carrera Técnica">Carrera Técnica</option>
-                        <option value="Otra">Otra</option>
-                      </select>
-                     <br>
-            <label for="obstaculos" class="form-label">¿Cuáles consideras tus principales obstáculos para encarar los estudios?</label>
-            <input type="text" class="form-control" id="obstaculos" required>
-              </div>
-                  </div>
-                </form>
-              </div>
-
-            <!-- FORMULARIO DE HÁBITOS DE ESTUDIO -->
-            <div class="tab-pane fade" id="datos-estudio" role="tabpanel" aria-labelledby="datos-estudio-tab">
-              <form id="formDatosEstudio">
-                <div class="row">
-                  <div class="col-md-6 mb-3"><br>
-                    <label for="te-gusta-leer" class="form-label">¿Te gusta leer?</label>
-                    <select class="form-control" id="te-gusta-leer" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                    </select>
-                    <br>
-                    <label for="tipo-lectura" class="form-label">¿Qué tipo de lectura te gusta? </label>
-                      <select class="form-control" id="tipo-lectura" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Novelas">Novelas</option>
-                        <option value="Cuentos">Cuentos</option>
-                        <option value="Poesía">Poesía</option>
-                        <option value="Noticias">Noticias</option>
-                        <option value="Ciencia Ficción">Ciencia Ficción</option>
-                        <option value="Libros de texto">Libros de texto</option>
-                        <option value="Artículos de divulgación">Artículos de divulgación</option>
-                        <option value="Artículos de opinión">Artículos de opinión</option>
-                        <option value="Otro">Otro</option>
-                      </select>
-                      <br>
-                    <label for="lugar-de-estudio" class="form-label">¿Tienes un lugar especial para estudiar en tu casa?</label>
-                    <select class="form-control" id="lugar-de-estudio" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                    </select>
-                    <br>
-                    <label for="describir" class="form-label">Descríbelo</label>
-                    <textarea class="form-control" id="describir" required></textarea>
-                  </div>
-
-                  <div class="col-md-6 mb-3"><br>
-                    <label for="horas-estudio" class="form-label">¿Cuántas horas diarias dedicas usualmente al estudio? </label>
-                    <select class="form-control" id="horas-estudio" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="Más de 5">Más de 5</option>
-                    </select>
-                    <br>
-                    <label for="horario-de-estudio" class="form-label">¿Tienes un horario fijo para estudiar?</label>
-                    <select class="form-control" id="horario-de-estudio" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                    </select>
-                    <br>
-                    <label for="escuchar-musica" class="form-label">¿Escuchas música cuando estudias?</label>
-                    <select class="form-control" id="escuchar-musica" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-          <!-- FORMULARIO DE AFICIONES -->
-          <div class="tab-pane fade" id="datos-aficiones" role="tabpanel" aria-labelledby="datos-aficiones-tab">
-            <form id="formDatosAficiones">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <br>
-                  <label for="tiempo-libre" class="form-label">¿En qué sueles emplear tu tiempo libre mayoritariamente?</label>
-                  <select class="form-control" id="tiempo-libre" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Practicar algún deporte">Practicar algún deporte</option>
-                    <option value="Leer">Leer</option>
-                    <option value="Escuchar música">Escuchar música</option>
-                    <option value="Salir o estar con amigos">Salir o estar con amigos</option>
-                    <option value="Ir al cine">Ir al cine</option>
-                    <option value="Ver TV">Ver TV</option>
-                    <option value="Redes sociales">Redes sociales</option>
-                    <option value="Navegar en Internet">Navegar en Internet</option>
-                    <option value="Jugar juegos en computadora, celular">Jugar juegos en computadora, celular</option>
-                    <option value="Otro">Otro</option>
-                  </select>
-                </div>
-                
-                <div class="col-md-6 mb-3">
-                  <br>
-                  <label for="tiempo-aficion" class="form-label">¿Cuánto tiempo diario dedicas a esa afición?</label>
-                  <select class="form-control" id="tiempo-aficion" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Media hora">Media hora</option>
-                    <option value="Una hora">Una hora</option>
-                    <option value="Hora y media">Hora y media</option>
-                    <option value="Dos horas">Dos horas</option>
-                    <option value="Tres horas">Tres horas</option>
-                    <option value="Más de tres horas">Más de tres horas</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <!-- FORMULARIO DE PERSONALIDAD -->
-          <div class="tab-pane fade" id="datos-personalidad" role="tabpanel" aria-labelledby="datos-personalidad-tab">
-            <form id="formDatosPersonalidad">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <br>
-                  <label for="colaboras-tareas" class="form-label">¿Colaboras en casa con las tareas del hogar?</label>
-                  <select class="form-control" id="colaboras-tareas" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                  </select>
-                  <br>
-                  <label for="medida-colaboracion" class="form-label">¿En qué medida?</label>
-                  <select class="form-control" id="medida-colaboracion" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Mucho">Mucho</option>
-                    <option value="Regular">Regular</option>
-                    <option value="Solo lo necesario">Solo lo necesario</option>
-                    <option value="Poco">Poco</option>
-                    <option value="Nada">Nada</option>
-                  </select>
-                </div>
-                
-                <div class="col-md-6 mb-3">
-                  <br>
-                  <label for="integracion-familiar" class="form-label">¿Qué tan integrado(a) consideras que estás a tu ambiente familiar?</label>
-                  <select class="form-control" id="integracion-familiar" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Totalmente">Totalmente</option>
-                    <option value="Bastante">Bastante</option>
-                    <option value="Suficiente">Suficiente</option>
-                    <option value="Regular">Regular</option>
-                    <option value="Poco">Poco</option>
-                    <option value="Nada">Nada</option>
-                  </select><br>
-                  <label for="hablar-familiares" class="form-label">¿Sueles hablar con familiares sobre aspectos que te interesan o preocupan?</label>
-                  <select class="form-control" id="hablar-familiares" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Siempre">Siempre</option>
-                    <option value="Casi siempre">Casi siempre</option>
-                    <option value="A veces">A veces</option>
-                    <option value="Casi nunca">Casi nunca</option>
-                    <option value="Nunca">Nunca</option>
-                  </select>
-                  <br>
-                  <label for="comunicacion-casa" class="form-label">¿Consideras que te comunicas adecuadamente en casa?</label>
-                  <select class="form-control" id="comunicacion-casa" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <!-- DATOS DE SALUD -->
-          <div class="tab-pane fade" id="datos-salud" role="tabpanel" aria-labelledby="datos-salud-tab">
-            <form id="formDatosSalud">
-                <div class="row">
-                    <div class="col-md-6 mb-3"><br>
-                        <label for="salud-general" class="form-label">¿Cómo consideras en general que es tu salud?</label>
-                        <select class="form-control" id="salud-general" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="Muy buena">Muy buena</option>
-                            <option value="Buena">Buena</option>
-                            <option value="Regular">Regular</option>
-                            <option value="Mala">Mala</option>
-                        </select><br>
-                        <label for="enfermedad-grave" class="form-label">¿Has tenido alguna enfermedad grave?</label>
-                        <select class="form-control" id="enfermedad-grave" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="Si">Sí</option>
-                            <option value="No">No</option>
-                        </select><br>
-                        <label for="tipo-enfermedad" class="form-label">¿De qué tipo?</label>
-                        <input type="text" class="form-control" id="tipo-enfermedad"><br>
-                        <label for="enfermedad-cronica" class="form-label">¿Tienes algún padecimiento o enfermedad crónica?</label>
-                        <input type="text" class="form-control" id="enfermedad-cronica"><br>
-                        <label for="cual-enfermedad-cronica" class="form-label">¿Cuál?</label>
-                        <input type="text" class="form-control" id="cual-enfermedad-cronica">
-                    </div>
-
-                    <div class="col-md-6 mb-3"><br>
-                      <label for="operacion" class="form-label">¿Te han operado alguna vez?</label>
-                      <select class="form-control" id="operacion" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="Si">Sí</option>
-                            <option value="No">No</option>
-                        </select><br>
-                        <label for="causa-operacion" class="form-label">¿Cuál fue la causa?</label>
-                        <input type="text" class="form-control" id="causa-operacion">
-                        <label for="problema-salud-estudios" class="form-label">¿Padeces algún problema de salud que consideres pueda afectar tus estudios? Menciónalo</label>
-                        <input type="text" class="form-control" id="problema-salud-estudios"><br>
-                        <label for="condicion-vision-audicion" class="form-label">¿Tienes alguna condición que afecte tu visión, audición, motricidad?</label>
-                        <select class="form-control" id="condicion-vision-audicion" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="Si">Sí</option>
-                            <option value="No">No</option>
-                        </select><br>
-                        <label for="cual-condicion-vision-audicion" class="form-label">¿Cuál?</label>
-                        <input type="text" class="form-control" id="cual-condicion-vision-audicion">
-                    </div>
-
-                    <div class="col-md-12 mb-3">
-                        <label for="comentarios" class="form-label">Si tuvieras algún comentario o algo más que agregar, te pedimos que lo hagas en el siguiente espacio:</label>
-                        <textarea class="form-control" id="comentarios" rows="3"></textarea>
-                    </div>
-                </div>
-            </form>
-          </div>
-
-          <!-- FORMULARIO DE RASGOS -->
-          <div class="tab-pane fade" id="datos-rasgos" role="tabpanel" aria-labelledby="datos-rasgos-tab">
-            <form id="formDatosRasgos">
-              <div class="row">
-                <div class="col-md-4 mt-4">
-                  <label>Marca aquellos rasgos que mejor definan tu personalidad:</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="platicador" name="rasgos" value="Platicador(a)">
-                    <label class="form-check-label" for="platicador">Platicador(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="timido" name="rasgos" value="Tímido(a)">
-                    <label class="form-check-label" for="timido">Tímido(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="enojon" name="rasgos" value="Enojón(a)">
-                    <label class="form-check-label" for="enojon">Enojón(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="seguro" name="rasgos" value="Seguro(a)">
-                    <label class="form-check-label" for="seguro">Seguro(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="servicial" name="rasgos" value="Servicial">
-                    <label class="form-check-label" for="servicial">Servicial</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="egocentrico" name="rasgos" value="Egocéntrico(a)">
-                    <label class="form-check-label" for="egocentrico">Egocéntrico(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="planificador" name="rasgos" value="Planificador(a)">
-                    <label class="form-check-label" for="planificador">Planificador(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="despreocupado" name="rasgos" value="Despreocupado(a)">
-                    <label class="form-check-label" for="despreocupado">Despreocupado(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cuestiono" name="rasgos" value="Cuestiono todo">
-                    <label class="form-check-label" for="cuestiono">Cuestiono todo</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="conservador" name="rasgos" value="Conservador(a)">
-                    <label class="form-check-label" for="conservador">Conservador(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="alegre" name="rasgos" value="Alegre">
-                    <label class="form-check-label" for="alegre">Alegre</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="retraido" name="rasgos" value="Retraído(a)">
-                    <label class="form-check-label" for="retraido">Retraído(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="impulsivo" name="rasgos" value="Impulsivo(a)">
-                    <label class="form-check-label" for="impulsivo">Impulsivo(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="calmado" name="rasgos" value="Calmado(a)">
-                    <label class="form-check-label" for="calmado">Calmado(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="franco" name="rasgos" value="Franco(a)">
-                    <label class="form-check-label" for="franco">Franco(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="competitivo" name="rasgos" value="Competitivo(a)">
-                    <label class="form-check-label" for="competitivo">Competitivo(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="ambicioso" name="rasgos" value="Ambicioso(a)">
-                    <label class="form-check-label" for="ambicioso">Ambicioso(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="espontaneo" name="rasgos" value="Espontáneo(a)">
-                    <label class="form-check-label" for="espontaneo">Espontáneo(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="critico" name="rasgos" value="Crítico(a)">
-                    <label class="form-check-label" for="critico">Crítico(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="tradicionalista" name="rasgos" value="Tradicionalista">
-                    <label class="form-check-label" for="tradicionalista">Tradicionalista</label>
-                  </div>
-                </div>  
-                </div>
-                
-                <div class="col-md-4 mt-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="optimista" name="rasgos" value="Optimista">
-                    <label class="form-check-label" for="optimista">Optimista</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="solitario" name="rasgos" value="Solitario(a)">
-                    <label class="form-check-label" for="solitario">Solitario(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="explota" name="rasgos" value="Explotas fácilmente">
-                    <label class="form-check-label" for="explota">Explotas fácilmente</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="piensas-antes" name="rasgos" value="Piensas antes de actuar">
-                    <label class="form-check-label" for="piensas-antes">Piensas antes de actuar</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="piensas-demas" name="rasgos" value="Piensas en los demás">
-                    <label class="form-check-label" for="piensas-demas">Piensas en los demás</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="antisocial" name="rasgos" value="Antisocial">
-                    <label class="form-check-label" for="antisocial">Antisocial</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="puntual" name="rasgos" value="Puntual">
-                    <label class="form-check-label" for="puntual">Puntual</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="aventado" name="rasgos" value="Aventado(a)">
-                    <label class="form-check-label" for="aventado">Aventado(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="seguir-indicaciones" name="rasgos" value="Me cuesta seguir indicaciones">
-                    <label class="form-check-label" for="seguir-indicaciones">Me cuesta seguir indicaciones</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="prefieres-seguro" name="rasgos" value="Prefieres lo seguro">
-                    <label class="form-check-label" for="prefieres-seguro">Prefieres lo seguro</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="autoridad" name="rasgos" value="Autoritario(a)">
-                    <label class="form-check-label" for="autoridad">Autoritario(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="temeroso" name="rasgos" value="Temeroso(a)">
-                    <label class="form-check-label" for="temeroso">Temeroso(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="preocupon" name="rasgos" value="Preocupón(a)">
-                    <label class="form-check-label" for="preocupon">Preocupón(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="optimista2" name="rasgos" value="Optimista">
-                    <label class="form-check-label" for="optimista2">Optimista</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="altruista" name="rasgos" value="Altruista">
-                    <label class="form-check-label" for="altruista">Altruista</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="indiferente" name="rasgos" value="Indiferente">
-                    <label class="form-check-label" for="indiferente">Indiferente</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cuadrado" name="rasgos" value="Cuadrado(a)">
-                    <label class="form-check-label" for="cuadrado">Cuadrado(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="desinhibido" name="rasgos" value="Desinhibido(a)">
-                    <label class="form-check-label" for="desinhibido">Desinhibido(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="imaginativo" name="rasgos" value="Imaginativo(a)">
-                    <label class="form-check-label" for="imaginativo">Imaginativo(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="poco-creativo" name="rasgos" value="Poco creativo(a)">
-                    <label class="form-check-label" for="poco-creativo">Poco creativo(a)</label>
-                  </div>
-                </div>
-
-                <div class="col-md-4 mt-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="amiguero" name="rasgos" value="Amiguero(a)">
-                    <label class="form-check-label" for="amiguero">Amiguero(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="ansioso" name="rasgos" value="Ansioso(a)">
-                    <label class="form-check-label" for="ansioso">Ansioso(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="pesimista" name="rasgos" value="Pesimista">
-                    <label class="form-check-label" for="pesimista">Pesimista</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="enfrento-problemas" name="rasgos" value="Enfrento los problemas">
-                    <label class="form-check-label" for="enfrento-problemas">Enfrento los problemas</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="generoso" name="rasgos" value="Generoso(a)">
-                    <label class="form-check-label" for="generoso">Generoso(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="insensible" name="rasgos" value="Insensible">
-                    <label class="form-check-label" for="insensible">Insensible</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="poco-espontaneo" name="rasgos" value="Poco espontáneo">
-                    <label class="form-check-label" for="poco-espontaneo">Poco espontáneo</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="flojo" name="rasgos" value="Flojo(a)">
-                    <label class="form-check-label" for="flojo">Flojo(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="curioso" name="rasgos" value="Curioso(a)">
-                    <label class="form-check-label" for="curioso">Curioso(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="sigo-indicaciones" name="rasgos" value="Sigo indicaciones fácilmente">
-                    <label class="form-check-label" for="sigo-indicaciones">Sigo indicaciones fácilmente</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="chistoso" name="rasgos" value="Chistoso(a)">
-                    <label class="form-check-label" for="chistoso">Chistoso(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="inseguro" name="rasgos" value="Inseguro(a)">
-                    <label class="form-check-label" for="inseguro">Inseguro(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="nervioso" name="rasgos" value="Nervioso(a)">
-                    <label class="form-check-label" for="nervioso">Nervioso(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="perseverante" name="rasgos" value="Perseverante y tenaz">
-                    <label class="form-check-label" for="perseverante">Perseverante y tenaz</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="solidario" name="rasgos" value="Solidario(a)">
-                    <label class="form-check-label" for="solidario">Solidario(a)</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="orgulloso" name="rasgos" value="Orgulloso">
-                    <label class="form-check-label" for="orgulloso">Orgulloso</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="escrupuloso" name="rasgos" value="Escrupuloso">
-                    <label class="form-check-label" for="escrupuloso">Escrupuloso</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="poca-voluntad" name="rasgos" value="Poca fuerza de voluntad">
-                    <label class="form-check-label" for="poca-voluntad">Poca fuerza de voluntad</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="responsable" name="rasgos" value="Responsable">
-                    <label class="form-check-label" for="responsable">Responsable</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="serio" name="rasgos" value="Serio(a)">
-                    <label class="form-check-label" for="serio">Serio(a)</label>
-                  </div>     
-                </div>
-              </div>
-            </form>
-          </div>
+            
+           
             <!-- BOTONES PARA DESPLAZAR DE PESTAÑA -->
             <div class="d-flex justify-content-between mt-3">
               <button type="button" class="btn btn-secondary" id="prevButton" style="display: none;">Anterior</button>
               <button type="button" class="btn btn-primary" id="nextButton">Siguiente</button>
-              <button type="button" class="btn btn-success" id="submitBtn" style="display: none;">Enviar</button>
+
             </div>
 
           </div>

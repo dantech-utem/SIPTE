@@ -464,11 +464,22 @@ def descargarXLSX(request):
 #     return response
 
 def descargarReporte(request):
-    wb = Workbook()
+    wb = load_workbook(filename='mainApp/data/baseReportePlanAccion.xlsx')
     ws = wb.active
+#
+#    FuenteRemarcada = Font(bold = True)
+#
+#    hilera1 = ['Programa', 'Realizada', 'Canalizada']
+#    for col in range(1, 4):
+#        cell = ws.cell(row=6, column=col)
+#        cell.value = hilera1[col - 1]
+#        cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
 
-    FuenteRemarcada = Font(bold = True)
+#    AreasCanalizacion = ['Psicologo', 'Pedagogo', 'Becas', 'Enfermeria', 'Incubadora', 'Bolsa de trabajo', 'Asesor Academico']
+#    for row in range(7, 15):
+#        ws[f'D{row}'].value = AreasCanalizacion[row - 8] 
 
+<<<<<<< Updated upstream
     hilera1 = ['Programa', 'Realizada', 'Canalizada']
 
     for col in range(1, 4):
@@ -487,13 +498,25 @@ def descargarReporte(request):
         ws[f'H{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
         ws[f'I{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
         ws[f'J{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+=======
+#    Motivos = ['No se cumplieron expectativas', 'Reprobacion', 'Problemas economicos', 'Dificultades para el transporte', 'Problemas de trabajo', 'Cambio de carrera', 'Incompatibilidad de horario', 'Faltas al reglamento', 'Cambio de residencia', 'Cambio de universidad', 'Problemas familiares', 'Problemas personales', 'Otras']
+#    for row in range(7, 21):
+#        ws[f'J{row}'].value = Motivos[row - 8]
 
-    hilera2 = ['Cantidad', 'Tipo de baja']
-    for col in range(11, 13):
-        cell = ws.cell(row=6, column=col) 
-        cell.value = hilera2[col - 11]
-        cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
+#    hilera2 = ['Cantidad', 'Tipo de baja']
+#    for col in range(11, 13):
+#        cell = ws.cell(row=6, column=col) 
+#        cell.value = hilera2[col - 11]
+#        cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
 
+#    ws['A15'] = 'No programada'
+#    ws['A15'].alignment = Alignment(vertical='center', text_rotation=90)
+>>>>>>> Stashed changes
+
+#    ws['D6'] = 'Areas de canalizacion'
+#    ws['D15'] = 'Asunto de atencion'
+
+<<<<<<< Updated upstream
 
 
     ws['A6'].font = FuenteRemarcada
@@ -508,6 +531,29 @@ def descargarReporte(request):
     ws['B15'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
     ws['B15'].font = FuenteRemarcada
     ws['B15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+=======
+#    ws['B15'] = 'Asunto de atencion'
+
+#    ws['C15'] = 'Cantidad'
+#    ws['C15'].alignment = Alignment(vertical='center', text_rotation=90)
+
+#    ws['D15'] = 'Observaciones'
+
+#    ws['J21'] = 'Dificultades para ejercer la tutoria'
+
+#    ws['G6'] = 'Cantidad'
+#    ws['G6'].alignment = Alignment(vertical='center', text_rotation=90)
+
+#    ws['H6'] = 'Resultado de la canalizacion'
+
+#    ws['I6'] = 'Total'
+#    ws['I6'].alignment = Alignment(vertical='center', text_rotation=90)
+
+
+#   ws['J6'] = 'Motivo de baja'
+
+#    ws['M6'] = 'Observaciones'    
+>>>>>>> Stashed changes
 
     ws['C6'].font = FuenteRemarcada
     ws['C6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')

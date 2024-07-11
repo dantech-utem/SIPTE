@@ -10,9 +10,9 @@ from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 # from openpyxl.styles.borders import Border, Side, BORDER_THIN
 # import requests
 from openpyxl.drawing.image import Image
-# from io import BytesIO
-# import os
-# from django.conf import settings
+from io import BytesIO
+import os
+from django.conf import settings
 from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor
 from django.contrib import messages #Importamos para presentar mensajes
 # hola
@@ -131,8 +131,6 @@ def editarAtencionIndividual(request, id):
     estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
     
     if request.method == 'POST':
-        estudiante_id = request.POST.get('estudianteAtencion')
-        atencion.estudiante_id = estudiante_id  
         atencion.asuntoTratar = request.POST.get('asuntoTratar')
         atencion.observaciones = request.POST.get('observaciones')
         atencion.save()
@@ -225,104 +223,150 @@ def evaluacionAcTutorial(request):
     # Si es un método GET o cualquier otro, simplemente renderizar el formulario
     return render(request, 'evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
 
+
+
 def descargarXLSX(request):
-
-    wb = Workbook()
+    tutor = request.user
+    usuario = Usuarios.objects.get(User=tutor)
+    periodo_activo = Periodo.objects.filter(estado=True).first()
+    actividad = AccionTutorial.objects.filter(tutor=tutor, cicloAccion=periodo_activo)
+# Cargar el archivo base
+    path_archivo_base = os.path.join(settings.BASE_DIR, 'mainApp', 'data', 'basePlanAccion.xlsx')
+    # Cargar el archivo base
+    wb = load_workbook(filename=path_archivo_base, read_only=False)
     ws = wb.active
-
-    thin_border = Border(left=Side(style='thin'),
-                         right=Side(style='thin'),
-                         top=Side(style='thin'),
-                         bottom=Side(style='thin'))
-
-    FuenteRemarcada = Font(bold = True)
-
-    ws['E5'] = 'Ciclo:'
-    ws['E5'].border = thin_border
-    ws['F5'].border = thin_border
-    ws['E5'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    Titulo = ['Plan acción tutorial']
-
-    for row in range(1, 2):
-        ws[f'E{row}'].value = Titulo[row - 1]
-        ws[f'E{row}'].border = thin_border
-        ws[f'E{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-        ws.merge_cells(start_row=row, start_column=5, end_row=row, end_column=6)
-
-
-
-    Datos = ["Nombre del tutor:", "Grupo tutorado:"]
-
-    for row in range(4, 6):
-        ws[f'A{row}'].value = Datos[row - 4]
-        ws[f'A{row}'].border = thin_border
-        ws[f'A{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-        ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=2)
-
-    for row in range(4, 6):
-        ws[f'C{row}'].border = thin_border
-        ws.merge_cells(start_row=row, start_column=3, end_row=row, end_column=4)
-
-
-    Atributos = ["No", "Tema", "Objetivos", "Actividades", "Recursos", "Evidencias"]
-
-    for col in range(1, 7):
-        cell = ws.cell(row=8, column=col)
-        cell.value = Atributos[col - 1]
-        cell.border = thin_border
-        cell.fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-        cell.font = FuenteRemarcada
-
-    for row in range(9, 19):
-        ws[f'A{row}'].value = row - 8
-        ws[f'A{row}'].border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=9, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=10, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=11, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=12, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=13, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=14, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=15, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=16, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=17, column=col)
-        cell.border = thin_border
-
-    for col in range(2, 7):
-        cell = ws.cell(row=18, column=col)
-        cell.border = thin_border
     
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=Libro.xlsx'
-    wb.save(response)
+    if periodo_activo:
+        ws['F6'] = f"{periodo_activo.periodo} {periodo_activo.anio}"
+    else:
+        ws['F6'] = "No hay periodo activo"
+        
+    ws['C5'] = f"{tutor.first_name} {tutor.last_name}"
+    ws['C6'] = usuario.grupo
 
-    return response
+
+    # Rellenar las filas con los datos de 'actividad'
+    row_num = 10
+    for idx, atencion in enumerate(actividad, start=1):
+        print(f"Procesando registro {idx}: {atencion.tema}, {atencion.objetivos}, {atencion.actividades}, {atencion.recursos}, {atencion.evidencias}")
+        if row_num > 18:
+            break
+        ws.cell(row=row_num, column=2).value = atencion.tema  # Columna Tema
+        ws.cell(row=row_num, column=3).value = atencion.objetivos  # Columna Objetivos
+        ws.cell(row=row_num, column=4).value = atencion.actividades  # Columna Actividades
+        ws.cell(row=row_num, column=5).value = atencion.recursos  # Columna Recursos
+        ws.cell(row=row_num, column=6).value = atencion.evidencias  # Columna Evidencias
+        row_num += 1
+        
+    # Crear un objeto BytesIO para guardar el archivo modificado en memoria
+    with BytesIO() as in_memory_fp:
+        wb.save(in_memory_fp)
+        in_memory_fp.seek(0)
+        
+        # Crear la respuesta HTTP
+        response = HttpResponse(in_memory_fp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=reporte.xlsx'
+
+    return response 
+
+# def descargarXLSX(request):
+
+    # wb = Workbook()
+    # ws = wb.active
+
+    # thin_border = Border(left=Side(style='thin'),
+    #                      right=Side(style='thin'),
+    #                      top=Side(style='thin'),
+    #                      bottom=Side(style='thin'))
+
+    # FuenteRemarcada = Font(bold = True)
+
+    # ws['E5'] = 'Ciclo:'
+    # ws['E5'].border = thin_border
+    # ws['F5'].border = thin_border
+    # ws['E5'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+
+    # Titulo = ['Plan acción tutorial']
+
+    # for row in range(1, 2):
+    #     ws[f'E{row}'].value = Titulo[row - 1]
+    #     ws[f'E{row}'].border = thin_border
+    #     ws[f'E{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    #     ws.merge_cells(start_row=row, start_column=5, end_row=row, end_column=6)
+
+
+
+    # Datos = ["Nombre del tutor:", "Grupo tutorado:"]
+
+    # for row in range(4, 6):
+    #     ws[f'A{row}'].value = Datos[row - 4]
+    #     ws[f'A{row}'].border = thin_border
+    #     ws[f'A{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    #     ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=2)
+
+    # for row in range(4, 6):
+    #     ws[f'C{row}'].border = thin_border
+    #     ws.merge_cells(start_row=row, start_column=3, end_row=row, end_column=4)
+
+
+    # Atributos = ["No", "Tema", "Objetivos", "Actividades", "Recursos", "Evidencias"]
+
+    # for col in range(1, 7):
+    #     cell = ws.cell(row=8, column=col)
+    #     cell.value = Atributos[col - 1]
+    #     cell.border = thin_border
+    #     cell.fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    #     cell.font = FuenteRemarcada
+
+    # for row in range(9, 19):
+    #     ws[f'A{row}'].value = row - 8
+    #     ws[f'A{row}'].border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=9, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=10, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=11, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=12, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=13, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=14, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=15, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=16, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=17, column=col)
+    #     cell.border = thin_border
+
+    # for col in range(2, 7):
+    #     cell = ws.cell(row=18, column=col)
+    #     cell.border = thin_border
+    
+    # response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    # response['Content-Disposition'] = 'attachment; filename=Libro.xlsx'
+    # wb.save(response)
+
+    # return response
 
 
 # def descargarXLSX(request):

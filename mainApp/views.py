@@ -15,7 +15,7 @@ from openpyxl.drawing.image import Image
 # from django.conf import settings
 from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor
 from django.contrib import messages #Importamos para presentar mensajes
-
+# hola
 
 # Create your views here.
 class inicio(View):

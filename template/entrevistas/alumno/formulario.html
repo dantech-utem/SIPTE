@@ -2,53 +2,57 @@
 {% load static %}
 
 {% block content %}
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        <div class="card">
-          <div class="card-body">
-            <!-- PESTAÑAS -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="datos-identificacion-tab" data-bs-toggle="tab" data-bs-target="#datos-identificacion" type="button" role="tab" aria-controls="datos-identificacion" aria-selected="true">Datos de Identificación</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="datos-familiares-tab" data-bs-toggle="tab" data-bs-target="#datos-familiares" type="button" role="tab" aria-controls="datos-familiares" aria-selected="false">Datos familiares</button>
-              </li>
-             <!--  <li class="nav-item" role="presentation">
-                <button class="nav-link" id="datos-socioeconomicos-tab" data-bs-toggle="tab" data-bs-target="#datos-socioeconomicos" type="button" role="tab" aria-controls="datos-socioeconomicos" aria-selected="false">Datos socioeconómicos</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="datos-academicos-tab" data-bs-toggle="tab" data-bs-target="#datos-academicos" type="button" role="tab" aria-controls="datos-academicos" aria-selected="false">Antecedentes académicos</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="datos-estudio-tab" data-bs-toggle="tab" data-bs-target="#datos-estudio" type="button" role="tab" aria-controls="datos-estudio" aria-selected="false">Hábitos de estudio</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="datos-aficiones-tab" data-bs-toggle="tab" data-bs-target="#datos-aficiones" type="button" role="tab" aria-controls="datos-aficiones" aria-selected="false">Aficiones</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="datos-personalidad-tab" data-bs-toggle="tab" data-bs-target="#datos-personalidad" type="button" role="tab" aria-controls="datos-personalidad" aria-selected="false">Personalidad</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="datos-rasgos-tab" data-bs-toggle="tab" data-bs-target="#datos-rasgos" type="button" role="tab" aria-controls="datos-rasgos" aria-selected="false">Rasgos</button>
-              </li>
-                <li class="nav-item" role="presentation">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <!-- PESTAÑAS -->
+           <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="datos-identificacion-tab" data-bs-toggle="tab" data-bs-target="#datos-identificacion" type="button" role="tab" aria-controls="datos-identificacion" aria-selected="true">Datos de Identificación</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-familiares-tab" data-bs-toggle="tab" data-bs-target="#datos-familiares" type="button" role="tab" aria-controls="datos-familiares" aria-selected="false">Datos familiares</button>
+            </li>
+            <!-- <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-socioeconomicos-tab" data-bs-toggle="tab" data-bs-target="#datos-socioeconomicos" type="button" role="tab" aria-controls="datos-socioeconomicos" aria-selected="false">Datos socioeconómicos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-academicos-tab" data-bs-toggle="tab" data-bs-target="#datos-academicos" type="button" role="tab" aria-controls="datos-academicos" aria-selected="false">Antecedentes académicos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-estudio-tab" data-bs-toggle="tab" data-bs-target="#datos-estudio" type="button" role="tab" aria-controls="datos-estudio" aria-selected="false">Hábitos de estudio</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-aficiones-tab" data-bs-toggle="tab" data-bs-target="#datos-aficiones" type="button" role="tab" aria-controls="datos-aficiones" aria-selected="false">Aficiones</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-personalidad-tab" data-bs-toggle="tab" data-bs-target="#datos-personalidad" type="button" role="tab" aria-controls="datos-personalidad" aria-selected="false">Personalidad</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-rasgos-tab" data-bs-toggle="tab" data-bs-target="#datos-rasgos" type="button" role="tab" aria-controls="datos-rasgos" aria-selected="false">Rasgos</button>
+            </li>
+             <li class="nav-item" role="presentation">
                     <button class="nav-link" id="datos-salud-tab" data-bs-toggle="tab" data-bs-target="#datos-salud" type="button" role="tab" aria-controls="datos-salud" aria-selected="false">Salud</button>
-              </li> -->
-            </ul>
-            <!-- FORMULARIO DE DATOS DE IDENTIFICACION -->
-            <div class="tab-content" id="myTabContent">
+            </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-salud-tab" data-bs-toggle="tab" data-bs-target="#datos-salud" type="button" role="tab" aria-controls="datos-salud" aria-selected="false">Salud</button>
+            </li> -->
+           </ul>
+            <!-- FORMULARIO -->
+            <form id="formDatos" action="{% url 'crearEstudiante' %}" method="POST">
+            {% csrf_token %}
+             <div class="tab-content" id="myTabContent">
+              <!-- DATOS DE IDENTIFICACION -->
               <div class="tab-pane fade show active" id="datos-identificacion" role="tabpanel" aria-labelledby="datos-identificacion-tab">
-                <form id="formDatosIdentificacion" action="" method="POST">
-                  {% csrf_token %}
-                  <div class="row">
-                    <div class="col-md-6 mb-3"><br>
-                      <label for="noControl" class="form-label">Número de control</label>
-                      <input type="text" class="form-control" id="noControl" name="noControl" required maxlength="8" pattern="\d{8}">
+                <div class="row">
+                  <div  class="col-md-6 mb-3"><br>
+                    <label for="noControl" class="form-label">Número de control</label>
+                      <input type="text" class="form-control" id="noControl" name="noControl" required maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                       <br>
                       <label for="nombre" class="form-label">Nombre del Alumno</label>
-                      <input type="text" class="form-control" id="nombre" name="nombre" required pattern="[A-Za-z\s]+">
+                      <input type="text" class="form-control" id="nombre" name="nombre" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                       <br>
                       <label for="carrera" class="form-label">Carrera</label>
                       <select class="form-control" id="carrera" name="carrera" required>
@@ -83,20 +87,19 @@
                         <option value="9-IDG-1">9-IDG-1</option>
                         <option value="4-TID-1">4-TID-1</option>
                       </select>
-                    </div>
-
-                    <div class="col-md-6 mb-3"><br>
-                      <label for="fechaR" class="form-label">Fecha</label>
+                  </div>
+                  <div class="col-md-6 mb-3"><br>
+                    <label for="fechaR" class="form-label">Fecha</label>
                       <input type="date" class="form-control" id="fechaR" name="fechaR" required>
                     <br>
                       <label for="telCasa" class="form-label">Teléfono de Casa</label>
-                      <input type="text" class="form-control" id="telCasa" name="telCasa" required maxlength="10" pattern="\d{10}">
+                      <input type="text" class="form-control" id="telCasa" name="telCasa" required maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" >
                     <br>
                       <label for="correo" class="form-label">Correo Electrónico</label>
                       <input type="email" class="form-control" id="correo" name="correo" required>
                     <br>
                       <label for="telCelular" class="form-label">Número de Celular</label>
-                      <input type="text" class="form-control" id="telCelular" name="telCelular" required maxlength="10" pattern="\d{10}">
+                      <input type="text" class="form-control" id="telCelular" name="telCelular" required maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     <br>
                       <label for="edad" class="form-label">Edad</label>
                       <select class="form-control" id="edad" name="edad" required>
@@ -118,14 +121,11 @@
                         <option value="30">30</option>
                         <option value="Más de 30">Más de 30</option>
                       </select>
-                    </div>
-                  </div>         
-                </form>
-              </div> 
-             <!-- FORMULARIO DE DATOS FAMILIARES -->
-             <div class="tab-pane fade" id="datos-familiares" role="tabpanel" aria-labelledby="datos-familiares-tab">
-              <form method="POST" action="">
-                {% csrf_token %}
+                  </div>
+                </div>
+              </div>
+              <!--DATOS FAMILIARES -->
+              <div class="tab-pane fade" id="datos-familiares" role="tabpanel" aria-labelledby="datos-familiares-tab">
                 <div class="row">
                   <div class="col-md-6 mb-3"><br>
                     <label for="conviveCon" class="form-label">¿Con quién vives?</label>
@@ -140,7 +140,7 @@
                       <option value="Otra situación">Otra situación</option>
                     </select><br>
                     <label for="otra_situacion" class="form-label">Si "otra situación", descríbela</label>
-                    <input type="text" class="form-control" id="otra_situacion" name="otra_situacion">
+                    <input type="text" class="form-control" id="otra_situacion" name="otra_situacion" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                   </div>
                   <div class="col-md-6 mb-3"><br>
                     <label for="huerfano" class="form-label">¿Eres huérfano?</label>
@@ -158,7 +158,7 @@
                         <option value="Ambos">Ambos</option>
                       </select>
                   </div>
-                  <div class="col-md-6 mb-3">
+                  <div  class="col-md-6 mb-3">
                     <label for="totalHermanos" class="form-label">Número de hermanos(as)</label>
                     <select class="form-control" id="totalHermanos" name="totalHermanos" required>
                       <option value="">Selecciona una opción</option>
@@ -172,7 +172,7 @@
                       <option value="8">8</option>
                       <option value="9">9</option>
                       <option value="10">10</option>
-                      <option value="11">Más de 10</option>
+                      <option value="Más de 10">Más de 10</option>
                     </select><br>
                     <label for="lugarHermano" class="form-label">Lugar que ocupas</label>
                       <select class="form-control" id="lugarHermano" name="lugarHermano" required>
@@ -190,7 +190,7 @@
                         </select>
                   </div>
                   <div class="col-md-6 mb-3">
-                      <label for="estadoCivil" class="form-label">Estado civil</label>
+                    <label for="estadoCivil" class="form-label">Estado civil</label>
                       <select class="form-control" id="estadoCivil" name="estadoCivil" required>
                         <option value="">Selecciona una opción</option>
                         <option value="Soltero">Soltero</option>
@@ -198,24 +198,27 @@
                         <option value="Unión libre">Unión libre</option>
                         <option value="Divorciado(a)">Divorciado(a)</option>
                       </select>
-                    </div>
+                  </div>
                 </div>
-                <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Enviar</button>
-              </form>
-            </div>
-            
-            
-           
-            <!-- BOTONES PARA DESPLAZAR DE PESTAÑA -->
+              </div>
+               <!--DATOS FAMILIARES -->
+
+              
+               <!-- BOTONES PARA DESPLAZAR DE PESTAÑA -->
             <div class="d-flex justify-content-between mt-3">
               <button type="button" class="btn btn-secondary" id="prevButton" style="display: none;">Anterior</button>
               <button type="button" class="btn btn-primary" id="nextButton">Siguiente</button>
-
+              <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Enviar</button>
             </div>
-
-          </div>
+    
+             </div>
+             </form>
+                
         </div>
       </div>
     </div>
   </div>
-  {% endblock %}
+</div>
+
+
+{% endblock %}

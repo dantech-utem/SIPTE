@@ -15,3 +15,4 @@ function validateDates() {
 
     return true;
 }
+

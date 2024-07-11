@@ -21,7 +21,7 @@ class Periodo(models.Model):
 class CierreTutorias(models.Model):
     cierreTutorias= models.TextField(blank=True, null=True)
     tutor = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE,null=True)
 
 class AccionTutorial(models.Model):
     tema = models.CharField(max_length=100)
@@ -48,10 +48,10 @@ class EvaluacionTutor(models.Model):
     dominio = models.IntegerField(choices=respuestas,default=4)
     impacto = models.IntegerField(choices=respuestas,default=4)
     serviciosApoyo = models.IntegerField(choices=respuestas,default=4)
-    cicloEvaluacion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    cicloEvaluacion = models.ForeignKey(Periodo, on_delete=models.CASCADE,null=True)
 
 class BajaAlumnos(models.Model):
-    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
     tipo = models.CharField(max_length=100)
     observaciones = models.TextField()
     motivo = models.TextField()
@@ -59,7 +59,7 @@ class BajaAlumnos(models.Model):
 
 class AtencionIndividual(models.Model):
     estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
-    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
     asuntoTratar = models.CharField(max_length=400)
     observaciones = models.CharField(max_length=400)
     fecha = models.DateTimeField(auto_now_add=True)
@@ -68,7 +68,7 @@ class AtencionIndividual(models.Model):
 
 class Canalizacion(models.Model):
     atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE, null=True)
-    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE,null=True)
     area = models.CharField(max_length=150)
     observaciones = models.TextField()
     motivo = models.TextField()

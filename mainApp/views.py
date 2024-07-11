@@ -9,7 +9,7 @@ from .models import Usuarios
 import jwt
 import datetime
 from django.conf import settings
-from .models import *
+from .models import Canalizacion, BajaAlumnos, AccionTutorial,Usuarios,AtencionIndividual
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from django.db.models import Count, F, Value

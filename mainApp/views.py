@@ -83,7 +83,6 @@ class aviso(View):
 
 
 def crearEstudiante(request):
-    print("antes del POST")
     if request.method == 'POST':
         # Obtener los datos del formulario
         carrera = request.POST.get('carrera')
@@ -97,7 +96,6 @@ def crearEstudiante(request):
         telCelular = request.POST.get('telCelular')
         edad = request.POST.get('edad')
 
-        print("Estamos imprimiendo una variable :" + carrera)
 
         # Crear el estudiante
         estudiante = Estudiante.objects.create(
@@ -113,20 +111,6 @@ def crearEstudiante(request):
             edad=edad
         )
 
-        print(estudiante)
-        #id_estudiante = Estudiante.objects.get(id=estudiante.id)
-
-
-        # Redirigir a la vista 'crearDatosFamiliares' con el idEstudiante como parámetro en la URL
-        #return HttpResponseRedirect(reverse(crearDatosFamiliares,idEstudiante=estudiante.id))
-        #return render(request,'crearDatosFamiliares/',idEstudiante=estudiante.id)
-        return redirect('aviso')
-
-
-
-def crearDatosFamiliares(request, _idEstudiante):
-    if request.method == 'POST':
-        idEstudiante = _idEstudiante
         conviveCon = request.POST.get('conviveCon')
         otra_situacion = request.POST.get('otra_situacion')
         huerfano = request.POST.get('huerfano')
@@ -135,9 +119,10 @@ def crearDatosFamiliares(request, _idEstudiante):
         lugarHermano = request.POST.get('lugarHermano')
         estadoCivil = request.POST.get('estadoCivil')
 
+        _idestudiante = estudiante.idEstudiante
         # Crear los datos familiares asociados al estudiante encontrado
         datos_familiares = DatosFamiliares.objects.create(
-            idEstudiante=idEstudiante,
+            idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
             conviveCon=conviveCon,
             otra_situacion=otra_situacion,
             huerfano=huerfano,
@@ -147,7 +132,159 @@ def crearDatosFamiliares(request, _idEstudiante):
             estadoCivil=estadoCivil
         )
 
-        # Redireccionar a la vista de resumen o donde corresponda
-        return redirect('resumenresp')
 
-    
+        vivienda = request.POST.get('vivienda')
+        tenencia = request.POST.get('tenencia')
+        habitaciones = request.POST.get('habitaciones')
+        vehiculos = request.POST.get('vehiculos')
+        trabajoPapa = request.POST.get('trabajoPapa')
+        trabajoextraPapa = request.POST.get('trabajoextraPapa')
+        trabajoMama = request.POST.get('trabajoMama')
+        trabajoextraMama = request.POST.get('trabajoextraMama')
+        manutencion = request.POST.get('manutencion')
+        trabajas = request.POST.get('trabajas')
+        relacionCarrera = request.POST.get('relacionCarrera')
+        ingresoFam = request.POST.get('ingresoFam')
+        contribuyentes = request.POST.get('contribuyentes')
+        dependientesIngresos = request.POST.get('dependientesIngresos')
+
+
+        _idestudiante = estudiante.idEstudiante
+        # Crear los datos socioeconomicos asociados al estudiante encontrado
+        datos_socioeconomicos = Socioeconomicos.objects.create(
+            idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
+            vivienda=vivienda,
+            tenencia=tenencia,
+            habitaciones=habitaciones,
+            vehiculos=vehiculos,
+            trabajoPapa=trabajoPapa,
+            trabajoextraPapa=trabajoextraPapa,
+            trabajoMama=trabajoMama,
+            trabajoextraMama=trabajoextraMama,
+            manutencion=manutencion,
+            trabajas=trabajas,
+            relacionCarrera=relacionCarrera,
+            ingresoFam=ingresoFam,
+            contribuyentes=contribuyentes,
+            dependientesIngresos=dependientesIngresos
+        )
+
+        
+        bachillerato = request.POST.get('bachillerato')
+        modalidad = request.POST.get('modalidad')
+        duracion = request.POST.get('duracion')
+        promedio = request.POST.get('promedio')
+        rendimiento = request.POST.get('rendimiento')
+        materiasFacil = request.POST.get('materiasFacil')
+        materiasDificil = request.POST.get('materiasDificil')
+        materiasExtras = request.POST.get('materiasExtras')
+        cualesExtras = request.POST.get('cualesExtras')
+        repAnio = request.POST.get('repAnio')
+        nivelRep = request.POST.get('nivelRep')
+        obstaculos = request.POST.get('obstaculos')
+
+
+        _idestudiante = estudiante.idEstudiante
+        # Crear los datos antencedentes academicos asociados al estudiante encontrado
+        datos_academicos = AntecedenteAcademico.objects.create(
+            idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
+            bachillerato=bachillerato,
+            modalidad=modalidad,
+            duracion=duracion,
+            promedio=promedio,
+            rendimiento=rendimiento,
+            materiasFacil=materiasFacil,
+            materiasDificil=materiasDificil,
+            materiasExtras=materiasExtras,
+            cualesExtras=cualesExtras,
+            repAnio=repAnio,
+            nivelRep=nivelRep,
+            obstaculos=obstaculos
+        )
+
+        gustoLectura = request.POST.get('gustoLectura')
+        tipoLectura = request.POST.get('tipoLectura')
+        sitioLectura = request.POST.get('sitioLectura')
+        descripEstudio = request.POST.get('descripEstudio')
+        horas = request.POST.get('horas')
+        horario = request.POST.get('horario')
+        musica = request.POST.get('musica')
+        
+
+
+        _idestudiante = estudiante.idEstudiante
+        # Crear los datos habitos de estudio asociados al estudiante encontrado
+        datos_estudio = HabitosEstudio.objects.create(
+            idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
+            gustoLectura=gustoLectura,
+            tipoLectura=tipoLectura,
+            sitioLectura=sitioLectura,
+            descripEstudio=descripEstudio,
+            horas=horas,
+            horario=horario,
+            musica=musica
+        )
+
+
+        tiempoLibre = request.POST.get('tiempoLibre')
+        horasLibre = request.POST.get('horasLibre')
+   
+  
+        _idestudiante = estudiante.idEstudiante
+        # Crear los datos aficiones asociados al estudiante encontrado
+        datos_aficiones = DatosAficiones.objects.create(
+            idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
+            tiempoLibre=tiempoLibre,
+            horasLibre=horasLibre
+        )
+
+
+        estadoSalud = request.POST.get('estadoSalud')
+        enfermedadGrave = request.POST.get('enfermedadGrave')
+        tipoEnfermedad = request.POST.get('tipoEnfermedad')
+        padecimientoCro = request.POST.get('padecimientoCro')
+        tipoPadecimiento = request.POST.get('tipoPadecimiento')
+        operaciones = request.POST.get('operaciones')
+        causaOperacion = request.POST.get('causaOperacion')
+        problemaSalud = request.POST.get('problemaSalud')
+        condiciones = request.POST.get('condiciones')
+        tipoCondiciones = request.POST.get('tipoCondiciones')
+        comentario = request.POST.get('comentario')
+
+        _idestudiante = estudiante.idEstudiante
+        # Crear los datos aficiones asociados al estudiante encontrado
+        datos_salud = DatosSalud.objects.create(
+            idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
+            estadoSalud=estadoSalud,
+            enfermedadGrave=enfermedadGrave,
+            tipoEnfermedad=tipoEnfermedad,
+            padecimientoCro=padecimientoCro,
+            tipoPadecimiento=tipoPadecimiento,
+            operaciones=operaciones,
+            causaOperacion=causaOperacion,
+            problemaSalud=problemaSalud,
+            condiciones=condiciones,
+            tipoCondiciones=tipoCondiciones,
+            comentario=comentario
+
+        )
+
+        colaborasCasa = request.POST.get('colaborasCasa')
+        colaboracion = request.POST.get('colaboracion')
+        ambienteFamiliar = request.POST.get('ambienteFamiliar')
+        hablaFamiliar = request.POST.get('hablaFamiliar')
+        comunicacion = request.POST.get('comunicacion')
+
+        _idestudiante = estudiante.idEstudiante
+        # Crear los datos personalidad asociados al estudiante encontrado
+        datos_personalidad = DatosPersonalidad.objects.create(
+            idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
+            colaborasCasa=colaborasCasa,
+            colaboracion=colaboracion,
+            ambienteFamiliar=ambienteFamiliar,
+            hablaFamiliar=hablaFamiliar,
+            comunicacion=comunicacion,
+        )
+
+       
+        return redirect('aviso')

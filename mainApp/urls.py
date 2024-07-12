@@ -18,6 +18,5 @@ urlpatterns = [
     path('editarAviso/', views.editarAviso),
     path('eliminarAviso/<int:idAvisos>', views.eliminarAviso, name="eliminarAviso"),
     path('crearEstudiante/', views.crearEstudiante, name="crearEstudiante"),
-    path('crearDatosFamiliares/<int:idEstudiante>', views.crearDatosFamiliares, name="crearDatosFamiliares"),
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

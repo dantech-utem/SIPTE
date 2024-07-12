@@ -312,22 +312,21 @@ class canalizacionIndex(View):
       } 
       return render(request, 'Canalizacion/index.html', context)
    
-   
+  
 class canalizacionExpedientes(View):
-    def get(self, request):
+    def get(self, request, id):
         if request.GET.get('periodo_id'):
-            return self.get_ajax_response(request)
+            return self.get_ajax_response(request, id)
         else:
-            return self.get_page_response(request)
+            return self.get_page_response(request, id)
         # if request.GET.get('alumno'):
             
         # else:
         #     return redirect('Dashboard')
-    def get_page_response(self, request):
-        periodos = Periodo.objects.all()
-        alumno = request.GET.get('alumno')
+    def get_page_response(self, request, id):
+        periodos = Periodo.objects.all().order_by('-id')
+        alumno = id
         #filtro por que manu te envia el usuario pero tu tienes que obtener mediante la atencion individual
-        
         atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True).first()
         TablaExpedientes = Canalizacion.objects.filter(atencionIndividual_id=atencion_ids).annotate(
             observacionesIndividual = F('atencionIndividual__observaciones'),
@@ -340,11 +339,12 @@ class canalizacionExpedientes(View):
             'periodos': periodos,
             'TablaExpedientes': TablaExpedientes,
             'alumno': alumno_exp,
-            'alumno_id': alumno
+            'alumno_id': alumno,
+            'id': id
         }
         return render(request, 'Canalizacion/expediente.html', context)
     
-    def get_ajax_response(self, request):
+    def get_ajax_response(self, request, id):
         alumno = request.GET.get('alumno')
         periodo_id = request.GET.get('periodo_id')  # Obtener el periodo_id del formulario
         atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True).first()
@@ -362,12 +362,13 @@ class canalizacionExpedientes(View):
             )
             data = {
                 'atenciones_individuales': list(atenciones_individuales),
-                'canalizaciones': list(canalizaciones)
+                'canalizaciones': list(canalizaciones),
+                'id':id
             }
             return JsonResponse(data)
         
         return JsonResponse({'error': 'Periodo no válido'}, status=400)
-   
+
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):
       user = request.user.usuarios.tipo.tipo

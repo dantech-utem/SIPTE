@@ -21,7 +21,7 @@
 
         <select id="selectCiclo" name="periodo_id" class="selectCiclo">
             {% for periodo in periodos %}
-                <option value="{{ periodo.id }}">{{ periodo.periodo }} ({{ periodo.anio }})</option>
+                <option value="{{ periodo.id }}">{{ periodo.periodo }} {{ periodo.anio }}</option>
             {% endfor %}
         </select>
         <div>
@@ -90,8 +90,8 @@
 $(document).ready(function() {
     TipoEquipoSeleccionado = $("#selectCiclo option:selected").val();
     $.ajax({
-        url: "{% url 'Expediente' %}",
-        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{alumno_id}}},
+        url: "{% url 'Expediente' id %}",
+        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{id}}},
         success: function(data) {
             $('#tablaAtencionesIndividuales tbody').empty();
             $('#tablaCanalizaciones tbody').empty();
@@ -128,8 +128,8 @@ $(document).ready(function() {
 $(document).on("change", "#selectCiclo", function () { 
     TipoEquipoSeleccionado = $("#selectCiclo option:selected").val();
     $.ajax({
-        url: "{% url 'Expediente' %}",
-        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{alumno_id}}},
+        url: "{% url 'Expediente' id %}",
+        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{id}}},
         success: function(data) {
             $('#tablaAtencionesIndividuales tbody').empty();
             $('#tablaCanalizaciones tbody').empty();

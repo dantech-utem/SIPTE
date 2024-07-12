@@ -17,13 +17,16 @@
         <h3 class="formTitulo">Cierre de sesión</h3>
         <span style="font-size: small;">Rellena la información completa para el cierre de la sesión.</span><br><br>
 
-        <form action="">
+        <form  action="{% url 'canalizacionFormCompletarSesion' id %}" method="POST">
+            {% csrf_token %}
             <label class="labelFormCanalizacion">Resultado de la canalización:</label><br>
-            <textarea name="" id="" class="formTextarea" rows="10" required></textarea>
+            <textarea name="detalles" id="detalles" class="formTextarea" rows="10" {% if datos.estadoCanalizados == 3 %} readonly {% endif %} required>{% if datos.estadoCanalizados == 3 %}{{datos.detalles}}{% endif %}</textarea>
 
             <div class="btnsFormCanalizacion">
                 <a class="btnRegresar" href="{% url 'ResultadosCanalizacion' %}">Regresar</a>
+                {% if datos.estadoCanalizados != 3 %}
                 <button class="btnEnviar" type="submit">Enviar</button>
+                {% endif %}
             </div>
 
         </form>

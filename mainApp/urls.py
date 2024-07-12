@@ -21,8 +21,11 @@ urlpatterns = [
 
     path('Dashboard', canalizacionIndex.as_view(), name="Dashboard"),
     path('Calendario', canalizacionCalendario.as_view(), name="Calendario"),
-    path('CompletarSesion', canalizacionCompletarSesion.as_view(), name="CompletarSesion"),
-    path('formCalendario', formCalendario.as_view(), name="formCalendario"),
+    path('CompletarSesion/<int:id>/', canalizacionCompletarSesion.as_view(), name="CompletarSesion"),
+    path("canalizacionFormCompletarSesion/<int:id>", views.canalizacionFormCompletarSesion, name ="canalizacionFormCompletarSesion"),
+    path('viewCanalizar/<int:id>/', viewCanalizar.as_view(), name="viewCanalizar"),
+    path('formCalendario/<int:id>/', formCalendario.as_view(), name="formCalendario"),
+    path("canalizacionFormCalendario/<int:id>", views.canalizacionFormCalendario, name ="canalizacionFormCalendario"),
     path('Expediente', canalizacionExpedientes.as_view(), name="Expediente"),
     path('FormBaja', canalizacionBajas.as_view(), name="FormBaja"),
     path("canalizacionBajaAlumno/" , views.canalizacionBajaAlumno,name="canalizacionBajaAlumno"),

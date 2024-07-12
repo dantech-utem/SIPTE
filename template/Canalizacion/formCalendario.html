@@ -16,7 +16,7 @@
         <h3 class="formTitulo">Registro de cita</h3>
         <span style="font-size: small;">Rellena la información completa para el registro de la cita.</span><br><br>
 
-        <form action="{% url 'canalizacionFormCanalizarAlumno' %}" method="POST">
+        <form action="{% url 'canalizacionFormCalendario' id %}" method="POST">
             {% csrf_token %}
             <label class="labelFormCanalizacion">Título</label><br>
             <input type="text" name="titulo" id="titulo" class="formInput" required>

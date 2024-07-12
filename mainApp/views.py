@@ -189,16 +189,52 @@ class canalizacionCalendario(View):
         return render(request,'Canalizacion/calendario.html', context)
    
 class canalizacionCompletarSesion(View):
-   def get(self, request):
-      return render(request,'Canalizacion/completarSesion.html')
+   def get(self, request, id):
+      
+      context = {
+          'id': id,
+          'datos': Canalizacion.objects.get(id = id)
+      }
+
+      return render(request,'Canalizacion/completarSesion.html', context)
+   
+def canalizacionFormCompletarSesion(request, id):
+    if request.method == "POST":
+      
+      datos = Canalizacion.objects.get(id = id)
+
+      datos.detalles = request.POST['detalles']
+      datos.estadoCanalizados = 3
+      datos.save()
+
+      return redirect('ResultadosCanalizacion')
+    
+class viewCanalizar(View):
+    def get(self, request, id):
+        context = {
+          'id': id,
+          'datos': Canalizacion.objects.get(id = id)
+       }
+        
+        return render(request,'Canalizacion/viewCanalizar.html', context)
    
 class formCalendario(View):
-   def get(self, request):
-      return render(request,'Canalizacion/formCalendario.html')
-   
-class canalizacionExpedientes(View):
-   def get(self, request):
-      return render(request,'Canalizacion/expediente.html')
+   def get(self, request, id):
+      return render(request,'Canalizacion/formCalendario.html', {'id': id})
+
+def canalizacionFormCalendario(request, id):
+   if request.method == "POST":
+      
+      datos = Canalizacion.objects.get(id = id)
+
+      datos.titulo = request.POST['titulo']
+      datos.descripcion = request.POST['descripcion']
+      datos.FechaInicio = request.POST['fechaInicio']
+      datos.FechaFinal = request.POST['fechaFinal']
+      datos.estadoCanalizados = 2
+      datos.save()
+
+      return redirect('ResultadosCanalizacion')
    
 class canalizacionBajas(View):
    def get(self, request):
@@ -231,6 +267,7 @@ def canalizacionFormCanalizarAlumno(request):
 class canalizacionFormCerrarTutorias(View):
    def get(self, request):
       return render(request,'Canalizacion/formCerrarTutorias.html')
+
 def cerrarTurorias(request):
    if request.method == "POST":
       cierreTutorias = request.POST['cierreTutorias']
@@ -262,9 +299,6 @@ class canalizacionReportes(View):
         
         return render(request, 'Canalizacion/reportes.html', context)
    
-class canalizacionResultadosCanalizacion(View):
-   def get(self, request):
-      return render(request,'Canalizacion/resultadosCanalizacion.html')
 class canalizacionIndex(View):
    def get(self, request):
       tutor = request.user
@@ -336,10 +370,13 @@ class canalizacionExpedientes(View):
    
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):
-      user = request.user.usuarios.tipo
+      user = request.user.usuarios.tipo.tipo
 
-      tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=user)
+      areas = {'psicologo':'Psicólogia', 'pedagogo':'Pedagogía', 'becas':'Becas', 'enfermeria':'Enfermería', 'incubadora':'Incubadora', 'bolsadetrabajo':'Bolsa de trabajo', 'asesoracademico':'Asesor académico'}
 
+      print('test: ', areas[user])
+
+      tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=areas[user])
       context = {
          'TablaResultados': tabla,
       }

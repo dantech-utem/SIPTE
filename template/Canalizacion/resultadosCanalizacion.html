@@ -39,8 +39,10 @@
                 <td>{{x.atencionIndividual.estudiante.grupo}}</td>
                 <td>{{x.fecha}}</td>
                 <td>
-                    <a class="btnCalendarioSesion" href="{% url 'formCalendario' %}"><i
-                            class="fa-solid fa-user-pen"></i>Calendario</a>
+                    <a class="btnCalendarioSesion" href="{% url 'formCalendario' x.id %}">
+                        <i class="fa-regular fa-calendar"></i>Calendario</a>
+                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
+                        <i class="fa-regular fa-id-card"></i>Información</a>
                 </td>
             </tr>
             <tr {% elif x.estadoCanalizados == 2 %}>
@@ -50,8 +52,10 @@
                 <td>{{x.atencionIndividual.estudiante.grupo}}</td>
                 <td>{{x.fecha}}</td>
                 <td>
-                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' %}"><i
+                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' x.id %}"><i
                             class="fa-solid fa-user-pen"></i>Completar</a>
+                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
+                        <i class="fa-regular fa-id-card"></i>Información</a>
                 </td>
             </tr>
 
@@ -62,8 +66,10 @@
                 <td>{{x.atencionIndividual.estudiante.grupo}}</td>
                 <td>{{x.fecha}}</td>
                 <td>
-                    <a class="btnConsultarSesion" href="{% url 'CompletarSesion' %}"><i
-                            class="fa-solid fa-user-pen"></i>Consultar</a>
+                    <a class="btnConsultarSesion" href="{% url 'CompletarSesion' x.id %}">
+                        <i class="fa-solid fa-file-lines"></i>Consultar</a>
+                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
+                        <i class="fa-regular fa-id-card"></i>Información</a>
                 </td>
             </tr>
             {% endif %}

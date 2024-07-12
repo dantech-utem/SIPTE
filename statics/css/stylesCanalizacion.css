@@ -439,7 +439,7 @@ i{
     height: 3em;
 }
 
-.btnCompletarSesion, .btnConsultarSesion, .btnCalendarioSesion{
+.btnCompletarSesion, .btnConsultarSesion, .btnCalendarioSesion, .btnInfoCanal {
     display: inline-block;
     white-space: nowrap; 
     font-size: 0.9em;
@@ -461,11 +461,11 @@ i{
 }
 
 .btnCalendarioSesion {
-    background-color: #ffe046;
+    background-color: #e88b00;
 }
 
 .btnCalendarioSesion:hover {
-    background-color: #d6c808;
+    background-color: #ac6700;
 }
 
 .btnConsultarSesion {
@@ -475,6 +475,15 @@ i{
 .btnConsultarSesion:hover {
     background-color: #01217f;
 }
+
+.btnInfoCanal {
+    background-color: #00AA8A;
+}
+
+.btnInfoCanal:hover {
+    background-color: #008a70;
+}
+
 
                                                         /* Reportes*/
 .containerReportes {

@@ -40,7 +40,7 @@
                 <td>{{ x.User.first_name }}</td>
                 <td>{{ x.User.last_name }}</td>
                 <td>{{ x.noControl }}</td>
-                <td><a class="btnExpediente" href="{% url 'Expediente' %}"><i
+                <td><a class="btnExpediente" href="{% url 'Expediente' x.id %}"><i
                             class="fa-solid fa-clipboard-user"></i>Expediente</a>
                     <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
                 {% if x.estado == 2 %}   

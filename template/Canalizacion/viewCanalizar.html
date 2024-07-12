@@ -1,0 +1,41 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'ResultadosCanalizacion' %}">Alumnos
+                canalizados</a></li>
+        <li class="breadcrumb-item" aria-current="page">Consultar canalización</li>
+        </ol>
+    </nav>
+
+    <div class="cardFormulario">
+
+        <h3 class="formTitulo">Registro de canalización</h3><br>
+
+        <form action="{% url 'canalizacionFormCanalizarAlumno' %}" method="POST">
+            {% csrf_token %}
+            <label class="labelFormCanalizacion">Área:</label><br>
+            <input type="text" name="area" id="area" class="formInput" value="{{datos.area}}" readonly required>
+
+            <label class="labelFormCanalizacion">Motivo:</label><br>
+            <textarea name="motivo" id="motivo" class="formTextarea" rows="7" readonly required>{{datos.motivo}}</textarea>
+
+            <label class="labelFormCanalizacion">Observaciones:</label><br>
+            <textarea name="observaciones" id="observaciones" class="formTextarea" rows="7" readonly required>{{datos.observaciones}}</textarea>
+
+            <div class="btnsFormCanalizacion">
+                <a class="btnRegresar" href="{% url 'ResultadosCanalizacion' %}">Regresar</a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>

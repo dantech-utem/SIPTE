@@ -1,33 +1,33 @@
-{%extends '../dashboard.html'%}
-{%load static%}
+{% extends '../dashboard.html' %}
+{% load static %}
 {% block stylecontent %}
 <link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
-{%block content%}
+{% block content %}
 <div class="containerReportes">
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Dashboard' %}">Canalización</a>
-            </li>
-            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Expediente' %}">Expediente</a>
-            </li>
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Dashboard' %}">Canalización</a></li>
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Expediente' alumno_id %}">Expediente</a></li>
             <li class="breadcrumb-item" aria-current="page">Reportes</li>
         </ol>
     </nav>
 
     <div class="encabezadoReportes">
-        <h3>9-IDG-1</h3>
+        <h3>
+            {{ alumno.User.first_name }}
+            {{ alumno.User.last_name }}
+        </h3>
         <select id="selectCiclo" name="periodo_id" class="selectCiclo">
-            <option value="">Enero-Abril 2024</option>
-            <option value="">Agosto-Diciembre 2023</option>
+            {% for periodo in periodos %}
+                <option value="{{ periodo.id }}">{{ periodo.periodo }} {{ periodo.anio }}</option>
+            {% endfor %}
         </select>
-        <a class="btnReportes" href="#"><i class="fa-solid fa-file-pdf"></i>Reporte
-            general</a>
+        <a class="btnReportes" href="#"><i class="fa-solid fa-file-pdf"></i>Reporte general</a>
     </div>
 
     <div class="cardReportes">
-
         <table id="tablaReportes" class="tablaReportes" style="width: 100%;">
             <thead>
                 <tr>
@@ -37,7 +37,7 @@
                     <th>NO. DE CONTROL</th>
                     <th>ASUNTO DE ATENCIÓN</th>
                     <th>OBSERVACIONES</th>
-                    <th>DETALLES DE LA SESIÓNS</th>
+                    <th>DETALLES DE LA SESIÓN</th>
                     <th>FECHA</th>
                     <th>ACCIONES</th>
                 </tr>
@@ -60,22 +60,70 @@
         </table>
     </div>
 
-    {% endblock %}
     <script src="../../static/js/datatables.min.js"></script>
     <script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        let table = new DataTable('#tablaReportes', {
-            responsive: true,
-            "columnDefs": [
-                { "className": "dt-center", "targets": "_all" }
-            ],
-            language: {
-                info: 'Página _PAGE_ de _PAGES_',
-                infoEmpty: 'No records available',
-                infoFiltered: '(filtered from _MAX_ total records)',
-                lengthMenu: '_MENU_ registros por página',
-                zeroRecords: 'Nothing found - sorry',
-                search: 'Buscar: '
-            }
+        $(document).ready(function() {
+            let alumno_id = {{ alumno_id }};
+            let periodo_id = $("#selectCiclo option:selected").val();
+
+            $.ajax({
+                url: "{% url 'Reportes' alumno_id %}",
+                data: { periodo_id: periodo_id },
+                success: function(data) {
+                    $('#tablaReportes tbody').empty();
+                    $.each(data.reportes_data, function(index, reporte) {
+                        $('#tablaReportes tbody').append(
+                            '<tr style="background-color: rgb(173, 173, 173);">' +
+                            '<td>' + reporte.area + '</td>' +
+                            '<td>' + reporte.atencionIndividual__estudiante__User__first_name + '</td>' +
+                            '<td>' + reporte.atencionIndividual__estudiante__User__last_name + '</td>' +
+                            '<td>' + reporte.atencionIndividual__estudiante__noControl + '</td>' +
+                            '<td>' + reporte.motivo + '</td>' +
+                            '<td>' + reporte.observaciones + '</td>' +
+                            '<td>' + reporte.detalles + '</td>' +
+                            '<td>' + reporte.atencionIndividual__fecha + '</td>' +
+                            '<td><a class="btnReportesIcon" href="#"><i class="fa-solid fa-file-pdf"></i></a></td>' +
+                            '</tr>'
+                        );
+                    });
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus);
+                    alert("Error: " + errorThrown);
+                }
+            });
+
+            $("#selectCiclo").change(function() {
+                let periodo_id = $("#selectCiclo option:selected").val();
+                $.ajax({
+                    url: "{% url 'Reportes' alumno_id %}",
+                    data: { periodo_id: periodo_id },
+                    success: function(data) {
+                        $('#tablaReportes tbody').empty();
+                        $.each(data.reportes_data, function(index, reporte) {
+                            $('#tablaReportes tbody').append(
+                                '<tr style="background-color: rgb(173, 173, 173);">' +
+                                '<td>' + reporte.area + '</td>' +
+                                '<td>' + reporte.atencionIndividual__estudiante__User__first_name + '</td>' +
+                                '<td>' + reporte.atencionIndividual__estudiante__User__last_name + '</td>' +
+                                '<td>' + reporte.atencionIndividual__estudiante__noControl + '</td>' +
+                                '<td>' + reporte.motivo + '</td>' +
+                                '<td>' + reporte.observaciones + '</td>' +
+                                '<td>' + reporte.detalles + '</td>' +
+                                '<td>' + reporte.atencionIndividual__fecha + '</td>' +
+                                '<td><a class="btnReportesIcon" href="#"><i class="fa-solid fa-file-pdf"></i></a></td>' +
+                                '</tr>'
+                            );
+                        });
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus);
+                        alert("Error: " + errorThrown);
+                    }
+                });
+            });
         });
     </script>
+{% endblock %}

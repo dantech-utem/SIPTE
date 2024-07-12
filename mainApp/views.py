@@ -279,8 +279,16 @@ def cerrarTurorias(request):
      
      
 class canalizacionReportes(View):
-    def get(self, request):
-        canalizaciones = Canalizacion.objects.all().select_related('atencionIndividual', 'atencionIndividual__estudiante')
+    def get(self, request, id):
+        if request.GET.get('periodo_id'):
+            return self.get_ajax_response(request, id)
+        else:
+            return self.get_page_response(request, id)
+
+    def get_page_response(self, request, id):
+        periodos = Periodo.objects.all().order_by('-id')
+        alumno = Usuarios.objects.select_related('User').get(User_id=id)
+        canalizaciones = Canalizacion.objects.filter(atencionIndividual__estudiante_id=id).select_related('atencionIndividual', 'atencionIndividual__estudiante')
         
         reportes_data = []
         for canalizacion in canalizaciones:
@@ -295,9 +303,35 @@ class canalizacionReportes(View):
                 'fecha': canalizacion.atencionIndividual.fecha,
             })
         
-        context = {'reportes_data': reportes_data}
+        context = {
+            'reportes_data': reportes_data,
+            'periodos': periodos,
+            'alumno': alumno,
+            'alumno_id': id
+        }
         
         return render(request, 'Canalizacion/reportes.html', context)
+    
+    def get_ajax_response(self, request, id):
+        periodo_id = request.GET.get('periodo_id')
+        
+        if periodo_id:
+            canalizaciones = Canalizacion.objects.filter(cicloAccion_id=periodo_id, atencionIndividual__estudiante_id=id).values(
+                'area',
+                'atencionIndividual__estudiante__User__first_name',
+                'atencionIndividual__estudiante__User__last_name',
+                'atencionIndividual__estudiante__noControl',
+                'motivo',
+                'observaciones',
+                'detalles',
+                'atencionIndividual__fecha'
+            )
+            
+            reportes_data = list(canalizaciones)
+            data = {'reportes_data': reportes_data}
+            return JsonResponse(data)
+        
+        return JsonResponse({'error': 'Periodo no válido'}, status=400)
    
 class canalizacionIndex(View):
    def get(self, request):

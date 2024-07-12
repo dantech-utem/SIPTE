@@ -278,17 +278,61 @@ class canalizacionIndex(View):
       } 
       return render(request, 'Canalizacion/index.html', context)
    
+   
 class canalizacionExpedientes(View):
-   def get(self, request):
-      TablaExpedientes = Canalizacion.objects.all().annotate(
-         observacionesIndividual = F('atencionIndividual__observaciones'),
-         asuntoTratarIndividual = F('atencionIndividual__asuntoTratar'),
-         fechaIndividual = F('atencionIndividual__fecha'),
-      )
-      context = {
-         'TablaExpedientes': TablaExpedientes,
-      }
-      return render(request, 'Canalizacion/expediente.html', context)
+    def get(self, request):
+        if request.GET.get('periodo_id'):
+            return self.get_ajax_response(request)
+        else:
+            return self.get_page_response(request)
+        # if request.GET.get('alumno'):
+            
+        # else:
+        #     return redirect('Dashboard')
+    def get_page_response(self, request):
+        periodos = Periodo.objects.all()
+        alumno = request.GET.get('alumno')
+        #filtro por que manu te envia el usuario pero tu tienes que obtener mediante la atencion individual
+        
+        atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True).first()
+        TablaExpedientes = Canalizacion.objects.filter(atencionIndividual_id=atencion_ids).annotate(
+            observacionesIndividual = F('atencionIndividual__observaciones'),
+            asuntoTratarIndividual = F('atencionIndividual__asuntoTratar'),
+            fechaIndividual = F('atencionIndividual__fecha'),
+            
+        )
+        alumno_exp = Usuarios.objects.filter(User_id=alumno)
+        context = {
+            'periodos': periodos,
+            'TablaExpedientes': TablaExpedientes,
+            'alumno': alumno_exp,
+            'alumno_id': alumno
+        }
+        return render(request, 'Canalizacion/expediente.html', context)
+    
+    def get_ajax_response(self, request):
+        alumno = request.GET.get('alumno')
+        periodo_id = request.GET.get('periodo_id')  # Obtener el periodo_id del formulario
+        atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True).first()
+        if periodo_id:
+            atenciones_individuales = Canalizacion.objects.filter(cicloAccion_id=periodo_id,atencionIndividual_id=atencion_ids).values(
+                'area', 
+                'atencionIndividual__observaciones', 
+                'atencionIndividual__asuntoTratar', 
+                'atencionIndividual__fecha'
+            )
+            canalizaciones = Canalizacion.objects.filter(cicloAccion_id=periodo_id,atencionIndividual_id=atencion_ids).values(
+                'area', 
+                'detalles', 
+                'fecha'
+            )
+            data = {
+                'atenciones_individuales': list(atenciones_individuales),
+                'canalizaciones': list(canalizaciones)
+            }
+            return JsonResponse(data)
+        
+        return JsonResponse({'error': 'Periodo no válido'}, status=400)
    
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):

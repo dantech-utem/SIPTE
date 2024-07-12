@@ -13,11 +13,16 @@
     </nav>
 
     <div class="encabezadoCanalizacionExpediente">
-        <h3>Carlos Antonio Hernández Sandoval</h3>
+        <h3>{% for x in alumno %}
+                {{x.User.first_name}}
+                {{x.User.last_name}}
+            {% endfor%}
+        </h3>
 
-        <select id="" name="" class="selectCiclo">
-            <option value="psicologia">Enero-Abril 2024</option>
-            <option value="medicina">Agosto-Diciembre 2023</option>
+        <select id="selectCiclo" name="periodo_id" class="selectCiclo">
+            {% for periodo in periodos %}
+                <option value="{{ periodo.id }}">{{ periodo.periodo }} ({{ periodo.anio }})</option>
+            {% endfor %}
         </select>
         <div>
             <a class="btnPerfiles" href="{% url 'Reportes' %}"><i class="fa-solid fa-file-pdf"></i>Reportes</a>
@@ -77,11 +82,89 @@
     </div>
 
 </div>
-{% endblock %}
+
 <script src="../../static/js/datatables.min.js"></script>
 <script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    let table = new DataTable('#tablaAtencionesIndividuales', {
+$(document).ready(function() {
+    TipoEquipoSeleccionado = $("#selectCiclo option:selected").val();
+    $.ajax({
+        url: "{% url 'Expediente' %}",
+        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{alumno_id}}},
+        success: function(data) {
+            $('#tablaAtencionesIndividuales tbody').empty();
+            $('#tablaCanalizaciones tbody').empty();
+            
+            $.each(data.atenciones_individuales, function(index, atencion) {
+                $('#tablaAtencionesIndividuales tbody').append(
+                    '<tr>' +
+                    '<td>' + atencion.area + '</td>' +
+                    '<td>' + atencion.atencionIndividual__observaciones + '</td>' +
+                    '<td>' + atencion.atencionIndividual__asuntoTratar + '</td>' +
+                    '<td>' + atencion.atencionIndividual__fecha + '</td>' +
+                    '</tr>'
+                );
+            });
+
+            $.each(data.canalizaciones, function(index, canalizacion) {
+                $('#tablaCanalizaciones tbody').append(
+                    '<tr>' +
+                    '<td>' + canalizacion.area + '</td>' +
+                    '<td>' + canalizacion.detalles + '</td>' +
+                    '<td>' + canalizacion.fecha + '</td>' +
+                    '</tr>'
+                );
+            });
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+            alert("Estatus: " + textStatus); 
+            alert("Error: " + errorThrown); 
+        }
+    });
+    
+   
+});
+$(document).on("change", "#selectCiclo", function () { 
+    TipoEquipoSeleccionado = $("#selectCiclo option:selected").val();
+    $.ajax({
+        url: "{% url 'Expediente' %}",
+        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{alumno_id}}},
+        success: function(data) {
+            $('#tablaAtencionesIndividuales tbody').empty();
+            $('#tablaCanalizaciones tbody').empty();
+            
+            $.each(data.atenciones_individuales, function(index, atencion) {
+                $('#tablaAtencionesIndividuales tbody').append(
+                    '<tr>' +
+                    '<td>' + atencion.area + '</td>' +
+                    '<td>' + atencion.atencionIndividual__observaciones + '</td>' +
+                    '<td>' + atencion.atencionIndividual__asuntoTratar + '</td>' +
+                    '<td>' + atencion.atencionIndividual__fecha + '</td>' +
+                    '</tr>'
+                );
+            });
+
+            $.each(data.canalizaciones, function(index, canalizacion) {
+                $('#tablaCanalizaciones tbody').append(
+                    '<tr>' +
+                    '<td>' + canalizacion.area + '</td>' +
+                    '<td>' + canalizacion.detalles + '</td>' +
+                    '<td>' + canalizacion.fecha + '</td>' +
+                    '</tr>'
+                );
+            });
+
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+            alert("Estatus: " + textStatus); 
+            alert("Error: " + errorThrown); 
+        }
+    });
+});
+$(document).ready(function() {
+   
+   let table = new DataTable('#tablaAtencionesIndividuales', {
         responsive: true,
         "columnDefs": [
             { "className": "dt-center", "targets": "_all" }
@@ -110,4 +193,6 @@
             search: 'Buscar: '
         }
     });
+});
 </script>
+{% endblock %}

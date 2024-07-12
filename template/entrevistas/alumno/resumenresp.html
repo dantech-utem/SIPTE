@@ -1,0 +1,112 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+    <div class="col-md-6">
+    <h1>Resumen de Formulario</h1>
+    <p><strong>Número de control:</strong> {{ estudiante.no_control }}</p>
+    <p><strong>Nombre:</strong> {{ estudiante.nombre }}</p>
+    <p><strong>Carrera:</strong> {{ estudiante.carrera }}</p>
+    <p><strong>Tutor:</strong> {{ estudiante.tutor }}</p>
+    <p><strong>Grupo:</strong> {{ estudiante.grupo }}</p>
+    <p><strong>Fecha:</strong> {{ estudiante.fecha }}</p>
+    <p><strong>Teléfono de Casa:</strong> {{ estudiante.tel_casa }}</p>
+    <p><strong>Correo Electrónico:</strong> {{ estudiante.correo }}</p>
+    <p><strong>Número de Celular:</strong> {{ estudiante.tel_celular }}</p>
+    <p><strong>Edad:</strong> {{ estudiante.edad }}</p>
+    </div>
+    <!-- Datos Familiares -->
+    <div class="col-md-6">
+    <p><strong>¿Con quién vives?:</strong> {{ estudiante.convive_con }}</p>
+    {% if estudiante.convive_con == 'Otra situación' %}
+      <p><strong>Otra situación:</strong> {{ estudiante.otra_situacion }}</p>
+    {% endif %}
+    <p><strong>¿Eres huérfano?:</strong> {{ estudiante.huerfano }}</p>
+    {% if estudiante.huerfano == 'Si' %}
+      <p><strong>¿De quién?:</strong> {{ estudiante.huerfano_quien }}</p>
+    {% endif %}
+    <p><strong>Número de hermanos(as):</strong> {{ estudiante.total_hermanos }}</p>
+    <p><strong>Lugar que ocupas:</strong> {{ estudiante.lugar_hermano }}</p>
+    <p><strong>Estado civil:</strong> {{ estudiante.estado_civil }}</p>
+    </div>
+    <!-- Datos Socioeconomicos -->
+    <div class="col-md-6">
+        <h3>Datos Socioeconómicos</h3>
+        <p><strong>Tipo de vivienda:</strong> {{ respuestas.vivienda }}</p>
+        <p><strong>Tenencia de la vivienda:</strong> {{ respuestas.tenencia }}</p>
+        <p><strong>Número de habitaciones:</strong> {{ respuestas.habitaciones }}</p>
+        <p><strong>Número de vehículos:</strong> {{ respuestas.vehiculos }}</p>
+        <p><strong>Trabajo del papá:</strong> {{ respuestas.trabajoPapa }}</p>
+        {% if respuestas.trabajoPapa == 'Otro' %}
+        <p><strong>Descripción del otro trabajo del papá:</strong> {{ respuestas.trabajoextraPapa }}</p>
+        {% endif %}
+        <p><strong>Trabajo de la mamá:</strong> {{ respuestas.trabajoMama }}</p>
+        {% if respuestas.trabajoMama == 'Otro' %}
+        <p><strong>Descripción del otro trabajo de la mamá:</strong> {{ respuestas.trabajoextraMama }}</p>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h3>Otros Datos</h3>
+        <p><strong>Manutención:</strong> {{ respuestas.manutencion }}</p>
+        <p><strong>¿Trabajas?:</strong> {{ respuestas.trabajas }}</p>
+        <p><strong>¿Tiene relación con la carrera?:</strong> {{ respuestas.relacionCarrera }}</p>
+        <p><strong>Ingresos familiares:</strong> {{ respuestas.ingresoFam }}</p>
+        <p><strong>Número de personas que contribuyen a esos ingresos:</strong> {{ respuestas.contribuyentes }}</p>
+        <p><strong>Número de personas que dependen de esos ingresos:</strong> {{ respuestas.dependientesIngresos }}</p>
+    </div>
+    <div class="col-md-6">
+            <h3>Datos Socioeconómicos</h3>
+            <p><strong>Tipo de vivienda:</strong> {{ respuestas.vivienda }}</p>
+            <p><strong>Tenencia de la vivienda:</strong> {{ respuestas.tenencia }}</p>
+            <p><strong>Número de habitaciones:</strong> {{ respuestas.habitaciones }}</p>
+            <p><strong>Número de vehículos:</strong> {{ respuestas.vehiculos }}</p>
+            <p><strong>Trabajo del papá:</strong> {{ respuestas.trabajoPapa }}</p>
+            {% if respuestas.trabajoPapa == 'Otro' %}
+            <p><strong>Descripción del otro trabajo del papá:</strong> {{ respuestas.trabajoextraPapa }}</p>
+            {% endif %}
+            <p><strong>Trabajo de la mamá:</strong> {{ respuestas.trabajoMama }}</p>
+            {% if respuestas.trabajoMama == 'Otro' %}
+            <p><strong>Descripción del otro trabajo de la mamá:</strong> {{ respuestas.trabajoextraMama }}</p>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h3>Otros Datos</h3>
+            <p><strong>Manutención:</strong> {{ respuestas.manutencion }}</p>
+            <p><strong>¿Trabajas?:</strong> {{ respuestas.trabajas }}</p>
+            <p><strong>¿Tiene relación con la carrera?:</strong> {{ respuestas.relacionCarrera }}</p>
+            <p><strong>Ingresos familiares:</strong> {{ respuestas.ingresoFam }}</p>
+            <p><strong>Número de personas que contribuyen a esos ingresos:</strong> {{ respuestas.contribuyentes }}</p>
+            <p><strong>Número de personas que dependen de esos ingresos:</strong> {{ respuestas.dependientesIngresos }}</p>
+        </div>
+        <!-- Datos Academicos -->
+        <div class="col-md-6">
+            <h3>Datos Académicos</h3>
+            <p><strong>Bachillerato de procedencia:</strong> {{ respuestas.bachillerato }}</p>
+            <p><strong>Modalidad:</strong> {{ respuestas.modalidad }}</p>
+            <p><strong>Duración en años para terminarlo:</strong> {{ respuestas.duracion }}</p>
+            <p><strong>Promedio obtenido:</strong> {{ respuestas.promedio }}</p>
+            <p><strong>Rendimiento escolar:</strong> {{ respuestas.rendimiento }}</p>
+            <p><strong>Materias que se te facilitan más:</strong> {{ respuestas.materiasFacil }}</p>
+            <p><strong>Materias que te cuestan más trabajo:</strong> {{ respuestas.materiasDificil }}</p>
+            <p><strong>Materias acreditadas en extraordinario:</strong> {{ respuestas.materiasExtras }}</p>
+            <p><strong>¿Cuáles materias acreditadas en extraordinario?:</strong> {{ respuestas.cualesExtras }}</p>
+            <p><strong>¿Repetiste algún año o grado en niveles anteriores?:</strong> {{ respuestas.repAnio }}</p>
+            <p><strong>¿En qué nivel?:</strong> {{ respuestas.nivelRep }}</p>
+            <p><strong>Principales obstáculos para encarar los estudios:</strong> {{ respuestas.obstaculos }}</p>
+        </div>
+
+        <div class="col-md-6">
+            <ul>
+                <li>¿Te gusta leer?: {{ datos.gustoLectura }}</li>
+                <li>¿Qué tipo de lectura te gusta?: {{ datos.tipoLectura }}</li>
+                <li>¿Tienes un lugar especial para estudiar en tu casa?: {{ datos.sitioLectura }}</li>
+                <li>Descríbelo: {{ datos.descripEstudio }}</li>
+                <li>¿Cuántas horas diarias dedicas usualmente al estudio?: {{ datos.horas }}</li>
+                <li>¿Tienes un horario fijo para estudiar?: {{ datos.horario }}</li>
+                <li>¿Escuchas música cuando estudias?: {{ datos.musica }}</li>
+              </ul>
+        </div>
+        
+</div>
+</div>
+{% endblock %}

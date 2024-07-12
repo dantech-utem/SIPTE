@@ -287,4 +287,4 @@ def crearEstudiante(request):
         )
 
        
-        return redirect('aviso')
+        return redirect('resumenresp')

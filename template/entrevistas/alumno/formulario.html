@@ -200,7 +200,7 @@
                 <div class="row">
                   <div class="col-md-6 mb-3"><br>
                     <label for="vivienda" class="form-label">Tipo de vivienda</label>
-                      <select class="form-control" id="vivienda" name="vivienda">
+                      <select class="form-control" id="vivienda" name="vivienda" required>
                         <option value="">Selecciona una opción</option>
                         <option value="Casa">Casa</option>
                         <option value="Casa en coto privado">Casa en coto privado</option>
@@ -266,7 +266,7 @@
                         <option value="Otro">Otro</option>
                       </select><br>
                       <label for="trabajoextraPapa" class="form-label">Si "otra situación", descríbela</label>
-                      <input type="text" class="form-control" id="trabajoextraPapa" name="trabajoextraPapa" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                      <input type="text" class="form-control" id="trabajoextraPapa" name="trabajoextraPapa" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                       <br>
                       <label for="trabajoMama" class="form-label">Trabajo de la mamá</label>
                         <select class="form-control" id="trabajoMama" name="trabajoMama" required>
@@ -282,7 +282,7 @@
                           <option value="Otro">Otro</option>
                         </select><br>
                         <label for="trabajoextraMama" class="form-label">Si "otra situación", descríbela</label>
-                        <input type="text" class="form-control" id="trabajoextraMama" name="trabajoextraMama" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                        <input type="text" class="form-control" id="trabajoextraMama" name="trabajoextraMama" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="manutencion" class="form-label">Manutención</label>
@@ -294,7 +294,7 @@
                         </select>
                         <br>
                         <label for="trabajas" class="form-label">¿Trabajas?</label>
-                        <select class="form-control" id="trabajas" name="trabajas">
+                        <select class="form-control" id="trabajas" name="trabajas" required>
                             <option value="">Selecciona una opción</option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -354,7 +354,7 @@
                         <input type="text" class="form-control" id="bachillerato" name="bachillerato" required>
                         <br>
                           <label for="modalidad" class="form-label">Modalidad</label>
-                          <select class="form-control" name="modalidad" id="modalidad">
+                          <select class="form-control" name="modalidad" id="modalidad" required>
                             <option value="">Selecciona una opción</option>
                             <option value="Escolarizada">Escolarizada</option>
                             <option value="Semiescolarizada">Semiescolarizada</option>

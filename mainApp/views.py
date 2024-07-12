@@ -227,8 +227,8 @@ class canalizacionReportes(View):
         for canalizacion in canalizaciones:
             reportes_data.append({
                 'area': canalizacion.area,
-                'nombre': canalizacion.atencionIndividual.estudiante.nombre,
-                'apellidos': canalizacion.atencionIndividual.estudiante.apellido,
+                'nombre': canalizacion.atencionIndividual.estudiante.User.first_name,
+                'apellidos': canalizacion.atencionIndividual.estudiante.User.last_name,
                 'no_control': canalizacion.atencionIndividual.estudiante.noControl,
                 'asunto_atencion': canalizacion.motivo,
                 'observaciones': canalizacion.observaciones,

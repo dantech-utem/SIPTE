@@ -66,7 +66,7 @@
                 <td>{{x.atencionIndividual.estudiante.grupo}}</td>
                 <td>{{x.fecha}}</td>
                 <td>
-                    <a class="btnConsultarSesion" href="{% url 'CompletarSesion' x.id %}">
+                    <a class="btnConsultarSesion" href="{% url 'viewCompletarSesion' x.id %}">
                         <i class="fa-solid fa-file-lines"></i>Consultar</a>
                     <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
                         <i class="fa-regular fa-id-card"></i>Información</a>

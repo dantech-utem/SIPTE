@@ -37,6 +37,7 @@ urlpatterns = [
     path('Dashboard', canalizacionIndex.as_view(), name="Dashboard"),
     path('Calendario', canalizacionCalendario.as_view(), name="Calendario"),
     path('CompletarSesion/<int:id>/', canalizacionCompletarSesion.as_view(), name="CompletarSesion"),
+    path('viewCompletarSesion/<int:id>/', viewCanalizacionCompletarSesion.as_view(), name="viewCompletarSesion"),
     path("canalizacionFormCompletarSesion/<int:id>", views.canalizacionFormCompletarSesion, name ="canalizacionFormCompletarSesion"),
     path('viewCanalizar/<int:id>/', viewCanalizar.as_view(), name="viewCanalizar"),
     path('formCalendario/<int:id>/', formCalendario.as_view(), name="formCalendario"),

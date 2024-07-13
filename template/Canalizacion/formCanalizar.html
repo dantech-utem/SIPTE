@@ -14,9 +14,8 @@
     <div class="cardFormulario">
 
         <h3 class="formTitulo">Registro de canalización</h3>
-        {% if canalizacion.estadoCanalizados == '' %}
-        <span style="font-size: small;">Rellena la información completa para el registro de la nueva
-            canalización.</span>        
+        {% if canalizacion.estadoCanalizados != 1 and canalizacion.estadoCanalizados != 2 %}
+        <span style="font-size: small;">Rellena la información completa para el registro de la nueva canalización.</span>
         {% endif %}
         <br><br>
 
@@ -46,7 +45,7 @@
 
             <div class="btnsFormCanalizacion">
                 <a class="btnRegresar" href="{% url 'Dashboard' %}">Regresar</a>
-                {% if canalizacion.estadoCanalizados == '' %}
+                {% if canalizacion.estadoCanalizados != 1 and canalizacion.estadoCanalizados != 2 %}
                 <button class="btnEnviar" type="submit">Enviar</button>
                 {% endif %}
             </div>

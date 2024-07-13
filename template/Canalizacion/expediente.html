@@ -1,10 +1,11 @@
-{%extends '../dashboard.html'%}
-{%load static%}
-{%block content%}
+{% extends '../dashboard.html' %}
+{% load static %}
+
+{% block content %}
 <link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
-<div class="containerCanalizacion">
 
+<div class="containerCanalizacion">
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Dashboard' %}">Canalización</a></li>
@@ -13,10 +14,10 @@
     </nav>
 
     <div class="encabezadoCanalizacionExpediente">
-        <h3>{% for x in alumno %}
-                {{x.User.first_name}}
-                {{x.User.last_name}}
-            {% endfor%}
+        <h3>
+            {% for x in alumno %}
+                {{ x.User.first_name }} {{ x.User.last_name }}
+            {% endfor %}
         </h3>
 
         <select id="selectCiclo" name="periodo_id" class="selectCiclo">
@@ -24,13 +25,13 @@
                 <option value="{{ periodo.id }}">{{ periodo.periodo }} {{ periodo.anio }}</option>
             {% endfor %}
         </select>
+
         <div>
             <a class="btnPerfiles" href="{% url 'Reportes' alumno_id %}"><i class="fa-solid fa-file-pdf"></i>Reportes</a>
         </div>
     </div>
 
     <div class="cardExpediente">
-
         <h2 style="text-align: center;">Atenciones individuales</h2>
 
         <table id="tablaAtencionesIndividuales" class="tablaAtencionesIndividuales" style="width: 100%;">
@@ -44,20 +45,18 @@
             </thead>
             <tbody style="text-align: center;">
                 {% for x in TablaExpedientes %}
-                <tr>
-                    <td>{{x.area}}</td>
-                    <td>{{x.observacionesIndividual}}</td>
-                    <td>{{x.asuntoTratarIndividual}}</td>
-                    <td>{{x.fechaIndividual}}</td>
-                </tr>
+                    <tr>
+                        <td>{{ x.area }}</td>
+                        <td>{{ x.observacionesIndividual }}</td>
+                        <td>{{ x.asuntoTratarIndividual }}</td>
+                        <td>{{ x.fechaIndividual }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
 
     <div class="cardExpediente" style="margin-top: 3em;">
-
         <h2 style="text-align: center;">Canalizaciones</h2>
 
         <table id="tablaCanalizaciones" class="tablaCanalizaciones" style="width: 100%;">
@@ -70,127 +69,103 @@
             </thead>
             <tbody style="text-align: center;">
                 {% for x in TablaExpedientes %}
-                <tr>
-                    <td>{{x.area}}</td>
-                    <td>{{x.detalles}}</td>
-                    <td>{{x.fecha}}</td>
-                </tr>
+                    <tr>
+                        <td>{{ x.area }}</td>
+                        <td>{{ x.detalles }}</td>
+                        <td>{{ x.fecha }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
-
 </div>
 
-<script src="../../static/js/datatables.min.js"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
 <script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-    TipoEquipoSeleccionado = $("#selectCiclo option:selected").val();
-    $.ajax({
-        url: "{% url 'Expediente' alumno_id %}",
-        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{alumno_id}}},
-        success: function(data) {
-            $('#tablaAtencionesIndividuales tbody').empty();
-            $('#tablaCanalizaciones tbody').empty();
-            
-            $.each(data.atenciones_individuales, function(index, atencion) {
-                $('#tablaAtencionesIndividuales tbody').append(
-                    '<tr>' +
-                    '<td>' + atencion.area + '</td>' +
-                    '<td>' + atencion.atencionIndividual__observaciones + '</td>' +
-                    '<td>' + atencion.atencionIndividual__asuntoTratar + '</td>' +
-                    '<td>' + atencion.atencionIndividual__fecha + '</td>' +
-                    '</tr>'
-                );
-            });
+    // Función para cargar datos al seleccionar un periodo
+    function cargarDatos(periodo_id, alumno_id) {
+        $.ajax({
+            url: "{% url 'Expediente' alumno_id %}",
+            data: {
+                periodo_id: periodo_id,
+                alumno: alumno_id
+            },
+            success: function(data) {
+                // Limpiar tablas antes de agregar datos
+                $('#tablaAtencionesIndividuales tbody').empty();
+                $('#tablaCanalizaciones tbody').empty();
 
-            $.each(data.canalizaciones, function(index, canalizacion) {
-                $('#tablaCanalizaciones tbody').append(
-                    '<tr>' +
-                    '<td>' + canalizacion.area + '</td>' +
-                    '<td>' + canalizacion.detalles + '</td>' +
-                    '<td>' + canalizacion.fecha + '</td>' +
-                    '</tr>'
-                );
-            });
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-            alert("Estatus: " + textStatus); 
-            alert("Error: " + errorThrown); 
-        }
+                // Iterar sobre las atenciones individuales y añadir a la tabla correspondiente
+                $.each(data.atenciones_individuales, function(index, atencion) {
+                    $('#tablaAtencionesIndividuales tbody').append(
+                        '<tr>' +
+                        '<td>' + atencion.area + '</td>' +
+                        '<td>' + atencion.atencionIndividual__observaciones + '</td>' +
+                        '<td>' + atencion.atencionIndividual__asuntoTratar + '</td>' +
+                        '<td>' + atencion.atencionIndividual__fecha + '</td>' +
+                        '</tr>'
+                    );
+                });
+
+                // Iterar sobre las canalizaciones y añadir a la tabla correspondiente
+                $.each(data.canalizaciones, function(index, canalizacion) {
+                    $('#tablaCanalizaciones tbody').append(
+                        '<tr>' +
+                        '<td>' + canalizacion.area + '</td>' +
+                        '<td>' + canalizacion.detalles + '</td>' +
+                        '<td>' + canalizacion.fecha + '</td>' +
+                        '</tr>'
+                    );
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Estatus: " + textStatus);
+                alert("Error: " + errorThrown);
+            }
+        });
+    }
+
+    // Cargar datos al cargar la página inicialmente
+    cargarDatos($('#selectCiclo').val(), {{ alumno_id }});
+
+    // Cargar datos al cambiar el periodo seleccionado
+    $(document).on("change", "#selectCiclo", function() {
+        cargarDatos($(this).val(), {{ alumno_id }});
     });
-    
-   
-});
-$(document).on("change", "#selectCiclo", function () { 
-    TipoEquipoSeleccionado = $("#selectCiclo option:selected").val();
-    $.ajax({
-        url: "{% url 'Expediente' alumno_id %}",
-        data: {periodo_id: TipoEquipoSeleccionado,alumno:{{alumno_id}}},
-        success: function(data) {
-            $('#tablaAtencionesIndividuales tbody').empty();
-            $('#tablaCanalizaciones tbody').empty();
-            
-            $.each(data.atenciones_individuales, function(index, atencion) {
-                $('#tablaAtencionesIndividuales tbody').append(
-                    '<tr>' +
-                    '<td>' + atencion.area + '</td>' +
-                    '<td>' + atencion.atencionIndividual__observaciones + '</td>' +
-                    '<td>' + atencion.atencionIndividual__asuntoTratar + '</td>' +
-                    '<td>' + atencion.atencionIndividual__fecha + '</td>' +
-                    '</tr>'
-                );
-            });
 
-            $.each(data.canalizaciones, function(index, canalizacion) {
-                $('#tablaCanalizaciones tbody').append(
-                    '<tr>' +
-                    '<td>' + canalizacion.area + '</td>' +
-                    '<td>' + canalizacion.detalles + '</td>' +
-                    '<td>' + canalizacion.fecha + '</td>' +
-                    '</tr>'
-                );
-            });
-
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-            alert("Estatus: " + textStatus); 
-            alert("Error: " + errorThrown); 
-        }
-    });
-});
-$(document).ready(function() {
-   
-   let table = new DataTable('#tablaAtencionesIndividuales', {
+    // Inicializar DataTables
+    $('#tablaAtencionesIndividuales').DataTable({
         responsive: true,
-        "columnDefs": [
-            { "className": "dt-center", "targets": "_all" }
-        ],
+        "columnDefs": [{
+            "className": "dt-center",
+            "targets": "_all"
+        }],
         language: {
             info: 'Página _PAGE_ de _PAGES_',
-            infoEmpty: 'No records available',
-            infoFiltered: '(filtered from _MAX_ total records)',
+            infoEmpty: 'No hay registros disponibles',
+            infoFiltered: '(filtrado de _MAX_ registros totales)',
             lengthMenu: '_MENU_ registros por página',
-            zeroRecords: 'Nothing found - sorry',
-            search: 'Buscar: '
+            zeroRecords: 'No se encontraron resultados',
+            search: 'Buscar:'
         }
     });
 
-    let table2 = new DataTable('#tablaCanalizaciones', {
+    $('#tablaCanalizaciones').DataTable({
         responsive: true,
-        "columnDefs": [
-            { "className": "dt-center", "targets": "_all" }
-        ],
+        "columnDefs": [{
+            "className": "dt-center",
+            "targets": "_all"
+        }],
         language: {
             info: 'Página _PAGE_ de _PAGES_',
-            infoEmpty: 'No records available',
-            infoFiltered: '(filtered from _MAX_ total records)',
+            infoEmpty: 'No hay registros disponibles',
+            infoFiltered: '(filtrado de _MAX_ registros totales)',
             lengthMenu: '_MENU_ registros por página',
-            zeroRecords: 'Nothing found - sorry',
-            search: 'Buscar: '
+            zeroRecords: 'No se encontraron resultados',
+            search: 'Buscar:'
         }
     });
 });

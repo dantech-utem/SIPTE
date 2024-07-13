@@ -27,7 +27,13 @@
     </tbody>
   </table>
 </div><br><br>
-<a href="{% url 'formulario' %}" type="button" class="btn btn-success">Entrevista Inicial</a>
+  {% if estudiante %}
+        <!-- Mostrar el botón para ver el resumen de respuesta -->
+        <a href="{% url 'resumenresp' idEstudiante=estudiante.id %}" class="btn btn-primary">Ver Resumen</a>
+    {% else %}
+        <!-- Mostrar el botón para completar el formulario inicial -->
+        <a href="{% url 'formulario' %}" class="btn btn-success">Entrevista Inicial</a>
+    {% endif %}
 
 </div>
 

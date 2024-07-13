@@ -82,6 +82,27 @@ class aviso(View):
         return render(request, "entrevistas/alumno/aviso.html", {'avisos': avisos})
 
 
+
+class resumenresp(View):
+    def get(self, request, idEstudiante):
+        estudiante = get_object_or_404(Estudiante, idEstudiante=idEstudiante)
+        datos_familiares = get_object_or_404(DatosFamiliares, idEstudiante=estudiante)
+        datos_socioeconomicos = get_object_or_404(Socioeconomicos, idEstudiante=estudiante)
+        datos_academicos = get_object_or_404(AntecedenteAcademico, idEstudiante=estudiante)
+        datos_estudio = get_object_or_404(HabitosEstudio, idEstudiante=estudiante)
+        
+        context = {
+            'estudiante': estudiante,
+            'datos_familiares': datos_familiares,
+            'datos_socioeconomicos': datos_socioeconomicos,
+            'datos_academicos': datos_academicos,
+            'datos_estudio': datos_estudio,
+        }
+   
+        return render(request, 'entrevistas/alumno/resumenresp.html', context)
+
+ 
+
 def crearEstudiante(request):
     if request.method == 'POST':
         # Obtener los datos del formulario
@@ -287,4 +308,5 @@ def crearEstudiante(request):
         )
 
        
-        return redirect('resumenresp')
+        return redirect('resumenresp', idEstudiante=estudiante.idEstudiante)
+    

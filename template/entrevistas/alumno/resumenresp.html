@@ -1,112 +1,438 @@
 {% extends 'dashboard.html' %}
+{% load static %}
+
 {% block content %}
-<div class="container">
-    <div class="row">
-    <div class="col-md-6">
-    <h1>Resumen de Formulario</h1>
-    <p><strong>Número de control:</strong> {{ estudiante.no_control }}</p>
-    <p><strong>Nombre:</strong> {{ estudiante.nombre }}</p>
-    <p><strong>Carrera:</strong> {{ estudiante.carrera }}</p>
-    <p><strong>Tutor:</strong> {{ estudiante.tutor }}</p>
-    <p><strong>Grupo:</strong> {{ estudiante.grupo }}</p>
-    <p><strong>Fecha:</strong> {{ estudiante.fecha }}</p>
-    <p><strong>Teléfono de Casa:</strong> {{ estudiante.tel_casa }}</p>
-    <p><strong>Correo Electrónico:</strong> {{ estudiante.correo }}</p>
-    <p><strong>Número de Celular:</strong> {{ estudiante.tel_celular }}</p>
-    <p><strong>Edad:</strong> {{ estudiante.edad }}</p>
+<style>
+    #colora {
+        color: white;
+        background-color: #5AA86C;
+
+    }
+
+    #colorb {
+        color: black;
+        background-color: #AFD5B8;
+    }
+
+    .accordion-item {
+        margin: 5px;
+    }
+
+    #datosI {
+        background-color: #5AA86C;
+        color: white;
+        font-size: 18px;
+    }
+
+    #labels {
+        font-weight: 400;
+    }
+
+    #labelP {
+        font-weight: 700;
+    }
+</style>
+
+<div class="card  w-auto p-3" style="width: 18rem;">
+    <div id="datosI" class="card-header">
+        <b> Datos de Identificación</b>
     </div>
-    <!-- Datos Familiares -->
-    <div class="col-md-6">
-    <p><strong>¿Con quién vives?:</strong> {{ estudiante.convive_con }}</p>
-    {% if estudiante.convive_con == 'Otra situación' %}
-      <p><strong>Otra situación:</strong> {{ estudiante.otra_situacion }}</p>
-    {% endif %}
-    <p><strong>¿Eres huérfano?:</strong> {{ estudiante.huerfano }}</p>
-    {% if estudiante.huerfano == 'Si' %}
-      <p><strong>¿De quién?:</strong> {{ estudiante.huerfano_quien }}</p>
-    {% endif %}
-    <p><strong>Número de hermanos(as):</strong> {{ estudiante.total_hermanos }}</p>
-    <p><strong>Lugar que ocupas:</strong> {{ estudiante.lugar_hermano }}</p>
-    <p><strong>Estado civil:</strong> {{ estudiante.estado_civil }}</p>
-    </div>
-    <!-- Datos Socioeconomicos -->
-    <div class="col-md-6">
-        <h3>Datos Socioeconómicos</h3>
-        <p><strong>Tipo de vivienda:</strong> {{ respuestas.vivienda }}</p>
-        <p><strong>Tenencia de la vivienda:</strong> {{ respuestas.tenencia }}</p>
-        <p><strong>Número de habitaciones:</strong> {{ respuestas.habitaciones }}</p>
-        <p><strong>Número de vehículos:</strong> {{ respuestas.vehiculos }}</p>
-        <p><strong>Trabajo del papá:</strong> {{ respuestas.trabajoPapa }}</p>
-        {% if respuestas.trabajoPapa == 'Otro' %}
-        <p><strong>Descripción del otro trabajo del papá:</strong> {{ respuestas.trabajoextraPapa }}</p>
-        {% endif %}
-        <p><strong>Trabajo de la mamá:</strong> {{ respuestas.trabajoMama }}</p>
-        {% if respuestas.trabajoMama == 'Otro' %}
-        <p><strong>Descripción del otro trabajo de la mamá:</strong> {{ respuestas.trabajoextraMama }}</p>
-        {% endif %}
-    </div>
-    <div class="col-md-6">
-        <h3>Otros Datos</h3>
-        <p><strong>Manutención:</strong> {{ respuestas.manutencion }}</p>
-        <p><strong>¿Trabajas?:</strong> {{ respuestas.trabajas }}</p>
-        <p><strong>¿Tiene relación con la carrera?:</strong> {{ respuestas.relacionCarrera }}</p>
-        <p><strong>Ingresos familiares:</strong> {{ respuestas.ingresoFam }}</p>
-        <p><strong>Número de personas que contribuyen a esos ingresos:</strong> {{ respuestas.contribuyentes }}</p>
-        <p><strong>Número de personas que dependen de esos ingresos:</strong> {{ respuestas.dependientesIngresos }}</p>
-    </div>
-    <div class="col-md-6">
-            <h3>Datos Socioeconómicos</h3>
-            <p><strong>Tipo de vivienda:</strong> {{ respuestas.vivienda }}</p>
-            <p><strong>Tenencia de la vivienda:</strong> {{ respuestas.tenencia }}</p>
-            <p><strong>Número de habitaciones:</strong> {{ respuestas.habitaciones }}</p>
-            <p><strong>Número de vehículos:</strong> {{ respuestas.vehiculos }}</p>
-            <p><strong>Trabajo del papá:</strong> {{ respuestas.trabajoPapa }}</p>
-            {% if respuestas.trabajoPapa == 'Otro' %}
-            <p><strong>Descripción del otro trabajo del papá:</strong> {{ respuestas.trabajoextraPapa }}</p>
-            {% endif %}
-            <p><strong>Trabajo de la mamá:</strong> {{ respuestas.trabajoMama }}</p>
-            {% if respuestas.trabajoMama == 'Otro' %}
-            <p><strong>Descripción del otro trabajo de la mamá:</strong> {{ respuestas.trabajoextraMama }}</p>
-            {% endif %}
-        </div>
-        <div class="col-md-6">
-            <h3>Otros Datos</h3>
-            <p><strong>Manutención:</strong> {{ respuestas.manutencion }}</p>
-            <p><strong>¿Trabajas?:</strong> {{ respuestas.trabajas }}</p>
-            <p><strong>¿Tiene relación con la carrera?:</strong> {{ respuestas.relacionCarrera }}</p>
-            <p><strong>Ingresos familiares:</strong> {{ respuestas.ingresoFam }}</p>
-            <p><strong>Número de personas que contribuyen a esos ingresos:</strong> {{ respuestas.contribuyentes }}</p>
-            <p><strong>Número de personas que dependen de esos ingresos:</strong> {{ respuestas.dependientesIngresos }}</p>
-        </div>
-        <!-- Datos Academicos -->
-        <div class="col-md-6">
-            <h3>Datos Académicos</h3>
-            <p><strong>Bachillerato de procedencia:</strong> {{ respuestas.bachillerato }}</p>
-            <p><strong>Modalidad:</strong> {{ respuestas.modalidad }}</p>
-            <p><strong>Duración en años para terminarlo:</strong> {{ respuestas.duracion }}</p>
-            <p><strong>Promedio obtenido:</strong> {{ respuestas.promedio }}</p>
-            <p><strong>Rendimiento escolar:</strong> {{ respuestas.rendimiento }}</p>
-            <p><strong>Materias que se te facilitan más:</strong> {{ respuestas.materiasFacil }}</p>
-            <p><strong>Materias que te cuestan más trabajo:</strong> {{ respuestas.materiasDificil }}</p>
-            <p><strong>Materias acreditadas en extraordinario:</strong> {{ respuestas.materiasExtras }}</p>
-            <p><strong>¿Cuáles materias acreditadas en extraordinario?:</strong> {{ respuestas.cualesExtras }}</p>
-            <p><strong>¿Repetiste algún año o grado en niveles anteriores?:</strong> {{ respuestas.repAnio }}</p>
-            <p><strong>¿En qué nivel?:</strong> {{ respuestas.nivelRep }}</p>
-            <p><strong>Principales obstáculos para encarar los estudios:</strong> {{ respuestas.obstaculos }}</p>
+
+    <ul class="list-group list-group-flush">
+        <div class="row">
+            <div class="col-md-8 mt-4">
+                <div class="mb-1">
+                    <label id="labelP" for="">Nombre del alumno: &nbsp;</label> <label id="labels" for="">Gabriela
+                        Carrion De La Cruz</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Carrera: &nbsp;</label> <label id="labels" for="">Ingeniera en Desarrollo
+                        de Software Multiplataforma</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Grupo: &nbsp;</label> <label id="labels" for="">9-TID-1</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Correo Electrónico: &nbsp;</label> <label id="labels"
+                        for="">a20210155@utem.edu.mx</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Tutor &nbsp;</label> <label id="labels" for="">Perla Rubi Pizano
+                        Ferrer</label>
+                </div>
+            </div>
+            <div class="col-md-4 mt-4">
+                <div class="mb-1">
+                    <label id="labelP" for="">Numero de Control: &nbsp;</label> <label id="labels"
+                        for="">20210155</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Edad: &nbsp;</label> <label id="labels" for="">21</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Tel. Casa: &nbsp;</label> <label id="labels" for="">313789008</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Num. Celular: &nbsp;</label> <label id="labels" for="">314789887</label>
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-md-6">
-            <ul>
-                <li>¿Te gusta leer?: {{ datos.gustoLectura }}</li>
-                <li>¿Qué tipo de lectura te gusta?: {{ datos.tipoLectura }}</li>
-                <li>¿Tienes un lugar especial para estudiar en tu casa?: {{ datos.sitioLectura }}</li>
-                <li>Descríbelo: {{ datos.descripEstudio }}</li>
-                <li>¿Cuántas horas diarias dedicas usualmente al estudio?: {{ datos.horas }}</li>
-                <li>¿Tienes un horario fijo para estudiar?: {{ datos.horario }}</li>
-                <li>¿Escuchas música cuando estudias?: {{ datos.musica }}</li>
-              </ul>
+    </ul>
+</div>
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colora" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseOne">
+                Datos familiares
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse ">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Vive con:&nbsp;</label> <label id="labels" for="">Ambos
+                                padres</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Numero de hermano: &nbsp;</label> <label id="labels"
+                                for="">2</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Lugar que ocupa:: &nbsp;</label> <label id="labels"
+                                for="">1°</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Huerfano: &nbsp;</label> <label id="labels" for=""> No</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for=""> Estado civil: &nbsp;</label> <label id="labels"
+                                for="">Soltero</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colorb" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseTwo">
+                Datos socioeconómicos
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Vivienda: &nbsp;</label> <label id="labels"
+                                for="">Casa-Propia</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabajo de papá: &nbsp;</label> <label id="labels" for="">Empleado
+                                del gobierno</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabajo de mamá: &nbsp;</label> <label id="labels" for="">Ayudante
+                                de cocina</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabaja: &nbsp;</label> <label id="labels" for="">Si</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabajo relacionado con carrera: &nbsp;</label> <label id="labels"
+                                for="">No</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Cuenta con: &nbsp;</label> <label id="labels"
+                                for="">Internet-Línea Tel.-Computadora-Servicio de TV</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Número de habitaciones: &nbsp;</label> <label id="labels"
+                                for="">4</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Número de vehiculos: &nbsp;</label> <label id="labels"
+                                for="">2</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Ingresos familiares: &nbsp;</label> <label id="labels"
+                                for="">31378</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Num. de personas que contribuyen: &nbsp;</label> <label
+                                id="labels" for="">3</label>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colora" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseThree">
+                Antecedentes académicos
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Bachillerato de procedencia: &nbsp;</label> <label id="labels"
+                                for="">UdeC Bachillerato #27</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Rendimiento escolar: &nbsp;</label> <label id="labels" for="">Muy
+                                bueno</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Materias faciles: &nbsp;</label> <label id="labels"
+                                for="">Quimica-Biologia-Matematicas</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Materias dificiles: &nbsp;</label> <label id="labels"
+                                for="">Ninguna</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Materias en extraordinario: &nbsp;</label> <label id="labels"
+                                for="">Quimica III- Geografía</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Obstaculos: &nbsp;</label> <label id="labels" for="">Mi principal
+                                obstaculo es que me cuesta concentrarme durante clases si no tengo una actividad</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Modalidad: &nbsp;</label> <label id="labels"
+                                for="">Escolarizada</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Duración: &nbsp;</label> <label id="labels" for="">Tres
+                                años</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Promedio Final: &nbsp;</label> <label id="labels" for="">Entre 10
+                                y 9.5</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Repetiste año o grado: &nbsp;</label> <label id="labels"
+                                for="">Bachillerato</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colorb" class="accordion-button  collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseFour">
+                Hábitos de estudio
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Le gusta leer: &nbsp;</label> <label id="labels"
+                                for="">Si-Novelas</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Lugar de estudio: &nbsp;</label> <label id="labels" for="">Mi
+                                cuarto</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Descripción del lugar: &nbsp;</label> <label id="labels"
+                                for="">9-TID-1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Horas de estudio diarias: &nbsp;</label> <label id="labels"
+                                for="">2 horas</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Horario fijo: &nbsp;</label> <label id="labels" for="">No</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Escucha musica cuando estudia: &nbsp;</label> <label id="labels"
+                                for="">Si</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colora" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseFive">
+                Aficiones
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+            <div class="accordion-body">
+
+                <div class="col-md-8 mt-4">
+                    <div class="mb-1">
+                        <label id="labelP" for="">En que emplea su tiempo libre: &nbsp;</label> <label id="labels"
+                            for="">Jugar videojuegos</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Cuánto tiempo dedica diario: &nbsp;</label> <label id="labels"
+                            for="">2 horas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colorb" class="accordion-button  collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseSix">
+                Personalidad
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Colabora en el hogar: &nbsp;</label> <label id="labels"
+                                for="">Si</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Cuantó:: &nbsp;</label> <label id="labels" for="">Solo lo
+                                necesario</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Integrado a su familia: &nbsp;</label> <label id="labels"
+                                for="">Totalmente</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Habla con su familia sobre sus interes o preocupaciones:
+                                &nbsp;</label> <label id="labels" for="">No</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Te comunicas a decuadamente en casa: &nbsp;</label> <label
+                                id="labels" for="">No</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colora" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseSeven">
+                Rasgos
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-3 mt-3">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Platicador(a) &nbsp;</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Platicador(a) &nbsp;</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Platicador(a) &nbsp;</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Platicador(a) &nbsp;</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Platicador(a) &nbsp;</label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button id="colorb" class="accordion-button  collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseEight">
+            Salud
+        </button>
+    </h2>
+    <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+        <div class="accordion-body">
+            <div class="row">
+                <div class="col-md-8 mt-4">
+                    <div class="mb-1">
+                        <label id="labelP" for="">Como considera su salud: &nbsp;</label> <label id="labels"
+                            for="">Regular</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Ha tenido enfermedad grave: &nbsp;</label> <label id="labels"
+                            for="">De este tipo de enfermedad</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">padecimientoo enfermedad crónica: &nbsp;</label> <label id="labels"
+                            for="">No</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Condición que fecte tu visión, audición, motricidad:
+                            &nbsp;</label> <label id="labels" for="">No</label>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-4">
+
+
+                    <div class="mb-1">
+                        <label id="labelP" for="">Lo han operado: &nbsp;</label> <label id="labels" for="">Por la
+                            gastritis</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Problema de salud que afecte estudios: &nbsp;</label> <label
+                            id="labels" for="">Mi vision y poca audición</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Comentario: &nbsp;</label> <label id="labels" for="">No aplica</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 </div>
 </div>
 {% endblock %}

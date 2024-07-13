@@ -1,0 +1,595 @@
+.containerCanalizacion {
+    font-family: sans-serif;
+    margin: 1em;
+    padding: 0.5em;
+    border-radius: 8px;
+}
+
+.breadcrumb {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.breadcrumb li {
+    list-style-type: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+    padding: 0 0.5em;
+    color: #6c757d;
+}
+
+i{
+    padding-right: 0.5em;
+}
+
+                                                            /* Lista de canalización */
+
+.encabezadoCanalizacion {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 20px;
+    margin-bottom: 2em;
+}
+
+.encabezadoCanalizacion h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btnCerrarTutorias {
+    text-decoration: none;
+    font-size: 1em;
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5em;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: #00AA8A;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.btnCerrarTutorias:hover {
+    background-color: #008a70;
+}
+
+.tablaCanalizacion thead{
+    width: 100%;
+    background-color: #F3F4F6;
+    text-align: center;
+}
+
+.tablaCanalizacion tbody tr {
+    height: 3em;
+}
+
+.btnExpediente, .btnBaja, .btnAlta, .btnCanalizar {
+    font-size: 0.9em;
+    padding: 0.5em;
+    margin: 0.1em 0.5em;
+    border-radius: 10px;
+    border-style: hidden;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.btnExpediente {
+    background-color: #2b4db3;
+}
+
+.btnExpediente:hover {
+    background-color: #01217f;
+}
+
+.btnBaja {
+    background-color: #aa0000;
+}
+
+.btnBaja:hover {
+    background-color: #850101;
+}
+
+.btnAlta {
+    background-color: #00aa25;
+}
+
+.btnAlta:hover {
+    background-color: #007b1b;
+}
+
+.btnCanalizar {
+    background-color: #e88b00;
+}
+
+.btnCanalizar:hover {
+    background-color: #ac6700;
+}
+
+
+                                                            /* Formularios */
+
+.cardFormulario {
+    display: block;
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px;
+}
+
+.formTitulo {
+    margin: 0;
+}
+
+.formTextarea {
+    font-family: Arial;
+    font-size: medium;
+    width: 100%;
+    resize: vertical;
+    background-color: #F3F4F6;
+    border-radius: 5px;
+    border-color: #47474746;
+    margin-bottom: 1em;
+}
+
+.formSelect {
+    font-family: Arial;
+    font-size: medium;
+    width: 100%;
+    height: 2em;
+    background-color: #F3F4F6;
+    border-radius: 5px;
+    border-color: #47474746;
+    margin-bottom: 1em;
+}
+
+.formInput {
+    font-family: Arial;
+    font-size: medium;
+    width: 100%;
+    height: 2em;
+    background-color: #F3F4F6;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #47474746;
+    margin-bottom: 1em;
+}
+
+.labelFormCanalizacion {
+    color: #000000;
+}
+
+.btnRegresar {
+    text-decoration: none;
+    font-size: 1em;
+    padding: 0.5em;
+    margin: 0.1em;
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: #7c7c7c;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.btnRegresar:hover {
+    background-color: #565656;
+}
+
+.btnEnviar {
+    font-size: 1em;
+    padding: 0.5em;
+    margin: 0.1em;
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: #00AA8A;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.btnEnviar:hover {
+    background-color: #008a70;
+}
+
+                                                            /* Expediente */
+
+.encabezadoCanalizacionExpediente {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 20px;
+    margin-bottom: 2em;
+    justify-items: center; 
+    align-items: center;
+    margin-top: 1em;
+}
+
+.tablaAtencionesIndividuales thead{
+    width: 100%;
+    background-color: #F3F4F6;
+    text-align: center;
+}
+
+.tablaAtencionesIndividuales tbody tr {
+    height: 3em;
+}
+
+.tablaCanalizaciones thead{
+    width: 100%;
+    background-color: #F3F4F6;
+    text-align: center;
+}
+
+.tablaCanalizaciones tbody tr {
+    height: 3em;
+}
+
+.tablaReportes thead{
+    width: 100%;
+    background-color: #F3F4F6;
+    text-align: center;
+}
+
+.tablaReportes tbody tr {
+    height: 3em;
+}
+
+.btnPerfiles {
+    text-decoration: none;
+    font-size: 1em;
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5em;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: #00AA8A;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.btnReportes:hover {
+    background-color: #008a70;
+}
+
+.selectCiclo {
+    font-family: Arial;
+    font-size: medium;
+    width: fit-content;
+    height: 2em;
+    background-color: #F3F4F6;
+    border-radius: 5px;
+    border-color: #47474746;
+    /* margin-bottom: 1em; */
+}
+
+.cardExpediente {
+    display: block;
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px;
+}
+
+                                                            /* Calendario */
+
+.containerCalendario {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    background-color: #ffffff00;
+}
+
+.cardCalendario {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.seccionEventos {
+    width: 30%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-right: 1px solid #ddd; 
+    box-sizing: border-box;
+}
+
+.seccionEventos h2 {
+    margin-top: 0;
+}
+
+.seccionEventos p {
+    margin-bottom: 10px;
+}
+
+.seccionCalendario {
+    flex: 1; 
+}
+
+.headerCalendario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #00AA8A;
+    color: #ffffff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.GrupoBtnMeses {
+    display: flex;
+    align-items: center;
+}
+
+.btnMes {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 10px; 
+}
+
+.mesAnio {
+    padding-left: 4em;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center; 
+}
+
+.grupoBtnMostrar {
+    display: flex;
+}
+
+.btnMostrar {
+    background-color: #00AA8A;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btnMostrar:hover {
+    background-color: #00715d;
+}
+
+.calendarioCompleto {
+    padding: 20px;
+}
+
+.calendarioSemanas {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.dias {
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+.calendarioFechas {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: right;
+}
+
+.fecha {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    position: relative;
+    height: 80px; 
+}
+
+.fecha:hover {
+    background-color: #00AA8A;
+    color: #fff;
+    cursor: pointer;
+}
+
+.fecha.vacia {
+    color: #515151;
+    background-color: transparent;
+    cursor: default;
+}
+
+.fecha::after {
+    content: attr(data-date);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 12px;
+    color: #999;
+}
+
+                                                            /* Completar sesión */
+
+.tablaCanalizados thead{
+    width: 100%;
+    background-color: #F3F4F6;
+    text-align: center;
+}
+
+.tablaCanalizados tbody tr {
+    height: 3em;
+}
+
+.btnCompletarSesion, .btnConsultarSesion, .btnCalendarioSesion, .btnInfoCanal {
+    display: inline-block;
+    white-space: nowrap; 
+    font-size: 0.9em;
+    padding: 0.5em;
+    margin: 0.1em 0.5em;
+    border-radius: 10px;
+    border-style: hidden;
+    color: #FFFFFF;
+    transition: 0.5s all;
+    text-align: center; 
+}
+
+.btnCompletarSesion {
+    background-color: #00aa25;
+}
+
+.btnCompletarSesion:hover {
+    background-color: #007b1b;
+}
+
+.btnCalendarioSesion {
+    background-color: #e88b00;
+}
+
+.btnCalendarioSesion:hover {
+    background-color: #ac6700;
+}
+
+.btnConsultarSesion {
+    background-color: #2b4db3;
+}
+
+.btnConsultarSesion:hover {
+    background-color: #01217f;
+}
+
+.btnInfoCanal {
+    background-color: #00AA8A;
+}
+
+.btnInfoCanal:hover {
+    background-color: #008a70;
+}
+
+
+                                                        /* Reportes*/
+.containerReportes {
+    font-family: sans-serif;
+    margin: 1em;
+    padding: 0.5em;
+    border-radius: 8px;
+}
+
+.encabezadoReportes {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 20px;
+    margin-bottom: 2em;
+}
+
+.btnReportes {
+    text-decoration: none;
+    font-size: 1em;
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5em;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: #00AA8A;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.tablaReportes thead{
+    width: 100%;
+    background-color: #F3F4F6;
+    text-align: center;
+}
+
+.tablaReportes tbody tr {
+    height: 3em;
+}
+
+.btnReportes{
+    font-size: 0.9em;
+    padding: 0.5em;
+    margin: 0.1em 0.5em;
+    border-radius: 10px;
+    border-style: hidden;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.btnReportes {
+    background-color: #000000;
+}
+
+.btnReportes:hover {
+    background-color: #01217f;
+}
+
+.btnReportesIcon {
+    background-color: #000000;
+    margin: auto;
+    display: grid;
+}
+
+.btnReportesIcon:hover {
+    background-color: #01217f;
+}
+
+.btnReportesIcon {
+    text-decoration: none;
+    font-size: 1em;
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5em;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: #000000;
+    color: #FFFFFF;
+    transition: 0.5s all;
+}
+
+.cardReportes {
+    display: block;
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px;
+}
+
+                                                        /* ReportesPdfIndividual*/
+.containerPdfImg{
+   position: relative;
+    top: 30px;
+    left: 85%;
+    margin-bottom: 100px;
+}
+
+.tablaReportesPdf thead{
+    width: 100%;
+    background-color: #F3F4F6;
+    text-align: center;
+}
+
+.tablaReportesPdf tbody tr {
+    height: 6em;
+}

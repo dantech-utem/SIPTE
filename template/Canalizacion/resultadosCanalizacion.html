@@ -1,0 +1,99 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i>Alumnos canalizados</li>
+        </ol>
+    </nav>
+
+    <!-- <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="../index.html">Alumnos canalizados</a></li>
+              <li class="breadcrumb-item" aria-current="page">Expediente</li>
+            </ol>
+        </nav> -->
+    <h2 style="text-align: center;">Canalizados</h2>
+
+    <table id="tablaCanalizados" class="tablaCanalizados" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>NOMBRE(S)</th>
+                <th>APELLIDOS</th>
+                <th>NO. DE CUENTA</th>
+                <th>GRUPO</th>
+                <th>FECHA</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in TablaResultados %}
+            <tr {% if x.estadoCanalizados == 1 %}>
+                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
+                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
+                <td>{{x.fecha}}</td>
+                <td>
+                    <a class="btnCalendarioSesion" href="{% url 'formCalendario' x.id %}">
+                        <i class="fa-regular fa-calendar"></i>Calendario</a>
+                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
+                        <i class="fa-regular fa-id-card"></i>Información</a>
+                </td>
+            </tr>
+            <tr {% elif x.estadoCanalizados == 2 %}>
+                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
+                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
+                <td>{{x.fecha}}</td>
+                <td>
+                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' x.id %}"><i
+                            class="fa-solid fa-user-pen"></i>Completar</a>
+                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
+                        <i class="fa-regular fa-id-card"></i>Información</a>
+                </td>
+            </tr>
+
+            <tr {% elif x.estadoCanalizados == 3 %}>
+                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
+                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
+                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
+                <td>{{x.fecha}}</td>
+                <td>
+                    <a class="btnConsultarSesion" href="{% url 'CompletarSesion' x.id %}">
+                        <i class="fa-solid fa-file-lines"></i>Consultar</a>
+                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
+                        <i class="fa-regular fa-id-card"></i>Información</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
+<script src="../../static/js/datatables.min.js"></script>
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script>
+    let table = new DataTable('#tablaCanalizados', {
+        responsive: true,
+        "columnDefs": [
+            { "className": "dt-center", "targets": "_all" }
+        ],
+        language: {
+            info: 'Página _PAGE_ de _PAGES_',
+            infoEmpty: 'No records available',
+            infoFiltered: '(filtered from _MAX_ total records)',
+            lengthMenu: '_MENU_ registros por página',
+            zeroRecords: 'Nothing found - sorry',
+            search: 'Buscar: '
+        }
+    });
+</script>

@@ -1,0 +1,35 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'Dashboard' %}">Canalización</a></li>
+            <li class="breadcrumb-item" aria-current="page">Cerrar tutorias</li>
+        </ol>
+    </nav>
+
+    <div class="cardFormulario">
+
+        <h3 class="formTitulo">Cierre de tutorias</h3>
+        <span style="font-size: small;">Rellena la información completa para el cierre de la tutoría.</span><br><br>
+
+        <form action="{% url 'cerrarTurorias' %}" method="POST">
+            {% csrf_token %}
+            <label class="labelFormCanalizacion">Dificultades presentadas al ejercer tutoría:</label><br>
+            <textarea name="cierreTutorias" id="" class="formTextarea" rows="10" required></textarea>
+
+            <div class="btnsFormCanalizacion">
+                <a class="btnRegresar" href="{% url 'Dashboard' %}">Regresar</a>
+                <button class="btnEnviar" type="submit">Enviar</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>

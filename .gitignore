@@ -1,2 +1,7 @@
 db.sqlite3
-/venv
+venv
+
+mainApp/__pycache__
+mainApp/migrations
+
+tutorias/__pycache__

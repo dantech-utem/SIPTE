@@ -1,0 +1,38 @@
+{%extends '../dashboard.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'css/stylesCanalizacion.css' %}" rel="stylesheet" type="text/css">
+<div class="containerCanalizacion">
+
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa-solid fa-users"></i><a href="{% url 'ResultadosCanalizacion' %}">Alumnos
+                    canalizados</a></li>
+            <li class="breadcrumb-item" aria-current="page">Completar sesión</li>
+        </ol>
+    </nav>
+
+    <div class="cardFormulario">
+
+        <h3 class="formTitulo">Cierre de sesión</h3>
+        <span style="font-size: small;">Rellena la información completa para el cierre de la sesión.</span><br><br>
+
+        <form  action="{% url 'canalizacionFormCompletarSesion' id %}" method="POST">
+            {% csrf_token %}
+            <label class="labelFormCanalizacion">Resultado de la canalización:</label><br>
+            <textarea name="detalles" id="detalles" class="formTextarea" rows="10" {% if datos.estadoCanalizados == 3 %} readonly {% endif %} required>{% if datos.estadoCanalizados == 3 %}{{datos.detalles}}{% endif %}</textarea>
+
+            <div class="btnsFormCanalizacion">
+                <a class="btnRegresar" href="{% url 'ResultadosCanalizacion' %}">Regresar</a>
+                {% if datos.estadoCanalizados != 3 %}
+                <button class="btnEnviar" type="submit">Enviar</button>
+                {% endif %}
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}
+<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>

@@ -1,3 +1,6 @@
+{% load permisos %}
+{% with user.groups|ComoJson as Grupos %}
+{% with user.get_all_permissions as Permisos %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,13 +22,6 @@
     <link href="/statics/css/icons.min.css" rel="stylesheet" type="text/css">
     <!-- App Css-->
     <link href="/statics/css/app.min.css" id="app-style" rel="stylesheet" type="text/css">
-    <!-- REFERENCIAS PARA PROYECTO ENTREVISTAS-->
-    <!-- CSS de DataTables -->
-    <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" rel="stylesheet">
-    <!--  Json Español DataTables -->
-    <link href="/statics/js/Spanish.json" rel="stylesheet">
-    <!-- CSS de entrevistas -->
-    <link href="/statics/css/style.css" rel="stylesheet">
 </head>
 
 <body class="pace-done sidebar-enable" cz-shortcut-listen="true">
@@ -44,56 +40,43 @@
                     <div class="navbar-brand-box">
                         <a href="/" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img
-                                    src="/statics/assets/img/logo_login.png"
-                                    alt
-                                    height="24">
+                                <img src="/statics/assets/img/logo_login.png" alt height="24">
                             </span>
                             <span class="logo-lg">
-                                <img
-                                    src="/statics/assets/img/logo_login.png"
-                                    alt
-                                    height="24"> <span
+                                <img src="/statics/assets/img/logo_login.png" alt height="24"> <span
                                     class="logo-txt">Tutorías</span>
                             </span>
                         </a>
 
                         <a href="/" class="logo logo-light">
                             <span class="logo-sm">
-                                <img
-                                    src="/statics/assets/img/logo_login.png"
-                                    alt
-                                    height="24">
+                                <img src="/statics/assets/img/logo_login.png" alt height="24">
                             </span>
                             <span class="logo-lg">
-                                <img
-                                    src="/statics/assets/img/logo_login.png"
-                                    alt
-                                    height="24"> <span
+                                <img src="/statics/assets/img/logo_login.png" alt height="24"> <span
                                     class="logo-txt">Tutorías</span>
                             </span>
                         </a>
                     </div>
-                    <button type="button"
-                        class="btn btn-sm px-3 font-size-16 header-item"
-                        id="vertical-menu-btn">
+                    <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div>SISTEMA INTEGRAL DE PEDAGOGIA Y TUTORIA EDUCATIVA</div>
+
+                {% if "mainApp.update_periodo" in Permisos %}
+                data respuesta data result data submit          
+                
+                {% endif %}
                 <div class="d-flex">
                     <div class="dropdown d-inline-block">
-                        <button type="button"
-                            class="btn header-item bg-soft-light border-start border-end"
-                            id="page-header-user-dropdown"
-                            data-bs-toggle="dropdown" aria-haspopup="true"
+                        <button type="button" class="btn header-item bg-soft-light border-start border-end"
+                            id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
 
                             <i class="fa-solid fa-user rounded-circle "></i>
-                            <span
-                                class="d-none d-xl-inline-block ms-1 fw-medium">{{request.user.first_name}}</span>
-                            <i
-                                class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            <span class="d-none d-xl-inline-block ms-1 fw-medium">{{request.user.first_name}}</span>
+                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
@@ -102,8 +85,7 @@
                                     class="mdi mdi-face-profile font-size-16 align-middle me-1"></i>
                                 Profile</a> -->
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"
-                                href="{% url 'logout' %}"><i
+                            <a class="dropdown-item" href="{% url 'logout' %}"><i
                                     class="mdi mdi-logout font-size-16 align-middle me-1"></i>
                                 Cerrar sesión</a>
                         </div>
@@ -272,6 +254,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     {% block content %}
+                                    
                                     {% endblock %}
                                 </div>
                             </div>
@@ -295,24 +278,14 @@
     <script src="/statics/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
     <script src="/statics/js/pages/dashboard.init.js"></script>
     <script src="/statics/js/app.js"></script>
-    <!-- JS de DataTables -->
-    <script src=" https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
-    <!-- JS Español DataTables De Informe,Index y avisos alumno -->
-    <script src="/statics/js/lenguaje.js"></script>
-    <script src="/statics/js/pages/dashboard.init.js"></script>
-    <script src="/statics/js/app.js"></script>
-    <script src="/statics/js/botones.js"></script>
-    <script src="/statics/js/eliminar.js"></script>
-    <script src="/statics/js/funcionesform.js"></script>
+    <script>
 
-    <script>  
         // Obtener una cookie específica por nombre
         function getCookie(name) {
             let cookieName = name + "=";
             let decodedCookies = decodeURIComponent(document.cookie);
             let cookiesArray = decodedCookies.split(';');
-            
+
             for (let i = 0; i < cookiesArray.length; i++) {
                 let cookie = cookiesArray[i].trim();
                 if (cookie.indexOf(cookieName) === 0) {
@@ -321,15 +294,15 @@
             }
             return "";
         }
-        
+
         // Obtener el valor de la cookie 'sso_token'
         let ssoToken = getCookie('sso_token');
         // Guardar el token en el localStorage si existe
         if (ssoToken) {
             localStorage.setItem('sso_token', ssoToken);
         }
-        
-                    </script>
+
+    </script>
     <svg id="SvgjsSvg1401" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"
         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
         style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;">
@@ -338,3 +311,5 @@
         <path id="SvgjsPath1404" d="M0 0 "></path>
     </svg>
 </body>
+{% endwith %}
+{% endwith %}

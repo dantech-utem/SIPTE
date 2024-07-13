@@ -31,10 +31,10 @@
                 <th>ACCIONES</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
             {% for x in TablaViews %}
             <!--cambiar  x.estadoCanalizados/x.estado seguen el estado que ocupemes ya sea canalizacion o usuarios-->
-            <tr {% if x.estado == 2 %} style="background-color: rgb(121, 154, 255);" 
+            <tr {% if x.estado == 2 or x.estado == 4 %} style="background-color: rgb(121, 154, 255);" 
             {% elif x.estado == 3 %} style="background-color: rgb(255, 121, 121);"
             {% else %} {% endif %}>
                 <td>{{ x.User.first_name }}</td>
@@ -42,12 +42,14 @@
                 <td>{{ x.noControl }}</td>
                 <td><a class="btnExpediente" href="{% url 'Expediente' x.id %}"><i
                             class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' x.id %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
                 {% if x.estado == 2 %}   
-                    <a class="btnCanalizar" href="{% url 'FormCanalizar' %}"><i
+                    <a class="btnCanalizar" href="{% url 'FormCanalizar' x.id %}"><i
                             class="fa-solid fa-bezier-curve"></i>Canalizar</a>
+                {% elif x.estado == 4 %}
+                    <a class="btnCanalizar" href="{% url 'FormCanalizar' x.id %}"><i
+                        class="fa-solid fa-bezier-curve"></i>En proceso de canalización</a>
                 {% endif %}
-
                 </td>
             </tr>
             {% endfor %}

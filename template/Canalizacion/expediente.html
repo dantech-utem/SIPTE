@@ -21,7 +21,7 @@
 
         <select id="selectCiclo" name="periodo_id" class="selectCiclo">
             {% for periodo in periodos %}
-                <option value="{{ periodo.id }}">{{ periodo.periodo }} ({{ periodo.anio }})</option>
+                <option value="{{ periodo.id }}">{{ periodo.periodo }} {{ periodo.anio }}</option>
             {% endfor %}
         </select>
         <div>
@@ -42,7 +42,7 @@
                     <th>FECHA</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="text-align: center;">
                 {% for x in TablaExpedientes %}
                 <tr>
                     <td>{{x.area}}</td>
@@ -68,7 +68,7 @@
                     <th>FECHA</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="text-align: center;">
                 {% for x in TablaExpedientes %}
                 <tr>
                     <td>{{x.area}}</td>

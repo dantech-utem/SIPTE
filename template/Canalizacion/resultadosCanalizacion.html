@@ -30,7 +30,7 @@
                 <th>ACCIONES</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
             {% for x in TablaResultados %}
             <tr {% if x.estadoCanalizados == 1 %}>
                 <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
@@ -40,7 +40,7 @@
                 <td>{{x.fecha}}</td>
                 <td>
                     <a class="btnCalendarioSesion" href="{% url 'formCalendario' x.id %}">
-                        <i class="fa-regular fa-calendar"></i>Calendario</a>
+                        <i class="fa-regular fa-calendar"></i>Asignar cita</a>
                     <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
                         <i class="fa-regular fa-id-card"></i>Información</a>
                 </td>

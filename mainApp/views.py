@@ -509,10 +509,14 @@ def canalizacionFormCompletarSesion(request, id):
     if request.method == "POST":
       
       datos = Canalizacion.objects.get(id = id)
+      usuario = Usuarios.objects.get(id = id)
 
       datos.detalles = request.POST['detalles']
       datos.estadoCanalizados = 3
       datos.save()
+
+      usuario.estado = 1
+      usuario.save()
 
       return redirect('ResultadosCanalizacion')
     
@@ -544,32 +548,77 @@ def canalizacionFormCalendario(request, id):
       return redirect('ResultadosCanalizacion')
    
 class canalizacionBajas(View):
-   def get(self, request):
-      return render(request,'Canalizacion/formBaja.html')
+    def get(self, request, id):
+        try:
+            baja = BajaAlumnos.objects.get(estudiante__id=id)
+            estudiante = Usuarios.objects.get(User__id=id)
+            context = {
+                'id': id,
+                'baja': baja,
+                'estudiante': estudiante
+            }
+        except BajaAlumnos.DoesNotExist:
+            context = {
+                'id': id,
+            }
+        
+        return render(request, 'Canalizacion/formBaja.html', context)
    
-def canalizacionBajaAlumno(request):
+def canalizacionBajaAlumno(request, id):
    if request.method == "POST":
+      datos = Usuarios.objects.get(id = id)
       tipo = request.POST['tipo']
       observaciones = request.POST['observaciones']
       motivo = request.POST['motivo']
-      cicloActual = Periodo.objects.filter(estado = True)
-      Baja  = BajaAlumnos.objects.create(tipo=tipo, observaciones=observaciones, motivo=motivo, cicloAccion=cicloActual)
-      Baja.save()
+      cicloActual = Periodo.objects.filter(estado = True).first()
+
+      Baja  = BajaAlumnos.objects.create(tipo=tipo, observaciones=observaciones, motivo=motivo, cicloAccion=cicloActual, estudiante=datos.User)
+
+      datos.estado = 3
+      datos.save()
+
       return redirect('Dashboard')
    
 class canalizacionFormCanalizar(View):
-   def get(self, request):
-      return render(request,'Canalizacion/formCanalizar.html')
+    def get(self, request, id):
+        try:
+            canalizacion = Canalizacion.objects.get(atencionIndividual__estudiante__User__id=id)
+            
+            context = {
+                'id': id,
+                'canalizacion': canalizacion
+            }
+        except Canalizacion.DoesNotExist:
+            context = {
+                'id': id,
+            }
+        
+        return render(request, 'Canalizacion/formCanalizar.html', context)
    
-def canalizacionFormCanalizarAlumno(request):
-   if request.method == "POST":
-      area = request.POST['area']
-      observaciones = request.POST['observaciones']
-      motivo = request.POST['motivo']
-      cicloActual = Periodo.objects.filter(estado = True)
-      Canalizar  = Canalizacion.objects.create(area=area, observaciones=observaciones, motivo=motivo, cicloAccion=cicloActual)
-      Canalizar.save()
-      return redirect('Dashboard')
+def canalizacionFormCanalizarAlumno(request, id):
+    if request.method == "POST":
+        atencion_individual = AtencionIndividual.objects.get(estudiante__id=id)
+        usuario = Usuarios.objects.get(id=id)
+        
+        area = request.POST['area']
+        observaciones = request.POST['observaciones']
+        motivo = request.POST['motivo']
+
+        ciclo_actual = Periodo.objects.filter(estado=True).first()
+        
+        Canalizar = Canalizacion.objects.create(
+            area=area,
+            observaciones=observaciones,
+            motivo=motivo,
+            cicloAccion=ciclo_actual,
+            atencionIndividual=atencion_individual,
+            estadoCanalizados=1
+        )
+
+        usuario.estado = 4
+        usuario.save()
+            
+        return redirect('Dashboard')
    
 class canalizacionFormCerrarTutorias(View):
    def get(self, request):
@@ -584,7 +633,7 @@ def cerrarTurorias(request):
       cierre.save()
       return redirect('Dashboard')
      
-     
+
 class canalizacionReportes(View):
     def get(self, request, id):
         if request.GET.get('periodo_id'):
@@ -643,7 +692,6 @@ class canalizacionReportes(View):
 class canalizacionIndex(View):
    def get(self, request):
       tutor = request.user
-      print("datos del tutor",tutor)
       estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
       periodo = Periodo.objects.filter(estado=1)
       context = {

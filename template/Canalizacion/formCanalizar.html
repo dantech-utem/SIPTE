@@ -14,12 +14,18 @@
     <div class="cardFormulario">
 
         <h3 class="formTitulo">Registro de canalización</h3>
+        {% if canalizacion.estadoCanalizados == '' %}
         <span style="font-size: small;">Rellena la información completa para el registro de la nueva
-            canalización.</span><br><br>
+            canalización.</span>        
+        {% endif %}
+        <br><br>
 
-        <form action="{% url 'canalizacionFormCanalizarAlumno' %}" method="POST">
+        <form action="{% url 'canalizacionFormCanalizarAlumno' id %}" method="POST">
             {% csrf_token %}
             <label class="labelFormCanalizacion">Área:</label><br>
+            {% if canalizacion.estadoCanalizados == 1 or canalizacion.estadoCanalizados == 2  %}
+            <input type="text" name="area" id="area" class="formInput" value="{{canalizacion.area}}" readonly required>
+            {% else %}
             <select id="area" name="area" class="formSelect" required>
                 <option value="" style="display: none;"></option>
                 <option value="Psicólogia">Psicología</option>
@@ -30,17 +36,19 @@
                 <option value="Bolsa de trabajo">Bolsa de trabajo</option>
                 <option value="Asesor académico">Asesor académico</option>
             </select>
+            {% endif %}
 
             <label class="labelFormCanalizacion">Motivo:</label><br>
-            <textarea name="motivo" id="motivo" class="formTextarea" rows="7" required></textarea>
+            <textarea name="motivo" id="motivo" class="formTextarea" rows="7" {% if canalizacion.estadoCanalizados == 1 or canalizacion.estadoCanalizados == 2 %} readonly {% endif %} required>{% if canalizacion.estadoCanalizados == 1 or canalizacion.estadoCanalizados == 2 %}{{canalizacion.motivo}}{% endif %}</textarea>
 
             <label class="labelFormCanalizacion">Observaciones:</label><br>
-            <textarea name="observaciones" id="observaciones" class="formTextarea" rows="7" required></textarea>
+            <textarea name="observaciones" id="observaciones" class="formTextarea" rows="7" {% if canalizacion.estadoCanalizados == 1 or canalizacion.estadoCanalizados == 2 %} readonly {% endif %} required>{% if canalizacion.estadoCanalizados == 1 or canalizacion.estadoCanalizados == 2 %}{{canalizacion.observaciones}}{% endif %}</textarea>
 
             <div class="btnsFormCanalizacion">
                 <a class="btnRegresar" href="{% url 'Dashboard' %}">Regresar</a>
-
+                {% if canalizacion.estadoCanalizados == '' %}
                 <button class="btnEnviar" type="submit">Enviar</button>
+                {% endif %}
             </div>
 
         </form>

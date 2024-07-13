@@ -52,10 +52,11 @@ class EvaluacionTutor(models.Model):
     cicloEvaluacion = models.ForeignKey(Periodo, on_delete=models.CASCADE,null=True)
 
 class BajaAlumnos(models.Model):
+    estudiante = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
     tipo = models.CharField(max_length=100)
-    observaciones = models.TextField()
-    motivo = models.TextField()
+    observaciones = models.TextField(null=True)
+    motivo = models.TextField(null=True)
     fecha = models.DateTimeField(auto_now_add=True)
 
 class AtencionIndividual(models.Model):
@@ -65,18 +66,20 @@ class AtencionIndividual(models.Model):
     observaciones = models.CharField(max_length=400)
     fecha = models.DateTimeField(auto_now_add=True)
     bajasAlumno = models.ForeignKey(BajaAlumnos, on_delete=models.CASCADE, null=True, blank=True)
-    
 
 class Canalizacion(models.Model):
     atencionIndividual = models.ForeignKey(AtencionIndividual, on_delete=models.CASCADE, null=True)
     cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE,null=True)
-    area = models.CharField(max_length=150)
-    observaciones = models.TextField()
-    motivo = models.TextField()
+    area = models.CharField(max_length=150,null=True)
+    observaciones = models.TextField(null=True)
+    motivo = models.TextField(null=True)
     detalles = models.TextField(null=True)
     fecha = models.DateTimeField(auto_now_add=True)
-    FechaInicio = models.DateTimeField()
-    FechaFinal = models.DateTimeField()
+    estadoCanalizados = models.IntegerField(null=True)
+    titulo = models.CharField(max_length=100, null=True)
+    descripcion = models.TextField(null=True)
+    FechaInicio = models.DateTimeField(null=True)
+    FechaFinal = models.DateTimeField(null=True)
 
 class Aviso(models.Model):
     idAvisos = models.AutoField(primary_key=True)

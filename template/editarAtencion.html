@@ -35,4 +35,27 @@
         </form>
     </div>
 </div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5;">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "success" %}
+          <div id="box" class="alert alert-success alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% elif message.tags == "error" %}
+          <div id="box" class="alert alert-danger alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% else %}
+          <div id="box" class="alert alert-warning alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
 {% endblock %}

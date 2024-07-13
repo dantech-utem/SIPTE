@@ -6,17 +6,13 @@ from flask import Flask, send_file
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
-# from openpyxl.styles import Font, PatternFill, Alignment
-# from openpyxl.styles.borders import Border, Side, BORDER_THIN
-# import requests
 from openpyxl.drawing.image import Image
 from io import BytesIO
 import os
 from django.conf import settings
 from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor
 from django.contrib import messages #Importamos para presentar mensajes
-# hola
-# Hola jiji
+
 
 # Create your views here.
 class inicio(View):
@@ -95,7 +91,10 @@ def infoActividadTutorial(request, id):
     return render(request,'infoActividad.html', {"actividad":actividad})   
 
 def infoatencionIndividual(request):
-    atenciones = AtencionIndividual.objects.all()
+    tutor = request.user
+    usuario = Usuarios.objects.get(User=tutor)
+    grupo= usuario.grupo
+    atenciones = AtencionIndividual.objects.filter(cicloAccion__estado=True, estudiante__grupo=grupo)
     messages.success(request, '¡Datos cargados!')
     return render(request, 'atencionIndividual.html', {"atenciones": atenciones})
 
@@ -229,6 +228,8 @@ def descargarXLSX(request):
     tutor = request.user
     usuario = Usuarios.objects.get(User=tutor)
     periodo_activo = Periodo.objects.filter(estado=True).first()
+    grupo= usuario.grupo
+    atenciones= AtencionIndividual.objects.filter(cicloAccion__estado=True, estudiante__grupo=grupo) 
     actividad = AccionTutorial.objects.filter(tutor=tutor, cicloAccion=periodo_activo)
 # Cargar el archivo base
     path_archivo_base = os.path.join(settings.BASE_DIR, 'mainApp', 'data', 'basePlanAccion.xlsx')
@@ -244,20 +245,165 @@ def descargarXLSX(request):
     ws['C5'] = f"{tutor.first_name} {tutor.last_name}"
     ws['C6'] = usuario.grupo
 
+    thin_border = Border(left=Side(style='thin'),
+                        right=Side(style='thin'),
+                        top=Side(style='thin'),
+                        bottom=Side(style='thin'))
 
+    # Estilo de fuente
+    calibri_10_font = Font(name='Calibri', size=10)
+    calibri_10_font_bold = Font(name='Calibri', size=10, bold=True)
+    gray_fill = PatternFill(start_color='D8D8D8', end_color='D8D8D8', fill_type='solid')
+    
     # Rellenar las filas con los datos de 'actividad'
     row_num = 10
-    for idx, atencion in enumerate(actividad, start=1):
-        print(f"Procesando registro {idx}: {atencion.tema}, {atencion.objetivos}, {atencion.actividades}, {atencion.recursos}, {atencion.evidencias}")
-        if row_num > 18:
-            break
-        ws.cell(row=row_num, column=2).value = atencion.tema  # Columna Tema
-        ws.cell(row=row_num, column=3).value = atencion.objetivos  # Columna Objetivos
-        ws.cell(row=row_num, column=4).value = atencion.actividades  # Columna Actividades
-        ws.cell(row=row_num, column=5).value = atencion.recursos  # Columna Recursos
-        ws.cell(row=row_num, column=6).value = atencion.evidencias  # Columna Evidencias
+    inserted_rows_count = 0
+    for idx, act in enumerate(actividad, start=1):
+        inserted_rows_count += 1
+        num_cell = ws.cell(row=row_num, column=1)
+        num_cell.value = idx
+        num_cell.font = calibri_10_font_bold
+        num_cell.border = thin_border
+
+        # Llenado de datos en las columnas
+        ws.cell(row=row_num, column=2).value = act.tema
+        ws.cell(row=row_num, column=3).value = act.objetivos
+        ws.cell(row=row_num, column=4).value = act.actividades
+        ws.cell(row=row_num, column=5).value = act.recursos
+        ws.cell(row=row_num, column=6).value = act.evidencias
+        
+        # Aplicar bordes y fuente a cada celda en la fila actual
+        for col in range(2, 7):
+            cell = ws.cell(row=row_num, column=col)
+            cell.border = thin_border
+            cell.font = calibri_10_font
+        
         row_num += 1
         
+
+        # Calcular alumnos_atencion_row y atencion_start_row
+    alumnos_atencion_row = max(row_num, 24) + inserted_rows_count -10
+    atencion_start_row = alumnos_atencion_row + 1
+
+        # Insertar y combinar la celda "Alumnos a atención individual" dos filas antes de alumnos_atencion_row
+    merge_start_row = alumnos_atencion_row - 1
+    ws.merge_cells(start_row=merge_start_row, start_column=1, end_row=merge_start_row, end_column=3)
+    merged_cell = ws.cell(row=merge_start_row, column=1)
+    merged_cell.value = "Alumnos a atención individual"
+    merged_cell.font = calibri_10_font_bold
+    merged_cell.fill = gray_fill  # Aplicar fondo gris
+    merged_cell.border = thin_border  # Aplicar bordes a la celda combinada
+
+# Aplicar el borde a cada celda dentro de la región combinada
+    for col in range(1, 4):
+        cell = ws.cell(row=merge_start_row, column=col)
+        cell.border = thin_border
+    
+    num_cell = ws.cell(row=alumnos_atencion_row, column=1)
+    num_cell.value = "No."
+    num_cell.font = calibri_10_font_bold
+    num_cell.border = thin_border
+    num_cell.fill = gray_fill
+
+    ws.merge_cells(start_row=alumnos_atencion_row, start_column=2, end_row=alumnos_atencion_row, end_column=3)
+    cell = ws.cell(row=alumnos_atencion_row, column=2)
+    cell.value =  "Nombre"
+    cell.font = calibri_10_font_bold
+    cell.border = thin_border
+    cell.fill = gray_fill
+
+    asunto_cell = ws.cell(row=alumnos_atencion_row, column=4)
+    asunto_cell.value = "Asunto a tratar"
+    asunto_cell.font = calibri_10_font_bold
+    asunto_cell.border = thin_border
+    asunto_cell.fill = gray_fill
+
+    ws.merge_cells(start_row=alumnos_atencion_row, start_column=5, end_row=alumnos_atencion_row, end_column=6)
+
+    # Obtener la celda combinada
+    merged_cell = ws.cell(row=alumnos_atencion_row, column=5)
+
+    # Configurar el contenido y estilo de la celda combinada
+    merged_cell.value = "Observaciones"
+    merged_cell.font = calibri_10_font_bold
+    merged_cell.fill = gray_fill  # Aplicar fondo gris
+    merged_cell.border = thin_border  # Aplicar bordes a la celda combinada
+
+    # Aplicar el borde a cada celda dentro de la región combinada
+    for col in range(5, 7):
+        cell = ws.cell(row=alumnos_atencion_row, column=col)
+        cell.border = thin_border
+            
+        # Rellenar las filas con los datos de 'atenciones'
+    for idx, atencion in enumerate(atenciones, start=1):
+            # Numeración continua en la columna 1
+            num_cell = ws.cell(row=atencion_start_row, column=1)
+            num_cell.value = idx
+            num_cell.font = calibri_10_font_bold
+            num_cell.border = thin_border
+
+            # Combinar columnas 2 y 3
+            ws.merge_cells(start_row=atencion_start_row, start_column=2, end_row=atencion_start_row, end_column=3)
+            cell = ws.cell(row=atencion_start_row, column=2)
+            cell.value =  f"{atencion.estudiante.User.first_name} {atencion.estudiante.User.last_name}"
+            cell.font = calibri_10_font
+            cell.border = thin_border
+
+            # Aplicar el borde a la celda combinada
+            for col in range(2, 4):
+                merged_cell = ws.cell(row=atencion_start_row, column=col)
+                merged_cell.border = thin_border
+            
+            # Llenar datos en las columnas restantes
+            asunto_cell = ws.cell(row=atencion_start_row, column=4)
+            asunto_cell.value = atencion.asuntoTratar
+            asunto_cell.font = calibri_10_font
+            asunto_cell.border = thin_border
+
+            ws.merge_cells(start_row=atencion_start_row, start_column=5, end_row=atencion_start_row, end_column=6)
+            observaciones_cell = ws.cell(row=atencion_start_row, column=5)
+            observaciones_cell.value = atencion.observaciones
+            observaciones_cell.font = calibri_10_font
+            observaciones_cell.border = thin_border
+
+            # Aplicar el borde a la celda combinada (observaciones)
+            for col in range(5, 7):
+                merged_cell = ws.cell(row=atencion_start_row, column=col)
+                merged_cell.border = thin_border
+
+            atencion_start_row += 1
+            
+    ws.insert_rows(atencion_start_row + 2)
+
+    # Encabezados en la fila insertada
+    headers = ["No.", "Temas no vistos", "Motivo", "Observaciones"]
+
+    for col_idx, header in enumerate(headers, start=1):
+        cell = ws.cell(row=atencion_start_row + 2, column=col_idx)
+        cell.value = header
+        cell.font = calibri_10_font_bold
+        cell.border = thin_border
+        cell.fill = gray_fill
+
+    # Insertar tres filas adicionales
+    for i in range(1, 4):
+        ws.insert_rows(atencion_start_row + 3 + i)
+
+        # Llenar celdas en las nuevas filas
+        num_cell = ws.cell(row=atencion_start_row + 2 + i, column=1)
+        num_cell.value = i
+        num_cell.font = calibri_10_font_bold
+        num_cell.border = thin_border
+
+        tema_cell = ws.cell(row=atencion_start_row + 2 + i, column=2)
+        tema_cell.border = thin_border
+
+        motivo_cell = ws.cell(row=atencion_start_row + 2 + i, column=3)
+        motivo_cell.border = thin_border
+
+        ob_cell = ws.cell(row=atencion_start_row + 2 + i, column=4)
+        ob_cell.border = thin_border
+    
     # Crear un objeto BytesIO para guardar el archivo modificado en memoria
     with BytesIO() as in_memory_fp:
         wb.save(in_memory_fp)
@@ -265,203 +411,11 @@ def descargarXLSX(request):
         
         # Crear la respuesta HTTP
         response = HttpResponse(in_memory_fp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = 'attachment; filename=reporte.xlsx'
+        response['Content-Disposition'] = 'attachment; filename=8.- FOR-06-01-B_r1 Plan de Accion Tutorial.xlsx'
 
     return response 
 
-# def descargarXLSX(request):
 
-    # wb = Workbook()
-    # ws = wb.active
-
-    # thin_border = Border(left=Side(style='thin'),
-    #                      right=Side(style='thin'),
-    #                      top=Side(style='thin'),
-    #                      bottom=Side(style='thin'))
-
-    # FuenteRemarcada = Font(bold = True)
-
-    # ws['E5'] = 'Ciclo:'
-    # ws['E5'].border = thin_border
-    # ws['F5'].border = thin_border
-    # ws['E5'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    # Titulo = ['Plan acción tutorial']
-
-    # for row in range(1, 2):
-    #     ws[f'E{row}'].value = Titulo[row - 1]
-    #     ws[f'E{row}'].border = thin_border
-    #     ws[f'E{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    #     ws.merge_cells(start_row=row, start_column=5, end_row=row, end_column=6)
-
-
-
-    # Datos = ["Nombre del tutor:", "Grupo tutorado:"]
-
-    # for row in range(4, 6):
-    #     ws[f'A{row}'].value = Datos[row - 4]
-    #     ws[f'A{row}'].border = thin_border
-    #     ws[f'A{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    #     ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=2)
-
-    # for row in range(4, 6):
-    #     ws[f'C{row}'].border = thin_border
-    #     ws.merge_cells(start_row=row, start_column=3, end_row=row, end_column=4)
-
-
-    # Atributos = ["No", "Tema", "Objetivos", "Actividades", "Recursos", "Evidencias"]
-
-    # for col in range(1, 7):
-    #     cell = ws.cell(row=8, column=col)
-    #     cell.value = Atributos[col - 1]
-    #     cell.border = thin_border
-    #     cell.fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    #     cell.font = FuenteRemarcada
-
-    # for row in range(9, 19):
-    #     ws[f'A{row}'].value = row - 8
-    #     ws[f'A{row}'].border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=9, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=10, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=11, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=12, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=13, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=14, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=15, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=16, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=17, column=col)
-    #     cell.border = thin_border
-
-    # for col in range(2, 7):
-    #     cell = ws.cell(row=18, column=col)
-    #     cell.border = thin_border
-    
-    # response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    # response['Content-Disposition'] = 'attachment; filename=Libro.xlsx'
-    # wb.save(response)
-
-    # return response
-
-
-# def descargarXLSX(request):
-#     tutor = request.user
-#     usuario = Usuarios.objects.get(User=tutor)
-#     periodo_activo = Periodo.objects.filter(estado=True).first()
-#     actividad = AccionTutorial.objects.filter(tutor=tutor, cicloAccion=periodo_activo)
-
-#     wb = Workbook()
-#     ws = wb.active
-
-#     FuenteRemarcada = Font(bold = True)
-#     # Estilo de borde
-#     bd = Side(border_style='dotted',style='dotted',color='FF0000') 
-    
-#     ws['E5'] = 'Ciclo:'
-#     ws['E5'].font = FuenteRemarcada
-    
-#     ws['E5'].border = Border(top=bd,bottom=bd,left=bd,right=bd)
-    
-#     if periodo_activo:
-#         ws['F5'] = f"{periodo_activo.periodo} {periodo_activo.anio}"
-#     else:
-#         ws['F5'] = "No hay periodo activo"
-        
-# # Combinar celdas y establecer el valor de 'E1'
-#     ws.merge_cells('E1:F1')
-#     ws['E1'] = 'PLAN DE ACCIÓN TUTORIAL'
-#     ws['E1'].alignment = Alignment(horizontal='center', vertical='center')
-#     ws['E1'].font = FuenteRemarcada
-
-#     ws.merge_cells('A4:B4')
-#     ws['A4'] = 'Nombre del tutor:'
-#     ws.merge_cells('C4:E4')
-#     ws['C4'] = f"{tutor.first_name} {tutor.last_name}"
-
-#     # Set the group of the logged-in user in cell C5
-#     ws.merge_cells('A5:B5')
-#     ws['A5'] = 'Grupo tutorado:'
-#     ws['C5'] = usuario.grupo
-    
-#     ws['A4'].font = FuenteRemarcada
-#     ws['A5'].font = FuenteRemarcada
-    
-#     Atributos = ["No", "Tema", "Objetivos", "Actividades", "Recursos", "Evidencias"]
-
-#     for col in range(1, 7):
-#         cell = ws.cell(row=8, column=col)
-#         cell.value = Atributos[col - 1]
-#         cell.font = FuenteRemarcada
-
-#     # Llenar la columna "No" (Columna A)
-#     for row_num in range(9, 19):
-#         ws.cell(row=row_num, column=1).value = row_num - 8
-
-#     # Continuar llenando dinámicamente si hay más de 10 registros
-#     row_num = 9
-#     for idx, atencion in enumerate(actividad, start=1):
-#         if row_num > 18:
-#             break
-#         ws.cell(row=row_num, column=2).value = atencion.tema  # Columna Tema
-#         ws.cell(row=row_num, column=3).value = atencion.objetivos  # Columna Objetivos
-#         ws.cell(row=row_num, column=4).value = atencion.actividades  # Columna Actividades
-#         ws.cell(row=row_num, column=5).value = atencion.recursos  # Columna Recursos
-#         ws.cell(row=row_num, column=6).value = atencion.evidencias  # Columna Evidencias
-#         row_num += 1
-
-#     # Si hay más de 10 registros, continuar desde donde se quedó la numeración inicial
-#     if len(actividad) > 10:
-#         for idx, atencion in enumerate(actividad[10:], start=11):
-#             if row_num > 18:
-#                 break
-#             ws.cell(row=row_num, column=1).value = idx
-#             ws.cell(row=row_num, column=2).value = atencion.tema  # Columna Tema
-#             ws.cell(row=row_num, column=3).value = atencion.objetivos  # Columna Objetivos
-#             ws.cell(row=row_num, column=4).value = atencion.actividades  # Columna Actividades
-#             ws.cell(row=row_num, column=5).value = atencion.recursos  # Columna Recursos
-#             ws.cell(row=row_num, column=6).value = atencion.evidencias  # Columna Evidencias
-#             row_num += 1
-    
-#     # Insertar la imagen en la hoja de cálculo
-#     image_url = 'https://sic.cultura.gob.mx/images/62119'
-#     response = requests.get(image_url)
-#     image = Image(BytesIO(response.content))
-#     ws.add_image(image, 'A1')
-#     image.width = 130  # Ajusta este valor según sea necesario
-#     image.height = 60  # Ajusta este valor según sea necesario
-    
-
-    
-#     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-#     response['Content-Disposition'] = 'attachment; filename=Libro.xlsx'
-#     wb.save(response)
-
-#     return response
 
 def descargarReporte(request):
     wb = Workbook()

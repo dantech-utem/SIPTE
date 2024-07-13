@@ -17,8 +17,7 @@ urlpatterns = [
     path('atencionIndividual/editar/<int:id>/', views.editarAtencionIndividual, name='editarAtencion'),
     path('atencionIndividual/eliminar/<int:id>/', views.eliminarAtencionIndividual, name='eliminarAtencionIndividual'),
     path('reportePlanAccion', views.reportePlanAccion, name='reportePlanAccion'),
-    path('informePlanAccion', views.informePlanAccion, name='informePlanAccion'),
-    path('descarga', views.descargarXLSX, name='descarga'),
+    path('informePlanAccion', views.descargarXLSX, name='informePlanAccion'),
     path('XLSXReportePlanAccion', views.descargarReporte, name='XLSXReporte'),
     path('evaluacionAcTutorial', views.evaluacionAcTutorial, name='Evaluacion')
 

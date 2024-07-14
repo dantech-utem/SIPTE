@@ -22,7 +22,7 @@
             tutorias</a>
     </div>
 
-    <table id="tablaCanalizacion" class="tablaCanalizacion table-hover nowrap" style="width: 100%;">
+    <table id="tablaCanalizacion" class="tablaCanalizacion" style="width: 100%;">
         <thead>
             <tr>
                 <th>NOMBRE(S)</th>
@@ -57,22 +57,40 @@
     </table>
 
 </div>
-{% endblock %}
-<script src="../../static/js/datatables.min.js"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
 <script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-    let table = new DataTable('#tablaCanalizacion', {
+    $(document).ready(function() {
+        $('#tablaCanalizacion').DataTable({
         responsive: true,
-        "columnDefs": [
-            { "className": "dt-center", "targets": "_all" }
-        ],
+        "columnDefs": [{
+            "className": "dt-center",
+            "targets": "_all"
+        }],
         language: {
-            info: 'Página _PAGE_ de _PAGES_',
-            infoEmpty: 'No records available',
-            infoFiltered: '(filtered from _MAX_ total records)',
-            lengthMenu: '_MENU_ registros por página',
-            zeroRecords: 'Nothing found - sorry',
-            search: 'Buscar: '
-        }
+      "decimal": "",
+      "emptyTable": "No hay información",
+      "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+      "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+      "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+      "infoPostFix": "",
+      "thousands": ",",
+      "lengthMenu": "Mostrar _MENU_ Entradas",
+      "loadingRecords": "Cargando...",
+      "processing": "Procesando...",
+      "search": "Buscar: ",
+      "zeroRecords": "Sin resultados encontrados",
+      "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": "Siguiente",
+          "previous": "Anterior"
+      }
+    },
     });
+});
+
 </script>
+{% endblock %}

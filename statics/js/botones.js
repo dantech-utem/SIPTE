@@ -44,3 +44,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateButtons();
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('submitBtn').addEventListener('click', function(event) {
+        // Validar si todos los campos requeridos están llenos
+        var form = document.getElementById('formDatos');
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('#warningModal').modal('show'); // Mostrar el modal de advertencia
+        }
+        form.classList.add('was-validated');
+    }, false);
+});

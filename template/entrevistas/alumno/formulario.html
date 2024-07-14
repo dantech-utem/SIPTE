@@ -396,11 +396,11 @@
                   </select>
                   <br>
                   <label for="materiasFacil" class="form-label">¿Qué materias consideras que se te facilitan más?</label>
-                  <textarea class="form-control" id="materiasFacil" name="materiasFacil" rows="3"></textarea>
+                  <textarea class="form-control" id="materiasFacil" name="materiasFacil" required rows="3"></textarea>
               </div>
               <div class="col-md-6 mb-3"><br>
                   <label for="materiasDificil" class="form-label">¿Qué materias consideras que te cuestan más trabajo?</label>
-                  <textarea class="form-control" id="materiasDificil" name="materiasDificil" rows="3"></textarea>
+                  <textarea class="form-control" id="materiasDificil" name="materiasDificil" required rows="3"></textarea>
                   <label for="materiasExtras" class="form-label">¿Cuántas materias acreditaste en extraordinario?</label>
                   <select class="form-control" id="materiasExtras" name="materiasExtras">
                       <option value="">Selecciona una opción</option>
@@ -607,11 +607,11 @@
                             <option value="No">No</option>
                         </select><br>
                         <label for="tipoEnfermedad" class="form-label">¿De qué tipo?</label>
-                        <input type="text" class="form-control" id="tipoEnfermedad" name="tipoEnfermedad"><br>
+                        <input type="text" class="form-control" id="tipoEnfermedad" name="tipoEnfermedad" required><br>
                         <label for="padecimientoCro" class="form-label">¿Tienes algún padecimiento o enfermedad crónica?</label>
-                        <input type="text" class="form-control" id="padecimientoCro" name="padecimientoCro"><br>
+                        <input type="text" class="form-control" id="padecimientoCro" name="padecimientoCro" required><br>
                         <label for="tipoPadecimiento" class="form-label">¿Cuál?</label>
-                        <input type="text" class="form-control" id="tipoPadecimiento" name="tipoPadecimiento">
+                        <input type="text" class="form-control" id="tipoPadecimiento" name="tipoPadecimiento" required>
                     </div>
                     <div class="col-md-6 mb-3"><br>
                       <label for="operaciones" class="form-label">¿Te han operado alguna vez?</label>
@@ -621,7 +621,7 @@
                             <option value="No">No</option>
                         </select><br>
                         <label for="causaOperacion" class="form-label">¿Cuál fue la causa?</label>
-                        <input type="text" class="form-control" id="causaOperacion" name="causaOperacion">
+                        <input type="text" class="form-control" id="causaOperacion" name="causaOperacion" required>
                         <label for="problemaSalud" class="form-label">¿Padeces algún problema de salud que consideres pueda afectar tus estudios? Menciónalo</label>
                         <input type="text" class="form-control" id="problemaSalud" name="problemaSalud" required><br>
                         <label for="condiciones" class="form-label">¿Tienes alguna condición que afecte tu visión, audición, motricidad?</label>
@@ -631,11 +631,11 @@
                             <option value="No">No</option>
                         </select><br>
                         <label for="tipoCondiciones" class="form-label">¿Cuál?</label>
-                        <input type="text" class="form-control" id="tipoCondiciones" name="tipoCondiciones">
+                        <input type="text" class="form-control" id="tipoCondiciones" name="tipoCondiciones" required>
                     </div>
                     <div class="col-md-12 mb-3">
                       <label for="comentario" class="form-label">Si tuvieras algún comentario o algo más que agregar, te pedimos que lo hagas en el siguiente espacio:</label>
-                        <textarea class="form-control" id="comentario" name="comentario" rows="3"></textarea>
+                        <textarea class="form-control" id="comentario" name="comentario" required rows="3"></textarea>
                     </div>
                   </div>
                 </div>
@@ -646,14 +646,31 @@
               <button type="button" class="btn btn-primary" id="nextButton">Siguiente</button>
               <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Enviar</button>
             </div>
-    
              </div>
              </form>
+             
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Modal de Advertencia -->
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="warningModalLabel">¡Advertencia!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Por favor, completa todos los campos requeridos antes de enviar el formulario.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

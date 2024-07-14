@@ -10,7 +10,7 @@ from openpyxl.drawing.image import Image
 from io import BytesIO
 import os
 from django.conf import settings
-from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor
+from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor, Canalizacion
 from django.contrib import messages #Importamos para presentar mensajes
 
 
@@ -418,171 +418,74 @@ def descargarXLSX(request):
     return response 
 
 
-
 def descargarReporte(request):
+
     wb = load_workbook(filename='mainApp/data/baseReportePlanAccion.xlsx')
     ws = wb.active
-#
-    FuenteRemarcada = Font(bold = True)
-#
-#    hilera1 = ['Programa', 'Realizada', 'Canalizada']
-#    for col in range(1, 4):
-#        cell = ws.cell(row=6, column=col)
-#        cell.value = hilera1[col - 1]
-#        cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
 
-#    AreasCanalizacion = ['Psicologo', 'Pedagogo', 'Becas', 'Enfermeria', 'Incubadora', 'Bolsa de trabajo', 'Asesor Academico']
-#    for row in range(7, 15):
-#        ws[f'D{row}'].value = AreasCanalizacion[row - 8] 
+    tutor = request.user
+    periodo_activo = Periodo.objects.filter(estado=True).first()
 
+    area_P = "pedagogía"
+    motivos = Canalizacion.objects.filter(area=area_P, cicloAccion=periodo_activo).values_list('motivo', flat=True)
+    count_pedagogia = Canalizacion.objects.filter(area=area_P).count()
 
-    hilera1 = ['Programa', 'Realizada', 'Canalizada']
+    area_Psi = "Psicología"
+    motivo_psi = Canalizacion.objects.filter(area=area_Psi, cicloAccion=periodo_activo).values_list('motivo', flat=True)
+    count_Psicología = Canalizacion.objects.filter(area=area_Psi).count()
 
-    for col in range(1, 4):
-        cell = ws.cell(row=6, column=col)
-        cell.value = hilera1[col - 1]
-        cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
+    area_B = "Becas"
+    motivo_B = Canalizacion.objects.filter(area=area_B, cicloAccion=periodo_activo).values_list('motivo', flat=True)
+    count_Becas = Canalizacion.objects.filter(area=area_B).count()
 
-    AreasCanalizacion = ['Psicólogo', 'Pedagogo', 'Becas', 'Enfermería', 'Incubadora', 'Bolsa de trabajo', 'Asesor Académico']
-    for row in range(7, 15):
-        ws[f'D{row}'].value = AreasCanalizacion[row - 8]
-        ws[f'D{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    area_E = "Enfermería"
+    motivo_E = Canalizacion.objects.filter(area=area_E, cicloAccion=periodo_activo).values_list('motivo', flat=True)
+    count_Enfermería = Canalizacion.objects.filter(area=area_E).count()
 
-    Motivos = ['No se cumplieron expectativas', 'Reprobación', 'Problemas económicos', 'Dificultades para el transporte', 'Problemas de trabajo', 'Cambio de carrera', 'Incompatibilidad de horario', 'Faltas al reglamento', 'Cambio de residencia', 'Cambio de universidad', 'Problemas familiares', 'Problemas personales', 'Otras']
-    for row in range(7, 21):
-        ws[f'H{row}'].value = Motivos[row - 8]
-        ws[f'H{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-        ws[f'I{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-        ws[f'J{row}'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    area_I = "Incubadora"
+    motivo_I = Canalizacion.objects.filter(area=area_I, cicloAccion=periodo_activo).values_list('motivo', flat=True)
+    count_Incubadora = Canalizacion.objects.filter(area=area_I).count()
 
-#    Motivos = ['No se cumplieron expectativas', 'Reprobacion', 'Problemas economicos', 'Dificultades para el transporte', 'Problemas de trabajo', 'Cambio de carrera', 'Incompatibilidad de horario', 'Faltas al reglamento', 'Cambio de residencia', 'Cambio de universidad', 'Problemas familiares', 'Problemas personales', 'Otras']
-#    for row in range(7, 21):
-#        ws[f'J{row}'].value = Motivos[row - 8]
+    area_BT = "Bolsa de Trabajo"
+    motivo_BT = Canalizacion.objects.filter(area=area_BT, cicloAccion=periodo_activo).values_list('motivo', flat=True)
+    count_BT = Canalizacion.objects.filter(area=area_BT).count()
 
-#    hilera2 = ['Cantidad', 'Tipo de baja']
-#    for col in range(11, 13):
-#        cell = ws.cell(row=6, column=col) 
-#        cell.value = hilera2[col - 11]
-#        cell.alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
+    area_AA = "Asesor Académico"
+    motivo_AA = Canalizacion.objects.filter(area=area_AA, cicloAccion=periodo_activo).values_list('motivo', flat=True)
+    count_AA = Canalizacion.objects.filter(area=area_AA).count()
 
-#    ws['A15'] = 'No programada'
-#    ws['A15'].alignment = Alignment(vertical='center', text_rotation=90)
+    Estado_Realizadas = 1
+    Estado_Canalizadas = 2
+    Estado_Programadas = 0
 
-#    ws['D6'] = 'Areas de canalizacion'
-#    ws['D15'] = 'Asunto de atencion'
+    count_EstadoP = Canalizacion.objects.filter(estadoCanalizados = Estado_Programadas).count()
+    count_EstadoR = Canalizacion.objects.filter(estadoCanalizados = Estado_Realizadas).count()
+    count_EstadoC = Canalizacion.objects.filter(estadoCanalizados = Estado_Canalizadas).count()
 
 
-    ws['A6'].font = FuenteRemarcada
-    ws.column_dimensions['A'].width = 3
-    ws['A6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['A15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    def convert_to_string(motivos_list):
+        return ', '.join(motivos_list) if motivos_list else ''
 
-    ws['B6'].font = FuenteRemarcada
-    ws['B6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws.column_dimensions['B'].width = 3
-    ws['B15'] = 'No programada'
-    ws['B15'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
-    ws['B15'].font = FuenteRemarcada
-    ws['B15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    # Set each variable in a specific cell
+    ws['F9'] = convert_to_string(motivo_psi)
+    ws['F10'] = convert_to_string(motivos)
+    ws['F11'] = convert_to_string(motivo_B)
+    ws['F12'] = convert_to_string(motivo_E)
+    ws['F13'] = convert_to_string(motivo_I)
+    ws['F14'] = convert_to_string(motivo_BT)
+    ws['F15'] = convert_to_string(motivo_AA)
 
-#    ws['B15'] = 'Asunto de atencion'
+    ws['E9'] = count_Psicología
+    ws['E10'] = count_pedagogia
+    ws['E11'] = count_Becas
+    ws['E12'] = count_Enfermería
+    ws['E13'] = count_Incubadora
+    ws['E14'] = count_BT
+    ws['E15'] = count_AA
 
-#    ws['C15'] = 'Cantidad'
-#    ws['C15'].alignment = Alignment(vertical='center', text_rotation=90)
-
-#    ws['D15'] = 'Observaciones'
-
-#    ws['J21'] = 'Dificultades para ejercer la tutoria'
-
-#    ws['G6'] = 'Cantidad'
-#    ws['G6'].alignment = Alignment(vertical='center', text_rotation=90)
-
-#    ws['H6'] = 'Resultado de la canalizacion'
-
-#    ws['I6'] = 'Total'
-#    ws['I6'].alignment = Alignment(vertical='center', text_rotation=90)
-
-
-#   ws['J6'] = 'Motivo de baja'
-
-#    ws['M6'] = 'Observaciones'    
-
-
-    ws['C6'].font = FuenteRemarcada
-    ws['C6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws.column_dimensions['C'].width = 3
-    ws['C15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    ws.column_dimensions['D'].width = 20
-    ws['D6'] = 'Áreas de canalización'
-    ws['D6'].font = FuenteRemarcada
-    ws['D6'].alignment = Alignment(vertical='center')
-    ws['D6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['D15'] = 'Asunto de atención'
-    ws['D15'].alignment = Alignment(vertical='center')
-    ws['D15'].font = FuenteRemarcada
-    ws['D15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    ws['E6'] = 'Cantidad'
-    ws['E6'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
-    ws['E6'].font = FuenteRemarcada
-    ws.column_dimensions['E'].width = 3
-    ws['E6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['E15'] = 'Cantidad'
-    ws['E15'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
-    ws['E15'].font = FuenteRemarcada
-    ws['E15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    ws.column_dimensions['F'].width = 25
-    ws['F6'] = 'Resultado de la canalización'
-    ws['F6'].alignment = Alignment(vertical='center')
-    ws['F6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['F6'].font = FuenteRemarcada
-    ws['F15'].alignment = Alignment(vertical='center')
-    ws['F15'].font = FuenteRemarcada
-    ws['F15'] = 'Observaciones'
-    ws['F15'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    ws['G6'] = 'Total'
-    ws['G6'].font = FuenteRemarcada
-    ws['G6'].alignment = Alignment(horizontal='center', vertical='center', text_rotation=90)
-    ws['G6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['G21'] = 'Dificultades para ejercer la tutoria'
-    ws['G21'].alignment = Alignment(vertical='center')
-    ws['G21'].font = FuenteRemarcada
-    ws['G21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws.column_dimensions['G'].width = 3
-
-    ws['H6'] = 'Motivo de baja'
-    ws['H6'].alignment = Alignment(vertical='center')
-    ws['H6'].font = FuenteRemarcada
-    ws['H6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['H21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    ws['I6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['I21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    ws['J6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['J21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-
-    ws['K6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['K21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws.column_dimensions['K'].width = 3
-
-
-    ws['L6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['L21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws.column_dimensions['L'].width = 3
-
-    ws['M6'] = 'Observaciones'
-    ws['M6'].alignment = Alignment(vertical='center')
-
-    ws['M6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['M21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-
-    ws['N6'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
-    ws['N21'].fill = PatternFill(fill_type='solid', start_color='D9D9D9', end_color='D9D9D9')
+    ws['A9'] = count_EstadoP
+    ws['B9'] = count_EstadoR
+    ws['C9'] = count_EstadoC
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Reporte.xlsx'

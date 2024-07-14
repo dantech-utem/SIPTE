@@ -62,39 +62,23 @@
     </table>
 
 </div>
-<script src="../../static/js/datatables.min.js"></script>
-<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
+
 <script>
-    $(document).ready(function() {
-        $('#tablaCanalizados').DataTable({
+    let table = new DataTable('#tablaCanalizados', {
         responsive: true,
-        "columnDefs": [{
-            "className": "dt-center",
-            "targets": "_all"
-        }],
-            language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ Entradas",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar: ",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-            "first": "Primero",
-            "last": "Ultimo",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        }
-        },
+        "columnDefs": [
+            {"className": "dt-center", "targets": "_all"}
+        ],
+        language: {
+        info: 'Página _PAGE_ de _PAGES_',
+        infoEmpty: 'No records available',
+        infoFiltered: '(filtered from _MAX_ total records)',
+        lengthMenu: '_MENU_ registros por página',
+        zeroRecords: 'Nothing found - sorry',
+        search: 'Buscar: '
+    }
     });
-});
 
 
 </script>

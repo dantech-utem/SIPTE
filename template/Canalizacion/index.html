@@ -22,7 +22,7 @@
             tutorias</a>
     </div>
 
-    <table id="tablaCanalizacion" class="tablaCanalizacion table-hover nowrap" style="width: 100%;">
+    <table id="tablaCanalizacion" class="tablaCanalizacion" style="width: 100%;">
         <thead>
             <tr>
                 <th>NOMBRE(S)</th>
@@ -31,10 +31,10 @@
                 <th>ACCIONES</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
             {% for x in TablaViews %}
             <!--cambiar  x.estadoCanalizados/x.estado seguen el estado que ocupemes ya sea canalizacion o usuarios-->
-            <tr {% if x.estado == 2 %} style="background-color: rgb(121, 154, 255);" 
+            <tr {% if x.estado == 2 or x.estado == 4 %} style="background-color: rgb(121, 154, 255);" 
             {% elif x.estado == 3 %} style="background-color: rgb(255, 121, 121);"
             {% else %} {% endif %}>
                 <td>{{ x.User.first_name }}</td>
@@ -42,12 +42,14 @@
                 <td>{{ x.noControl }}</td>
                 <td><a class="btnExpediente" href="{% url 'Expediente' x.id %}"><i
                             class="fa-solid fa-clipboard-user"></i>Expediente</a>
-                    <a class="btnBaja" href="{% url 'FormBaja' %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
+                    <a class="btnBaja" href="{% url 'FormBaja' x.id %}"><i class="fa-solid fa-user-xmark"></i>Baja</a>
                 {% if x.estado == 2 %}   
-                    <a class="btnCanalizar" href="{% url 'FormCanalizar' %}"><i
+                    <a class="btnCanalizar" href="{% url 'FormCanalizar' x.id %}"><i
                             class="fa-solid fa-bezier-curve"></i>Canalizar</a>
+                {% elif x.estado == 4 %}
+                    <a class="btnCanalizar" href="{% url 'FormCanalizar' x.id %}"><i
+                        class="fa-solid fa-bezier-curve"></i>En proceso de canalización</a>
                 {% endif %}
-
                 </td>
             </tr>
             {% endfor %}
@@ -55,22 +57,40 @@
     </table>
 
 </div>
-{% endblock %}
-<script src="../../static/js/datatables.min.js"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
 <script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-    let table = new DataTable('#tablaCanalizacion', {
+    $(document).ready(function() {
+        $('#tablaCanalizacion').DataTable({
         responsive: true,
-        "columnDefs": [
-            { "className": "dt-center", "targets": "_all" }
-        ],
+        "columnDefs": [{
+            "className": "dt-center",
+            "targets": "_all"
+        }],
         language: {
-            info: 'Página _PAGE_ de _PAGES_',
-            infoEmpty: 'No records available',
-            infoFiltered: '(filtered from _MAX_ total records)',
-            lengthMenu: '_MENU_ registros por página',
-            zeroRecords: 'Nothing found - sorry',
-            search: 'Buscar: '
-        }
+      "decimal": "",
+      "emptyTable": "No hay información",
+      "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+      "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+      "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+      "infoPostFix": "",
+      "thousands": ",",
+      "lengthMenu": "Mostrar _MENU_ Entradas",
+      "loadingRecords": "Cargando...",
+      "processing": "Procesando...",
+      "search": "Buscar: ",
+      "zeroRecords": "Sin resultados encontrados",
+      "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": "Siguiente",
+          "previous": "Anterior"
+      }
+    },
     });
+});
+
 </script>
+{% endblock %}

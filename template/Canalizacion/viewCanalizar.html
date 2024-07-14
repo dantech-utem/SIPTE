@@ -16,7 +16,7 @@
 
         <h3 class="formTitulo">Registro de canalización</h3><br>
 
-        <form action="{% url 'canalizacionFormCanalizarAlumno' %}" method="POST">
+        <form action="" method="POST">
             {% csrf_token %}
             <label class="labelFormCanalizacion">Área:</label><br>
             <input type="text" name="area" id="area" class="formInput" value="{{datos.area}}" readonly required>

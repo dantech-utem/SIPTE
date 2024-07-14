@@ -16,16 +16,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- datos de prueba -->
+                    {% for estudiante in estudiantes %}
                     <tr>
-                        <td>Isa</td>
-                        <td>20210119</td>
-                        <td>TICS</td>
-                        <td>9-IDG-1</td>
+                        <td>{{ estudiante.nombre }}</td>
+                        <td>{{ estudiante.noControl }}</td>
+                        <td>{{ estudiante.carrera }}</td>
+                        <td>{{ estudiante.grupo }}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm">Ver</button>
+                            <a href="{% url 'resumenresp' estudiante.idEstudiante %}" class="btn btn-success">Ver</a>       
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

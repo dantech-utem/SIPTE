@@ -24,3 +24,31 @@ th{
     border-color: #dee2e6 !important; /* Cambia el color del borde del botón desactivado */
 }
 
+#colora {
+  color: black;
+  background-color: #AFD5B8;
+
+}
+
+#colorb {
+  color: black;
+  background-color: #AFD5B8;
+}
+
+.accordion-item {
+  margin: 5px;
+}
+
+#datosI {
+  background-color: #5AA86C;
+  color: white;
+  font-size: 18px;
+}
+
+#labels {
+  font-weight: 400;
+}
+
+#labelP {
+  font-weight: 700;
+}

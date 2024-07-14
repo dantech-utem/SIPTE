@@ -64,7 +64,12 @@ class registro(View):
 class informe(View):
    def get(self, request):
       return render(request,'entrevistas/administrador/informe.html')
+   
+class ver(View):
+   def get(self, request):
+      return render(request,'entrevistas/administrador/ver.html')
 
+#ENTREVISTAS
 #ADMINISTRADOR
 def registrarAviso(request):
    titulo=request.POST['titulo']
@@ -105,7 +110,10 @@ class aviso(View):
         avisos = Aviso.objects.all()
         return render(request, "entrevistas/alumno/aviso.html", {'avisos': avisos})
 
-
+class informe(View):
+    def get(self, request):
+        estudiantes = Estudiante.objects.all()
+        return render(request, 'entrevistas/administrador/informe.html', {'estudiantes': estudiantes})
 
 class resumenresp(View):
     def get(self, request, idEstudiante):
@@ -114,6 +122,9 @@ class resumenresp(View):
         datos_socioeconomicos = get_object_or_404(Socioeconomicos, idEstudiante=estudiante)
         datos_academicos = get_object_or_404(AntecedenteAcademico, idEstudiante=estudiante)
         datos_estudio = get_object_or_404(HabitosEstudio, idEstudiante=estudiante)
+        datos_aficiones = get_object_or_404(DatosAficiones,idEstudiante=estudiante)
+        datos_personalidad = get_object_or_404(DatosPersonalidad,idEstudiante=estudiante)
+        datos_salud = get_object_or_404(DatosSalud,idEstudiante=estudiante)
         
         context = {
             'estudiante': estudiante,
@@ -121,11 +132,13 @@ class resumenresp(View):
             'datos_socioeconomicos': datos_socioeconomicos,
             'datos_academicos': datos_academicos,
             'datos_estudio': datos_estudio,
+            'datos_aficiones':datos_aficiones,
+            'datos_personalidad':datos_personalidad,
+            'datos_salud':datos_salud
         }
    
-        return render(request, 'entrevistas/alumno/resumenresp.html', context)
+        return render(request, 'entrevistas/alumno/resumenresp.html', context)   
 
- 
 
 def crearEstudiante(request):
     if request.method == 'POST':
@@ -155,7 +168,7 @@ def crearEstudiante(request):
             telCelular=telCelular,
             edad=edad
         )
-
+        # Obtener los datos del familiares
         conviveCon = request.POST.get('conviveCon')
         otra_situacion = request.POST.get('otra_situacion')
         huerfano = request.POST.get('huerfano')
@@ -177,7 +190,7 @@ def crearEstudiante(request):
             estadoCivil=estadoCivil
         )
 
-
+         # Obtener los datos socioeconomicos
         vivienda = request.POST.get('vivienda')
         tenencia = request.POST.get('tenencia')
         habitaciones = request.POST.get('habitaciones')
@@ -214,7 +227,7 @@ def crearEstudiante(request):
             dependientesIngresos=dependientesIngresos
         )
 
-        
+         # Obtener los datos academicos
         bachillerato = request.POST.get('bachillerato')
         modalidad = request.POST.get('modalidad')
         duracion = request.POST.get('duracion')
@@ -246,7 +259,7 @@ def crearEstudiante(request):
             nivelRep=nivelRep,
             obstaculos=obstaculos
         )
-
+         # Obtener los datos estudio
         gustoLectura = request.POST.get('gustoLectura')
         tipoLectura = request.POST.get('tipoLectura')
         sitioLectura = request.POST.get('sitioLectura')
@@ -270,7 +283,7 @@ def crearEstudiante(request):
             musica=musica
         )
 
-
+         # Obtener los datos aficiones
         tiempoLibre = request.POST.get('tiempoLibre')
         horasLibre = request.POST.get('horasLibre')
    
@@ -283,7 +296,7 @@ def crearEstudiante(request):
             horasLibre=horasLibre
         )
 
-
+         # Obtener los datos salud
         estadoSalud = request.POST.get('estadoSalud')
         enfermedadGrave = request.POST.get('enfermedadGrave')
         tipoEnfermedad = request.POST.get('tipoEnfermedad')
@@ -297,7 +310,7 @@ def crearEstudiante(request):
         comentario = request.POST.get('comentario')
 
         _idestudiante = estudiante.idEstudiante
-        # Crear los datos aficiones asociados al estudiante encontrado
+        # Crear los datos salud asociados al estudiante encontrado
         datos_salud = DatosSalud.objects.create(
             idEstudiante= Estudiante.objects.get(idEstudiante = estudiante.idEstudiante),
             estadoSalud=estadoSalud,
@@ -313,7 +326,7 @@ def crearEstudiante(request):
             comentario=comentario
 
         )
-
+         # Obtener los datos personalidad
         colaborasCasa = request.POST.get('colaborasCasa')
         colaboracion = request.POST.get('colaboracion')
         ambienteFamiliar = request.POST.get('ambienteFamiliar')
@@ -331,7 +344,6 @@ def crearEstudiante(request):
             comunicacion=comunicacion,
         )
 
-       
         return redirect('resumenresp', idEstudiante=estudiante.idEstudiante)
     
 

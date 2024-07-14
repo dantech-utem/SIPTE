@@ -346,127 +346,97 @@
                   </div>
                 </div>
               </div>
-              <!--DATOS ANTECEDENTES ACADEMICOS -->
-              <div class="tab-pane fade" id="datos-academicos" role="tabpanel" aria-labelledby="datos-academicos-tab">
-                <div class="row">
-                  <div class="col-md-6 mb-3"><br>
-                    <label for="bachillerato" class="form-label">Bachillerato de procedencia:</label>
-                        <input type="text" class="form-control" id="bachillerato" name="bachillerato" required>
-                        <br>
-                          <label for="modalidad" class="form-label">Modalidad</label>
-                          <select class="form-control" name="modalidad" id="modalidad" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="Escolarizada">Escolarizada</option>
-                            <option value="Semiescolarizada">Semiescolarizada</option>
-                            <option value="Abierta">Abierta</option>
-                            <option value="A distancia">A distancia</option>
-                            <option value="Examen único">Examen único</option>
-                          </select>
-                          <br>
-                          <label for="duracion" class="form-label">Duración en años para terminarlo</label>
-                          <select class="form-control" id="duracion" name="duracion" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="Menos de uno">Menos de uno</option>
-                            <option value="Alrededor de un año">Alrededor de un año</option>
-                            <option value="Más de un año">Más de un año</option>
-                            <option value="Dos años">Dos años</option>
-                            <option value="Tres años">Tres años</option>
-                            <option value="Más de tres años">Más de tres años</option>
-                          </select>
-                          <br>
-                          <label for="promedio" class="form-label">Promedio obtenido</label>
-                          <select class="form-control" id="promedio" name="promedio" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="Entre 10 y 9.5">Entre 10 y 9.5</option>
-                            <option value="Entre 9.4 y 9.0">Entre 9.4 y 9.0</option>
-                            <option value="Entre 8.9 y 8.5">Entre 8.9 y 8.5</option>
-                            <option value="Entre 8.4 y 8.0">Entre 8.4 y 8.0</option>
-                            <option value="Entre 7.9 y 7.5">Entre 7.9 y 7.5</option>
-                            <option value="Entre 7.4 y 6.0">Entre 7.4 y 6.0</option>
-                            <option value="Menos de 6">Menos de 6</option>
-                          </select>
-                          <br>
-                        <label for="rendimiento" class="form-label">¿Cómo consideras tu rendimiento escolar? </label>
-                        <select class="form-control" id="rendimiento" name="rendimiento" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Muy bueno">Muy bueno</option>
-                          <option value="Bueno">Bueno</option>
-                          <option value="Regular">Regular</option>
-                          <option value="Malo">Malo</option>
-                        </select>
-                        <br>
-                        <label for="materiasFacil" class="form-label">¿Qué materias consideras que se te facilitan más?</label>
-                        <div class="row">
-                          <div class="col-md-4 mb-3">
-                            <input type="text" class="form-control" id="materiasFacil1" placeholder="Materia 1" name="materiasFacil">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <input type="text" class="form-control" id="materiaFacil2" name="materiasFacil" placeholder="Materia 2">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <input type="text" class="form-control" id="materiaFacil3" name="materiasFacil" placeholder="Materia 3">
-                        </div>
-                        </div>
-                  </div>
-                  <div class="col-md-6 mb-3"><br>
-                    <label for="materiasDificil" class="form-label">¿Qué materias consideras que te cuestan más trabajo?</label>
-                      <div class="row">
-                        <div class="col-md-4 mb-3">
-                          <input type="text" class="form-control" id="materiasDificil1" name="materiasDificil" placeholder="Materia 1">
-                      </div>
-                      <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" id="materiasDificil2" name="materiasDificil" placeholder="Materia 2">
-                      </div>
-                    <div class="col-md-4 mb-3">
-                      <input type="text" class="form-control" id="materiasDificil13" name="materiasDificil" placeholder="Materia 3">
-                    </div>
-                      </div>
-                      <label for="materiasExtras" class="form-label">¿Cuántas materias acreditaste en extraordinario?</label>
-                        <select class="form-control" id="materiasExtras" name="materiasExtras">
-                          <option value="">Selecciona una opción</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="Más de 5">Más de 5</option>
-                        </select>
-                     <br>
-                     <label for="cualesExtras" class="form-label">¿Cuáles?</label>
-                     <div class="row">
-                      <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" id="materiaacreditada1" name="cualesExtras" placeholder="Materia 1">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <input type="text" class="form-control" id="materiaacreditada2" name="cualesExtras" placeholder="Materia 2">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                      <input type="text" class="form-control" id="materiaacreditada3" name="cualesExtras" placeholder="Materia 3">
-                  </div>
-                     </div>
-                     <br>
-                     <label for="repAnio" class="form-label">¿Repetiste algún año o grado en niveles anteriores?</label>
-                        <select class="form-control" id="repAnio" name="repAnio" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                        </select>
-                        <br>
+             <!--DATOS ANTECEDENTES ACADEMICOS -->
+        <div class="tab-pane fade" id="datos-academicos" role="tabpanel" aria-labelledby="datos-academicos-tab">
+          <div class="row">
+              <div class="col-md-6 mb-3"><br>
+                  <label for="bachillerato" class="form-label">Bachillerato de procedencia:</label>
+                  <input type="text" class="form-control" id="bachillerato" name="bachillerato" required>
+                  <br>
+                  <label for="modalidad" class="form-label">Modalidad</label>
+                  <select class="form-control" name="modalidad" id="modalidad" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Escolarizada">Escolarizada</option>
+                      <option value="Semiescolarizada">Semiescolarizada</option>
+                      <option value="Abierta">Abierta</option>
+                      <option value="A distancia">A distancia</option>
+                      <option value="Examen único">Examen único</option>
+                  </select>
+                  <br>
+                  <label for="duracion" class="form-label">Duración en años para terminarlo</label>
+                  <select class="form-control" id="duracion" name="duracion" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Menos de uno">Menos de uno</option>
+                      <option value="Alrededor de un año">Alrededor de un año</option>
+                      <option value="Más de un año">Más de un año</option>
+                      <option value="Dos años">Dos años</option>
+                      <option value="Tres años">Tres años</option>
+                      <option value="Más de tres años">Más de tres años</option>
+                  </select>
+                  <br>
+                  <label for="promedio" class="form-label">Promedio obtenido</label>
+                  <select class="form-control" id="promedio" name="promedio" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Entre 10 y 9.5">Entre 10 y 9.5</option>
+                      <option value="Entre 9.4 y 9.0">Entre 9.4 y 9.0</option>
+                      <option value="Entre 8.9 y 8.5">Entre 8.9 y 8.5</option>
+                      <option value="Entre 8.4 y 8.0">Entre 8.4 y 8.0</option>
+                      <option value="Entre 7.9 y 7.5">Entre 7.9 y 7.5</option>
+                      <option value="Entre 7.4 y 6.0">Entre 7.4 y 6.0</option>
+                      <option value="Menos de 6">Menos de 6</option>
+                  </select>
+                  <br>
+                  <label for="rendimiento" class="form-label">¿Cómo consideras tu rendimiento escolar? </label>
+                  <select class="form-control" id="rendimiento" name="rendimiento" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Muy bueno">Muy bueno</option>
+                      <option value="Bueno">Bueno</option>
+                      <option value="Regular">Regular</option>
+                      <option value="Malo">Malo</option>
+                  </select>
+                  <br>
+                  <label for="materiasFacil" class="form-label">¿Qué materias consideras que se te facilitan más?</label>
+                  <textarea class="form-control" id="materiasFacil" name="materiasFacil" rows="3"></textarea>
+              </div>
+              <div class="col-md-6 mb-3"><br>
+                  <label for="materiasDificil" class="form-label">¿Qué materias consideras que te cuestan más trabajo?</label>
+                  <textarea class="form-control" id="materiasDificil" name="materiasDificil" rows="3"></textarea>
+                  <label for="materiasExtras" class="form-label">¿Cuántas materias acreditaste en extraordinario?</label>
+                  <select class="form-control" id="materiasExtras" name="materiasExtras">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="Más de 5">Más de 5</option>
+                  </select>
+                  <br>
+                  <label for="cualesExtras" class="form-label">¿Cuáles?</label>
+                  <textarea class="form-control" id="cualesExtras" name="cualesExtras" rows="3"></textarea>
+                  <br>
+                  <label for="repAnio" class="form-label">¿Repetiste algún año o grado en niveles anteriores?</label>
+                  <select class="form-control" id="repAnio" name="repAnio" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                  </select>
+                  <br>
                   <label for="nivelRep" class="form-label">¿En qué nivel?</label>
-                        <select class="form-control" id="nivelRep" name="nivelRep" required>
-                          <option value="">Selecciona una opción</option>
-                          <option value="Primaria">Primaria</option>
-                          <option value="Secundaria">Secundaria</option>
-                          <option value="Bachillerato">Bachillerato</option>
-                          <option value="Carrera Técnica">Carrera Técnica</option>
-                          <option value="Otra">Otra</option>
-                        </select>
-                       <br>
+                  <select class="form-control" id="nivelRep" name="nivelRep" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Primaria">Primaria</option>
+                      <option value="Secundaria">Secundaria</option>
+                      <option value="Bachillerato">Bachillerato</option>
+                      <option value="Carrera Técnica">Carrera Técnica</option>
+                      <option value="Otra">Otra</option>
+                  </select>
+                  <br>
                   <label for="obstaculos" class="form-label">¿Cuáles consideras tus principales obstáculos para encarar los estudios?</label>
                   <input type="text" class="form-control" id="obstaculos" name="obstaculos" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
-                  </div>
-                </div>
               </div>
+          </div>
+        </div>
               <!--DATOS HABITOS DE ESTUDIO -->
                <div class="tab-pane fade" id="datos-estudio" role="tabpanel" aria-labelledby="datos-estudio-tab">
                 <div class="row">

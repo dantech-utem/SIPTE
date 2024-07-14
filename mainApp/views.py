@@ -748,18 +748,20 @@ class canalizacionExpedientes(View):
         periodos = Periodo.objects.all().order_by('-id')
         alumno = id
         
-        # Obtener todas las atenciones individuales del alumno
         atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True)
         
-        # Obtener todas las canalizaciones asociadas a esas atenciones individuales
         TablaExpedientes = Canalizacion.objects.filter(atencionIndividual_id__in=atencion_ids).annotate(
             observacionesIndividual=F('atencionIndividual__observaciones'),
             asuntoTratarIndividual=F('atencionIndividual__asuntoTratar'),
             fechaIndividual=F('atencionIndividual__fecha'),
         )
         
-        # Obtener información del alumno
         alumno_exp = Usuarios.objects.filter(User_id=alumno)
+        
+        # Formatear las fechas antes de pasarlas al contexto usando strftime
+        for exp in TablaExpedientes:
+            exp.fechaIndividual = exp.fechaIndividual.strftime('%d-%m-%Y a las %H:%M')
+            exp.fecha = exp.fecha.strftime('%d-%m-%Y a las %H:%M')
         
         context = {
             'periodos': periodos,
@@ -775,10 +777,8 @@ class canalizacionExpedientes(View):
         alumno = request.GET.get('alumno')
         periodo_id = request.GET.get('periodo_id')
         
-        # Obtener todas las atenciones individuales del alumno para el periodo seleccionado
         atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True)
         
-        # Filtrar las canalizaciones para el periodo y las atenciones individuales específicas
         if periodo_id:
             atenciones_individuales = Canalizacion.objects.filter(
                 cicloAccion_id=periodo_id,
@@ -799,6 +799,12 @@ class canalizacionExpedientes(View):
                 'fecha'
             )
             
+            # Formatear las fechas antes de enviarlas usando strftime
+            for atencion in atenciones_individuales:
+                atencion['atencionIndividual__fecha'] = atencion['atencionIndividual__fecha'].strftime('%d-%m-%Y a las %H:%M')
+            for canalizacion in canalizaciones:
+                canalizacion['fecha'] = canalizacion['fecha'].strftime('%d-%m-%Y a las %H:%M')
+            
             data = {
                 'atenciones_individuales': list(atenciones_individuales),
                 'canalizaciones': list(canalizaciones),
@@ -809,6 +815,7 @@ class canalizacionExpedientes(View):
         
         return JsonResponse({'error': 'Periodo no válido'}, status=400)
 
+
 class canalizacionResultadosCanalizacion(View):
    def get(self, request):
       user = request.user.usuarios.tipo.tipo
@@ -817,7 +824,7 @@ class canalizacionResultadosCanalizacion(View):
 
       print('test: ', areas[user])
 
-      tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=areas[user])
+      tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=areas[user]).order_by('-fecha')
       context = {
          'TablaResultados': tabla,
       }

@@ -5,6 +5,7 @@ from mainApp.views import *
 from . import views
 from django.contrib.auth.decorators import login_required
 from rest_framework.routers import DefaultRouter
+from .views import canalizacionReportes, generatePDF
 
 router = DefaultRouter()
 router.register(r'tokens', TokenViewSet, basename='token')
@@ -33,6 +34,7 @@ urlpatterns = [
     path('FormCanalizar', canalizacionFormCanalizar.as_view(), name="FormCanalizar"),
     path('FormCerrarTutorias', canalizacionFormCerrarTutorias.as_view(), name="FormCerrarTutorias"),
     path('Reportes/<int:id>/', canalizacionReportes.as_view(), name="Reportes"),
+    path('Reportes/<int:id>/pdf/', generatePDF.as_view(), name='ReportePDF'),
     path('ResultadosCanalizacion', canalizacionResultadosCanalizacion.as_view(), name="ResultadosCanalizacion"),
     path("cerrarTurorias/" , views.cerrarTurorias,name="cerrarTurorias"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

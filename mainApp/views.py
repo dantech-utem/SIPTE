@@ -1,8 +1,9 @@
 from django.views import View
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.staticfiles import finders
 from django.urls import reverse
 from rest_framework import serializers, viewsets
 from .models import Usuarios
@@ -14,6 +15,13 @@ from django.views import View
 from django.views.decorators.http import require_http_methods
 from django.db.models import Count, F, Value
 from django.utils.timezone import make_aware
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib import colors
+from reportlab.lib.units import cm, inch, mm
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+
 class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuarios
@@ -275,8 +283,7 @@ def cerrarTurorias(request):
       userActual = request.user
       cierre  = CierreTutorias.objects.create(cierreTutorias=cierreTutorias, cicloAccion=cicloActual[0], tutor=userActual)
       cierre.save()
-      return redirect('Dashboard')
-     
+      return redirect('Dashboard') 
      
 class canalizacionReportes(View):
     def get(self, request, id):
@@ -332,7 +339,56 @@ class canalizacionReportes(View):
             return JsonResponse(data)
         
         return JsonResponse({'error': 'Periodo no válido'}, status=400)
-   
+
+class generatePDF(View):
+    def get(self, request, id):
+        alumno = get_object_or_404(Usuarios, User_id=id)
+        canalizaciones = Canalizacion.objects.filter(atencionIndividual__estudiante_id=id).select_related('atencionIndividual', 'atencionIndividual__estudiante')
+        
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="reporte_{alumno.User.first_name}_{alumno.User.last_name}.pdf"'
+
+        doc = SimpleDocTemplate(response, pagesize=letter)
+        elements = []
+
+        logo_path = finders.find('../statics/assets/img/utem.png')
+        elements.append(Image(logo_path, 1*inch, 1*inch))
+
+        elements.append(Spacer(1, 12))
+        elements.append(Paragraph(f'Reporte de Canalizaciones para {alumno.User.first_name} {alumno.User.last_name}',
+                                  getSampleStyleSheet()['Title']))
+
+        data = [['Area', 'Nombre', 'Apellidos', 'No. de Control', 'Asunto', 'Observaciones', 'Detalles', 'Fecha']]
+        
+        for canalizacion in canalizaciones:
+            data.append([
+                canalizacion.area,
+                canalizacion.atencionIndividual.estudiante.User.first_name,
+                canalizacion.atencionIndividual.estudiante.User.last_name,
+                canalizacion.atencionIndividual.estudiante.noControl,
+                canalizacion.motivo,
+                canalizacion.observaciones,
+                canalizacion.detalles,
+                canalizacion.atencionIndividual.fecha.strftime('%d-%m-%Y')
+            ])
+
+        table = Table(data)
+        table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ]))
+        
+        elements.append(table)
+        
+        doc.build(elements)
+        
+        return response
+    
 class canalizacionIndex(View):
    def get(self, request):
       tutor = request.user

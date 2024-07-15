@@ -18,24 +18,41 @@
         <h3 class="formTitulo">Baja de alumno</h3>
         <span style="font-size: small;">Rellena la información completa para la baja del alumno.</span><br><br>
 
-        <form action="{% url 'canalizacionBajaAlumno' %}" method="POST">
+        <form action="{% url 'canalizacionBajaAlumno' id %}" method="POST">
             {% csrf_token %}
             <label class="labelFormCanalizacion">Tipo:</label><br>
+            {% if estudiante.estado == 3 %}
+            <input type="text" name="tipo" id="tipo" class="formInput" value="{{baja.tipo}}" readonly required>
+            {% else %}
             <select id="tipo" name="tipo" class="formSelect" required>
                 <option value="" style="display: none;"></option>
-                <option value="reprobacion">Reprobación</option>
-                <option value="problemas_economicos">Problemas económicos</option>
+                <option value="No se cumplieron expectativas">No se cumplieron expectativas</option>
+                <option value="Reprobación">Reprobación</option>
+                <option value="Problemas económicos">Problemas económicos</option>
+                <option value="Dificultades para el transporte">Dificultades para el transporte</option>
+                <option value="Problemas de trabajo">Problemas de trabajo</option>
+                <option value="Cambio de carrera">Cambio de carrera</option>
+                <option value="Incompatibilidad de horario">Incompatibilidad de horario</option>
+                <option value="Faltas al reglamento">Faltas al reglamento</option>
+                <option value="Cambio de residencia">Cambio de residencia</option>
+                <option value="Cambio de universidad">Cambio de universidad</option>
+                <option value="Problemas familiares">Problemas familiares</option>
+                <option value="Problemas personales">Problemas personales</option>
+                <option value="Otra">Otra</option>
             </select>
+            {% endif %}
 
             <label class="labelFormCanalizacion">Motivo:</label><br>
-            <textarea name="motivo" id="motivo" class="formTextarea" rows="7" required></textarea>
+            <textarea name="motivo" id="motivo" class="formTextarea" rows="7" {% if estudiante.estado == 3 %} readonly {% endif %} required> {% if estudiante.estado == 3 %}{{baja.motivo}}{% endif %}</textarea>
 
             <label class="labelFormCanalizacion">Observaciones:</label><br>
-            <textarea name="observaciones" id="observaciones" class="formTextarea" rows="7" required></textarea>
+            <textarea name="observaciones" id="observaciones" class="formTextarea" rows="7" {% if estudiante.estado == 3 %} readonly {% endif %} required>{% if estudiante.estado == 3 %}{{baja.observaciones}}{% endif %}</textarea>
 
             <div class="btnsFormCanalizacion">
                 <a class="btnRegresar" href="{% url 'Dashboard' %}">Regresar</a>
+                {% if estudiante.estado != 3 %}
                 <button class="btnEnviar" type="submit" id="save">Enviar</button>
+                {% endif %}
             </div>
 
         </form>

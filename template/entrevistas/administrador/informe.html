@@ -1,0 +1,34 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mb-4">Informe de respuestas</h1>
+        <div class="table-responsive">
+            <table id="informeTable" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>No.Control</th>
+                        <th>Carrera</th>
+                        <th>Grado y grupo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for estudiante in estudiantes %}
+                    <tr>
+                        <td>{{ estudiante.nombre }}</td>
+                        <td>{{ estudiante.noControl }}</td>
+                        <td>{{ estudiante.carrera }}</td>
+                        <td>{{ estudiante.grupo }}</td>
+                        <td>
+                            <a href="{% url 'resumenresp' estudiante.idEstudiante %}" class="btn btn-success">Ver</a>       
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

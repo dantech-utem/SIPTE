@@ -60,10 +60,26 @@
         </table>
     </div>
 
-    <script src="../../static/js/datatables.min.js"></script>
-    <script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+
     <script>
+    let table = new DataTable('#tablaReportes', {
+    responsive: true,
+    "columnDefs": [
+        {"className": "dt-center", "targets": "_all"}
+    ],
+    language: {
+    info: 'Página _PAGE_ de _PAGES_',
+    infoEmpty: 'No records available',
+    infoFiltered: '(filtered from _MAX_ total records)',
+    lengthMenu: '_MENU_ registros por página',
+    zeroRecords: 'Nothing found - sorry',
+    search: 'Buscar: '
+        }
+        });
+
+
+
         $(document).ready(function() {
             let alumno_id = {{ alumno_id }};
             let periodo_id = $("#selectCiclo option:selected").val();

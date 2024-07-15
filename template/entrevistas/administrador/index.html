@@ -1,0 +1,55 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mb-4">Avisos</h1>
+    <a href="{% url 'registro' %}" type="button" class="btn btn-success">Agregar</a><br><br>
+    <div class="table-responsive">
+      <table id="avisosTable" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in avisos %}
+          <tr>
+            <td>{{c.titulo }}</td>
+            <td>{{c.descripcion }}</td>
+            <td>{{c.fechaInicio }}</td>
+            <td>{{c.fechaFin }}</td>
+            <td>
+              <div class="d-flex flex-column flex-md-row">
+                <a href="{% url 'edicionAviso' c.idAvisos %}" class="btn btn-warning btn-sm mb-2 mb-md-0 me-md-2">Editar</a>
+                <a href="{% url 'eliminarAviso' c.idAvisos %}" class="btn btn-danger btn-sm btnEliminacion">Eliminar</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="confirmModalLabel">Confirmación</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de que deseas eliminar este aviso?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

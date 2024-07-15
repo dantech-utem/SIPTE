@@ -1,0 +1,40 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<!-- contenido -->
+<div class="container">
+  <h1 class="mb-4">Avisos</h1>
+  <div class="table-responsive">
+  <table id="avisoAlum" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for aviso in avisos %}
+        <tr>
+          <td>{{ aviso.titulo }}</td>
+          <td>{{ aviso.descripcion }}</td>
+          <td>{{ aviso.fechaInicio }}</td>
+          <td>{{ aviso.fechaFin }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div><br><br>
+  {% if estudiante %}
+        <!-- Mostrar el botón para ver el resumen de respuesta -->
+        <a href="{% url 'resumenresp' idEstudiante=estudiante.id %}" class="btn btn-primary">Ver Resumen</a>
+    {% else %}
+        <!-- Mostrar el botón para completar el formulario inicial -->
+        <a href="{% url 'formulario' %}" class="btn btn-success">Entrevista Inicial</a>
+    {% endif %}
+
+</div>
+
+{% endblock %}

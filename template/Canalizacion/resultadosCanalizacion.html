@@ -30,70 +30,56 @@
                 <th>ACCIONES</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
             {% for x in TablaResultados %}
-            <tr {% if x.estadoCanalizados == 1 %}>
-                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
-                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
-                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
-                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
-                <td>{{x.fecha}}</td>
+            <tr>
+                <td>{{ x.atencionIndividual.estudiante.User.first_name }}</td>
+                <td>{{ x.atencionIndividual.estudiante.User.last_name }}</td>
+                <td>{{ x.atencionIndividual.estudiante.noControl }}</td>
+                <td>{{ x.atencionIndividual.estudiante.grupo }}</td>
+                <td>{{ x.fecha }}</td>
                 <td>
-                    <a class="btnCalendarioSesion" href="{% url 'formCalendario' x.id %}">
-                        <i class="fa-regular fa-calendar"></i>Calendario</a>
+                    {% if x.estadoCanalizados == 1 %}
+                        <a class="btnCalendarioSesion" href="{% url 'formCalendario' x.id %}">
+                            <i class="fa-regular fa-calendar"></i>Asignar cita
+                        </a>
+                    {% elif x.estadoCanalizados == 2 %}
+                        <a class="btnCompletarSesion" href="{% url 'CompletarSesion' x.id %}">
+                            <i class="fa-solid fa-user-pen"></i>Completar
+                        </a>
+                    {% elif x.estadoCanalizados == 3 %}
+                        <a class="btnConsultarSesion" href="{% url 'viewCompletarSesion' x.id %}">
+                            <i class="fa-solid fa-file-lines"></i>Consultar
+                        </a>
+                    {% endif %}
                     <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
-                        <i class="fa-regular fa-id-card"></i>Información</a>
+                        <i class="fa-regular fa-id-card"></i>Información
+                    </a>
                 </td>
             </tr>
-            <tr {% elif x.estadoCanalizados == 2 %}>
-                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
-                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
-                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
-                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
-                <td>{{x.fecha}}</td>
-                <td>
-                    <a class="btnCompletarSesion" href="{% url 'CompletarSesion' x.id %}"><i
-                            class="fa-solid fa-user-pen"></i>Completar</a>
-                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
-                        <i class="fa-regular fa-id-card"></i>Información</a>
-                </td>
-            </tr>
-
-            <tr {% elif x.estadoCanalizados == 3 %}>
-                <td>{{x.atencionIndividual.estudiante.User.first_name}}</td>
-                <td>{{x.atencionIndividual.estudiante.User.last_name}}</td>
-                <td>{{x.atencionIndividual.estudiante.noControl}}</td>
-                <td>{{x.atencionIndividual.estudiante.grupo}}</td>
-                <td>{{x.fecha}}</td>
-                <td>
-                    <a class="btnConsultarSesion" href="{% url 'CompletarSesion' x.id %}">
-                        <i class="fa-solid fa-file-lines"></i>Consultar</a>
-                    <a class="btnInfoCanal" href="{% url 'viewCanalizar' x.id %}">
-                        <i class="fa-regular fa-id-card"></i>Información</a>
-                </td>
-            </tr>
-            {% endif %}
-            {% endfor %}
+            {% endfor %}            
         </tbody>
     </table>
 
 </div>
-{% endblock %}
-<script src="../../static/js/datatables.min.js"></script>
-<script src="https://kit.fontawesome.com/76cbf2a826.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
+
 <script>
     let table = new DataTable('#tablaCanalizados', {
         responsive: true,
         "columnDefs": [
-            { "className": "dt-center", "targets": "_all" }
+            {"className": "dt-center", "targets": "_all"}
         ],
         language: {
-            info: 'Página _PAGE_ de _PAGES_',
-            infoEmpty: 'No records available',
-            infoFiltered: '(filtered from _MAX_ total records)',
-            lengthMenu: '_MENU_ registros por página',
-            zeroRecords: 'Nothing found - sorry',
-            search: 'Buscar: '
-        }
+        info: 'Página _PAGE_ de _PAGES_',
+        infoEmpty: 'No records available',
+        infoFiltered: '(filtered from _MAX_ total records)',
+        lengthMenu: '_MENU_ registros por página',
+        zeroRecords: 'Nothing found - sorry',
+        search: 'Buscar: '
+    }
     });
+
+
 </script>
+{% endblock %}

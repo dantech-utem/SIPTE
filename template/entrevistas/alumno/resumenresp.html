@@ -1,0 +1,359 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card  w-auto p-3" style="width: 18rem;">
+    <div id="datosI" class="card-header">
+        <b> Datos de Identificación</b>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <div class="row">
+            <div class="col-md-8 mt-4">
+                <div class="mb-1">
+                    <label id="labelP" for="">Nombre del alumno: &nbsp;</label> <label id="labels" for="">{{ estudiante.nombre }}</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Carrera: &nbsp;</label> <label id="labels" for="">{{ estudiante.carrera }}</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Grupo: &nbsp;</label> <label id="labels" for="">{{ estudiante.grupo }}</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Correo Electrónico: &nbsp;</label> <label id="labels"
+                        for="">{{ estudiante.correo }}</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Tutor: &nbsp;</label> <label id="labels" for="">{{ estudiante.tutor }}</label>
+                </div>
+            </div>
+            <div class="col-md-4 mt-4">
+                <div class="mb-1">
+                    <label id="labelP" for="">Numero de Control: &nbsp;</label> <label id="labels"
+                        for="">{{ estudiante.noControl }}</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Edad: &nbsp;</label> <label id="labels" for="">{{ estudiante.edad }}</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Tel. Casa: &nbsp;</label> <label id="labels" for="">{{ estudiante.telCasa }}</label>
+                </div>
+                <div class="mb-1">
+                    <label id="labelP" for="">Num. Celular: &nbsp;</label> <label id="labels" for="">{{ estudiante.telCelular }}</label>
+                </div>
+            </div>
+        </div>
+    </ul>
+</div>
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colora" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseOne">
+                Datos familiares
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse ">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Vive con:&nbsp;</label> <label id="labels" for="">{{ datos_familiares.conviveCon }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Numero de hermano: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_familiares.totalHermanos }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Lugar que ocupa:: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_familiares.lugarHermano }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Huerfano: &nbsp;</label> <label id="labels" for="">{{ datos_familiares.huerfano }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for=""> Estado civil: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_familiares.estadoCivil }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colorb" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseTwo">
+                Datos socioeconómicos
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Vivienda: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_socioeconomicos.vivienda }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Tenencia de la vivienda: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_socioeconomicos.tenencia }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabajo de papá: &nbsp;</label> <label id="labels" for="">{{ datos_socioeconomicos.trabajoPapa }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabajo de mamá: &nbsp;</label> <label id="labels" for="">{{ datos_socioeconomicos.trabajoMama }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabaja: &nbsp;</label> <label id="labels" for="">{{ datos_socioeconomicos.trabajas }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Trabajo relacionado con carrera: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_socioeconomicos.relacionCarrera }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Número de habitaciones: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_socioeconomicos.habitaciones }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Número de vehiculos: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_socioeconomicos.vehiculos }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Ingresos familiares: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_socioeconomicos.ingresoFam }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Num. de personas que contribuyen: &nbsp;</label> <label
+                                id="labels" for="">{{ datos_socioeconomicos.contribuyentes }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Num. de personas que dependen: &nbsp;</label> <label
+                                id="labels" for="">{{ datos_socioeconomicos.dependientesIngresos }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colora" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseThree">
+                Antecedentes académicos
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Bachillerato de procedencia: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_academicos.bachillerato }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Rendimiento escolar: &nbsp;</label> <label id="labels" for="">{{ datos_academicos.rendimiento }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Materias faciles: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_academicos.materiasFacil }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Materias dificiles: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_academicos.materiasDificil }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Materias en extraordinario: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_academicos.materiasExtras }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Obstaculos: &nbsp;</label> <label id="labels" for="">{{ datos_academicos.obstaculos }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Modalidad: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_academicos.modalidad }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Duración: &nbsp;</label> <label id="labels" for="">{{ datos_academicos.duracion }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Promedio Final: &nbsp;</label> <label id="labels" for="">{{ datos_academicos.promedio }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Repetiste año o grado: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_academicos.repAnio }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colorb" class="accordion-button  collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseFour">
+                Hábitos de estudio
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">¿Te gusta leer? &nbsp;</label> <label id="labels"
+                                for="">{{ datos_estudio.gustoLectura }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">¿Qué tipo de lectura te gusta?&nbsp;</label> <label id="labels"
+                                for="">{{ datos_estudio.tipoLectura }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">¿Tienes un lugar especial para estudiar en tu casa? &nbsp;</label> <label id="labels" for="">{{ datos_estudio.sitioLectura }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Descripción del lugar: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_estudio.descripEstudio }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Horas diarias dedicas usualmente al estudio: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_estudio.horas }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">¿Tienes un horario fijo para estudiar? &nbsp;</label> <label id="labels" for="">{{ datos_estudio.horario }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">¿Escuchas música cuando estudias? &nbsp;</label> <label id="labels"
+                                for="">{{ datos_estudio.musica }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colora" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseFive">
+                Aficiones
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+            <div class="accordion-body">
+
+                <div class="col-md-8 mt-4">
+                    <div class="mb-1">
+                        <label id="labelP" for="">En que emplea su tiempo libre: &nbsp;</label> <label id="labels"
+                            for="">{{ datos_aficiones.tiempoLibre }}</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Cuánto tiempo dedica diario: &nbsp;</label> <label id="labels"
+                            for="">{{ datos_aficiones.horasLibre }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button id="colorb" class="accordion-button  collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseSix">
+                Personalidad
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-md-8 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Colabora en el hogar: &nbsp;</label> <label id="labels"
+                                for="">{{ datos_personalidad.colaborasCasa }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Cuantó: &nbsp;</label> <label id="labels" for="">{{ datos_personalidad.colaboracion }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Integrado a su familia: &nbsp;</label> <label id="labels"
+                                for=""> {{ datos_personalidad.ambienteFamiliar }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="mb-1">
+                            <label id="labelP" for="">Habla con su familia sobre sus interes o preocupaciones:
+                                &nbsp;</label> <label id="labels" for=""> {{ datos_personalidad.hablaFamiliar }}</label>
+                        </div>
+                        <div class="mb-1">
+                            <label id="labelP" for="">Te comunicas a decuadamente en casa: &nbsp;</label> <label
+                                id="labels" for="">{{ datos_personalidad.comunicacion }}</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button id="colorb" class="accordion-button  collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseEight">
+            Salud
+        </button>
+    </h2>
+    <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+        <div class="accordion-body">
+            <div class="row">
+                <div class="col-md-8 mt-4">
+                    <div class="mb-1">
+                        <label id="labelP" for="">Como considera su salud: &nbsp;</label> <label id="labels"
+                            for="">{{ datos_salud.estadoSalud }}</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Ha tenido enfermedad grave: &nbsp;</label> <label id="labels"
+                            for="">{{datos_salud.tipoEnfermedad }}</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">¿Tienes algún padecimiento o enfermedad crónica? &nbsp;</label> <label id="labels"
+                            for="">{{ datos_salud.padecimientoCro }}</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Condición que fecte tu visión, audición, motricidad:
+                            &nbsp;</label> <label id="labels" for=""> {{ datos_salud.condiciones }}</label>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-4">
+                    <div class="mb-1">
+                        <label id="labelP" for="">Lo han operado: &nbsp;</label> <label id="labels" for="">{{ datos_salud.operaciones }}</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Problema de salud que afecte estudios: &nbsp;</label> <label
+                            id="labels" for="">{{ datos_salud.problemaSalud }}</label>
+                    </div>
+                    <div class="mb-1">
+                        <label id="labelP" for="">Comentario: &nbsp;</label> <label id="labels" for="">{{ datos_salud.comentario }}</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

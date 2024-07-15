@@ -1,0 +1,676 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <!-- PESTAÑAS -->
+           <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="datos-identificacion-tab" data-bs-toggle="tab" data-bs-target="#datos-identificacion" type="button" role="tab" aria-controls="datos-identificacion" aria-selected="true">Datos de Identificación</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-familiares-tab" data-bs-toggle="tab" data-bs-target="#datos-familiares" type="button" role="tab" aria-controls="datos-familiares" aria-selected="false">Datos familiares</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-socioeconomicos-tab" data-bs-toggle="tab" data-bs-target="#datos-socioeconomicos" type="button" role="tab" aria-controls="datos-socioeconomicos" aria-selected="false">Datos socioeconómicos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-academicos-tab" data-bs-toggle="tab" data-bs-target="#datos-academicos" type="button" role="tab" aria-controls="datos-academicos" aria-selected="false">Antecedentes académicos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-estudio-tab" data-bs-toggle="tab" data-bs-target="#datos-estudio" type="button" role="tab" aria-controls="datos-estudio" aria-selected="false">Hábitos de estudio</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-aficiones-tab" data-bs-toggle="tab" data-bs-target="#datos-aficiones" type="button" role="tab" aria-controls="datos-aficiones" aria-selected="false">Aficiones</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="datos-personalidad-tab" data-bs-toggle="tab" data-bs-target="#datos-personalidad" type="button" role="tab" aria-controls="datos-personalidad" aria-selected="false">Personalidad</button>
+            </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="datos-salud-tab" data-bs-toggle="tab" data-bs-target="#datos-salud" type="button" role="tab" aria-controls="datos-salud" aria-selected="false">Salud</button>
+            </li>
+           </ul>
+            <!-- FORMULARIO -->
+            <form id="formDatos" action="{% url 'crearEstudiante' %}" method="POST">
+            {% csrf_token %}
+             <div class="tab-content" id="myTabContent">
+              <!-- DATOS DE IDENTIFICACION -->
+              <div class="tab-pane fade show active" id="datos-identificacion" role="tabpanel" aria-labelledby="datos-identificacion-tab">
+                <div class="row">
+                  <div  class="col-md-6 mb-3"><br>
+                    <label for="noControl" class="form-label">Número de control</label>
+                      <input type="text" class="form-control" id="noControl" name="noControl" required maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                      <br>
+                      <label for="nombre" class="form-label">Nombre del Alumno</label>
+                      <input type="text" class="form-control" id="nombre" name="nombre" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                      <br>
+                      <label for="carrera" class="form-label">Carrera</label>
+                      <select class="form-control" id="carrera" name="carrera" required>
+                        <option value="">Selecciona una carrera</option>
+                        <option value="Licenciatura en Diseño y Gestión de Redes Logísticas">Licenciatura en Diseño y Gestión de Redes Logísticas</option>
+                        <option value="Ingeniería en Energías Renovables">Ingeniería en Energías Renovables</option>
+                        <option value="Licenciatura en Contaduría">Licenciatura en Contaduría</option>
+                        <option value="Licenciatura en Gastronomía">Licenciatura en Gastronomía</option>
+                        <option value="Ingeniería en Logística Comercial Global">Ingeniería en Logística Comercial Global</option>
+                        <option value="Ingeniería en Mantenimiento Industrial">Ingeniería en Mantenimiento Industrial</option>
+                        <option value="Ingeniería en Procesos Químicos">Ingeniería en Procesos Químicos</option>
+                        <option value="Ingeniería en Desarrollo y Gestión de Software">Ingeniería en Desarrollo y Gestión de Software</option>
+                      </select>
+                      <br>
+                      <label for="tutor" class="form-label">Tutor</label>
+                      <select class="form-control" id="tutor" name="tutor" required>
+                        <option value="">Selecciona un tutor</option>
+                        <option value="Guillermo Jair Rincón Cruzado">Guillermo Jair Rincón Cruzado</option>
+                        <option value="Miriam Minerva Jiménez Lara">Miriam Minerva Jiménez Lara</option>
+                        <option value="Heriberto Pérez Romero">Heriberto Pérez Romero</option>
+                        <option value="Alicia Judith Figueroa García">Alicia Judith Figueroa García</option>
+                        <option value="Juan Ríos Hernández">Juan Ríos Hernández</option>
+                        <option value="Francisco Fortino Güereña Galaz">Francisco Fortino Güereña Galaz</option>
+                        <option value="David Manuel Ramos Sánchez">David Manuel Ramos Sánchez</option>
+                        <option value="Juan Manuel Fernández Álvarez">Juan Manuel Fernández Álvarez</option>    
+                      </select>
+                      <br>
+                      <label for="grupo" class="form-label">Grupo</label>
+                      <select class="form-control" id="grupo" name="grupo" required>
+                        <option value="">Selecciona un grupo</option>
+                        <option value="1-GAS-1">1-GAS-1</option>
+                        <option value="9-IDG-1">9-IDG-1</option>
+                        <option value="4-TID-1">4-TID-1</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6 mb-3"><br>
+                    <label for="fechaR" class="form-label">Fecha</label>
+                      <input type="date" class="form-control" id="fechaR" name="fechaR" required readonly>
+                    <br>
+                      <label for="telCasa" class="form-label">Teléfono de Casa</label>
+                      <input type="text" class="form-control" id="telCasa" name="telCasa" required maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" >
+                    <br>
+                      <label for="correo" class="form-label">Correo Electrónico</label>
+                      <input type="email" class="form-control" id="correo" name="correo" required>
+                    <br>
+                      <label for="telCelular" class="form-label">Número de Celular</label>
+                      <input type="text" class="form-control" id="telCelular" name="telCelular" required maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <br>
+                      <label for="edad" class="form-label">Edad</label>
+                      <select class="form-control" id="edad" name="edad" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="Más de 30">Más de 30</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              <!--DATOS FAMILIARES -->
+              <div class="tab-pane fade" id="datos-familiares" role="tabpanel" aria-labelledby="datos-familiares-tab">
+                <div class="row">
+                  <div class="col-md-6 mb-3"><br>
+                    <label for="conviveCon" class="form-label">¿Con quién vives?</label>
+                    <select class="form-control" id="conviveCon" name="conviveCon" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Mis papás">Mis papás</option>
+                      <option value="Con mi papá">Con mi papá</option>
+                      <option value="Con mi mamá">Con mi mamá</option>
+                      <option value="Con mis parientes(tíos,abuelos,etc.)">Con mis parientes(tíos,abuelos,etc.)</option>
+                      <option value="Con mis amigos">Con mis amigos</option>
+                      <option value="Solo">Solo</option>
+                      <option value="Otra situación">Otra situación</option>
+                    </select><br>
+                    <label for="otra_situacion" class="form-label">Si "otra situación", descríbela</label>
+                    <input type="text" class="form-control" id="otra_situacion" name="otra_situacion" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                  </div>
+                  <div class="col-md-6 mb-3"><br>
+                    <label for="huerfano" class="form-label">¿Eres huérfano?</label>
+                    <select class="form-control" id="huerfano" name="huerfano" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select><br>
+                      <label for="huerfanoQuien" class="form-label">¿De?</label>
+                      <select class="form-control" id="huerfanoQuien" name="huerfanoQuien" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="No aplica">No aplica</option>
+                        <option value="Padre">Padre</option>
+                        <option value="Madre">Madre</option>
+                        <option value="Ambos">Ambos</option>
+                      </select>
+                  </div>
+                  <div  class="col-md-6 mb-3">
+                    <label for="totalHermanos" class="form-label">Número de hermanos(as)</label>
+                    <select class="form-control" id="totalHermanos" name="totalHermanos" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">Más de 10</option>
+                    </select><br>
+                    <label for="lugarHermano" class="form-label">Lugar que ocupas</label>
+                      <select class="form-control" id="lugarHermano" name="lugarHermano" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="estadoCivil" class="form-label">Estado civil</label>
+                      <select class="form-control" id="estadoCivil" name="estadoCivil" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Soltero">Soltero</option>
+                        <option value="Casado">Casado</option>
+                        <option value="Unión libre">Unión libre</option>
+                        <option value="Divorciado(a)">Divorciado(a)</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              <!--DATOS SOCIOECONOMICOS  -->
+              <div class="tab-pane fade" id="datos-socioeconomicos" role="tabpanel" aria-labelledby="datos-socioeconomicos-tab">
+                <div class="row">
+                  <div class="col-md-6 mb-3"><br>
+                    <label for="vivienda" class="form-label">Tipo de vivienda</label>
+                      <select class="form-control" id="vivienda" name="vivienda" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Casa en coto privado">Casa en coto privado</option>
+                        <option value="Departamento">Departamento</option>
+                        <option value="Departamento multifamiliar">Departamento multifamiliar</option>
+                        <option value="Casa de huéspedes">Casa de huéspedes</option>
+                      </select>
+                      <br>
+                      <label for="tenencia" class="form-label">Tenencia de la vivienda</label>
+                        <select class="form-control" id="tenencia" name="tenencia" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="Propia">Propia</option>
+                          <option value="Rentada">Rentada</option>
+                          <option value="Prestada">Prestada</option>
+                          <option value="Hipotecada">Hipotecada</option>
+                          <option value="Otra">Otra</option>
+                        </select>
+                        <br>
+                        <label for="habitaciones" class="form-label">Número de habitaciones</label>
+                        <select class="form-control" id="habitaciones" name="habitaciones" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="Más de 10">Más de 10</option>
+                        </select>
+                        <br>
+                        <label for="vehiculos" class="form-label">Número de vehículos</label>
+                      <select class="form-control" id="vehiculos" name="vehiculos" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="Más de 10">Más de 10</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6 mb-3"><br>
+                    <label for="trabajoPapa" class="form-label">Trabajo del papá</label>
+                      <select class="form-control" id="trabajoPapa" name="trabajoPapa" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Desempleado(a)">Desempleado(a)</option>
+                        <option value="Jubilado(a) o pensionado(a)">Jubilado(a) o pensionado(a)</option>
+                        <option value="Empleado del gobierno(a)">Empleado del gobierno(a)</option>
+                        <option value="Agroproductor(a)">Agroproductor(a)</option>
+                        <option value="Operario de producción(a)">Operario de producción(a)</option>
+                        <option value="Comerciante">Comerciante</option>
+                        <option value="Profesionista trabaja por cuenta propia">Profesionista trabaja por cuenta propia</option>
+                        <option value="Militar (ejército o armada)">Militar (ejército o armada)</option>
+                        <option value="Otro">Otro</option>
+                      </select><br>
+                      <label for="trabajoextraPapa" class="form-label">Si "otra situación", descríbela</label>
+                      <input type="text" class="form-control" id="trabajoextraPapa" name="trabajoextraPapa" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                      <br>
+                      <label for="trabajoMama" class="form-label">Trabajo de la mamá</label>
+                        <select class="form-control" id="trabajoMama" name="trabajoMama" required>
+                          <option value="">Selecciona una opción</option>
+                          <option value="Desempleado(a)">Desempleado(a)</option>
+                          <option value="Jubilado(a) o pensionado(a)">Jubilado(a) o pensionado(a)</option>
+                          <option value="Empleado del gobierno(a)">Empleado del gobierno(a)</option>
+                          <option value="Agroproductor(a)">Agroproductor(a)</option>
+                          <option value="Operario de producción(a)">Operario de producción(a)</option>
+                          <option value="Comerciante">Comerciante</option>
+                          <option value="Profesionista trabaja por cuenta propia">Profesionista trabaja por cuenta propia</option>
+                          <option value="Militar (ejército o armada)">Militar (ejército o armada)</option>
+                          <option value="Otro">Otro</option>
+                        </select><br>
+                        <label for="trabajoextraMama" class="form-label">Si "otra situación", descríbela</label>
+                        <input type="text" class="form-control" id="trabajoextraMama" name="trabajoextraMama" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="manutencion" class="form-label">Manutención</label>
+                        <select class="form-control" id="manutencion" name="manutencion" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Por cuenta propia">Por cuenta propia</option>
+                            <option value="Mis papás costean mis gastos">Mis papás costean mis gastos</option>
+                            <option value="Parte mis papás, parte yo">Parte mis papás, parte yo</option>
+                        </select>
+                        <br>
+                        <label for="trabajas" class="form-label">¿Trabajas?</label>
+                        <select class="form-control" id="trabajas" name="trabajas" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
+                        </select>
+                        <br>
+                        <label for="relacionCarrera" class="form-label">¿Tiene relación con la carrera?</label>
+                        <select class="form-control" id="relacionCarrera" name="relacionCarrera" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Mucho">Mucho</option>
+                            <option value="Algo">Algo</option>
+                            <option value="Nada">Nada</option>
+                        </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="ingresoFam" class="form-label">Ingresos familiares</label>
+                    <select class="form-control" id="ingresoFam" name="ingresoFam" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="De 3,000 a 5,000">De 3,000 a 5,000</option>
+                        <option value="De 5,001 a 10,000">De 5,001 a 10,000</option>
+                        <option value="De 10,001 a 15,000">De 10,001 a 15,000</option>
+                        <option value="De 15,001 a 20,000">De 15,001 a 20,000</option>
+                        <option value="De 20,001 a 25,000">De 20,001 a 25,000</option>
+                        <option value="De 25,001 a 26,000">De 25,001 a 26,000</option>
+                        <option value="De 26,001 a 30,000">De 26,001 a 30,000</option>
+                        <option value="Más de 30,000">Más de 30,000</option>
+                    </select>
+                    <br>
+                    <label for="contribuyentes" class="form-label">Número de personas que contribuyen a esos ingresos</label>
+                      <select class="form-control" id="contribuyentes" name="contribuyentes" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="Más de 5">Más de 5</option>
+                      </select>
+                      <br>
+                    <label for="dependientesIngresos" class="form-label">Número de personas que dependen de esos ingresos</label>
+                      <select class="form-control" id="dependientesIngresos" name="dependientesIngresos" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="Más de 5">Más de 5</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+             <!--DATOS ANTECEDENTES ACADEMICOS -->
+        <div class="tab-pane fade" id="datos-academicos" role="tabpanel" aria-labelledby="datos-academicos-tab">
+          <div class="row">
+              <div class="col-md-6 mb-3"><br>
+                  <label for="bachillerato" class="form-label">Bachillerato de procedencia:</label>
+                  <input type="text" class="form-control" id="bachillerato" name="bachillerato" required>
+                  <br>
+                  <label for="modalidad" class="form-label">Modalidad</label>
+                  <select class="form-control" name="modalidad" id="modalidad" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Escolarizada">Escolarizada</option>
+                      <option value="Semiescolarizada">Semiescolarizada</option>
+                      <option value="Abierta">Abierta</option>
+                      <option value="A distancia">A distancia</option>
+                      <option value="Examen único">Examen único</option>
+                  </select>
+                  <br>
+                  <label for="duracion" class="form-label">Duración en años para terminarlo</label>
+                  <select class="form-control" id="duracion" name="duracion" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Menos de uno">Menos de uno</option>
+                      <option value="Alrededor de un año">Alrededor de un año</option>
+                      <option value="Más de un año">Más de un año</option>
+                      <option value="Dos años">Dos años</option>
+                      <option value="Tres años">Tres años</option>
+                      <option value="Más de tres años">Más de tres años</option>
+                  </select>
+                  <br>
+                  <label for="promedio" class="form-label">Promedio obtenido</label>
+                  <select class="form-control" id="promedio" name="promedio" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Entre 10 y 9.5">Entre 10 y 9.5</option>
+                      <option value="Entre 9.4 y 9.0">Entre 9.4 y 9.0</option>
+                      <option value="Entre 8.9 y 8.5">Entre 8.9 y 8.5</option>
+                      <option value="Entre 8.4 y 8.0">Entre 8.4 y 8.0</option>
+                      <option value="Entre 7.9 y 7.5">Entre 7.9 y 7.5</option>
+                      <option value="Entre 7.4 y 6.0">Entre 7.4 y 6.0</option>
+                      <option value="Menos de 6">Menos de 6</option>
+                  </select>
+                  <br>
+                  <label for="rendimiento" class="form-label">¿Cómo consideras tu rendimiento escolar? </label>
+                  <select class="form-control" id="rendimiento" name="rendimiento" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Muy bueno">Muy bueno</option>
+                      <option value="Bueno">Bueno</option>
+                      <option value="Regular">Regular</option>
+                      <option value="Malo">Malo</option>
+                  </select>
+                  <br>
+                  <label for="materiasFacil" class="form-label">¿Qué materias consideras que se te facilitan más?</label>
+                  <textarea class="form-control" id="materiasFacil" name="materiasFacil" required rows="3"></textarea>
+              </div>
+              <div class="col-md-6 mb-3"><br>
+                  <label for="materiasDificil" class="form-label">¿Qué materias consideras que te cuestan más trabajo?</label>
+                  <textarea class="form-control" id="materiasDificil" name="materiasDificil" required rows="3"></textarea>
+                  <label for="materiasExtras" class="form-label">¿Cuántas materias acreditaste en extraordinario?</label>
+                  <select class="form-control" id="materiasExtras" name="materiasExtras">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="Más de 5">Más de 5</option>
+                  </select>
+                  <br>
+                  <label for="cualesExtras" class="form-label">¿Cuáles?</label>
+                  <textarea class="form-control" id="cualesExtras" name="cualesExtras" rows="3"></textarea>
+                  <br>
+                  <label for="repAnio" class="form-label">¿Repetiste algún año o grado en niveles anteriores?</label>
+                  <select class="form-control" id="repAnio" name="repAnio" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                  </select>
+                  <br>
+                  <label for="nivelRep" class="form-label">¿En qué nivel?</label>
+                  <select class="form-control" id="nivelRep" name="nivelRep" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Primaria">Primaria</option>
+                      <option value="Secundaria">Secundaria</option>
+                      <option value="Bachillerato">Bachillerato</option>
+                      <option value="Carrera Técnica">Carrera Técnica</option>
+                      <option value="Otra">Otra</option>
+                  </select>
+                  <br>
+                  <label for="obstaculos" class="form-label">¿Cuáles consideras tus principales obstáculos para encarar los estudios?</label>
+                  <input type="text" class="form-control" id="obstaculos" name="obstaculos" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+              </div>
+          </div>
+        </div>
+              <!--DATOS HABITOS DE ESTUDIO -->
+               <div class="tab-pane fade" id="datos-estudio" role="tabpanel" aria-labelledby="datos-estudio-tab">
+                <div class="row">
+                  <div class="col-md-6 mb-3"><br>
+                    <label for="gustoLectura" class="form-label">¿Te gusta leer?</label>
+                    <select class="form-control" id="gustoLectura" name="gustoLectura" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                    <br>
+                    <label for="tipoLectura" class="form-label">¿Qué tipo de lectura te gusta? </label>
+                      <select class="form-control" id="tipoLectura" name="tipoLectura" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Novelas">Novelas</option>
+                        <option value="Cuentos">Cuentos</option>
+                        <option value="Poesía">Poesía</option>
+                        <option value="Noticias">Noticias</option>
+                        <option value="Ciencia Ficción">Ciencia Ficción</option>
+                        <option value="Libros de texto">Libros de texto</option>
+                        <option value="Artículos de divulgación">Artículos de divulgación</option>
+                        <option value="Artículos de opinión">Artículos de opinión</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                      <br>
+                    <label for="sitioLectura" class="form-label">¿Tienes un lugar especial para estudiar en tu casa?</label>
+                    <select class="form-control" id="sitioLectura" name="sitioLectura" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                    <br>
+                    <label for="descripEstudio" class="form-label">Descríbelo</label>
+                    <textarea class="form-control" id="descripEstudio" name="descripEstudio" required></textarea>
+                  </div>
+                  <div  class="col-md-6 mb-3"><br>
+                    <label for="horas" class="form-label">¿Cuántas horas diarias dedicas usualmente al estudio? </label>
+                    <select class="form-control" id="horas" name="horas" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="Más de 5">Más de 5</option>
+                    </select>
+                    <br>
+                    <label for="horario" class="form-label">¿Tienes un horario fijo para estudiar?</label>
+                    <select class="form-control" id="horario" name="horario" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                    <br>
+                    <label for="musica" class="form-label">¿Escuchas música cuando estudias?</label>
+                    <select class="form-control" id="musica" name="musica" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                </div>
+               </div>
+               <!--DATOS PERSONALIDAD -->
+               <div class="tab-pane fade" id="datos-personalidad" role="tabpanel" aria-labelledby="datos-personalidad-tab">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <br>
+                    <label for="colaborasCasa" class="form-label">¿Colaboras en casa con las tareas del hogar?</label>
+                      <select class="form-control" id="colaborasCasa" name="colaborasCasa" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Si">Si</option>
+                        <option value="No">No</option>
+                      </select>
+                      <br>
+                      <label for="colaboracion" class="form-label">¿En qué medida?</label>
+                      <select class="form-control" id="colaboracion" name="colaboracion" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Mucho">Mucho</option>
+                        <option value="Regular">Regular</option>
+                        <option value="Solo lo necesario">Solo lo necesario</option>
+                        <option value="Poco">Poco</option>
+                        <option value="Nada">Nada</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <br>
+                    <label for="ambienteFamiliar" class="form-label">¿Qué tan integrado(a) consideras que estás a tu ambiente familiar?</label>
+                    <select class="form-control" id="ambienteFamiliar" name="ambienteFamiliar" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Totalmente">Totalmente</option>
+                      <option value="Bastante">Bastante</option>
+                      <option value="Suficiente">Suficiente</option>
+                      <option value="Regular">Regular</option>
+                      <option value="Poco">Poco</option>
+                      <option value="Nada">Nada</option>
+                    </select><br>
+                    <label for="hablaFamiliar" class="form-label">¿Sueles hablar con familiares sobre aspectos que te interesan o preocupan?</label>
+                    <select class="form-control" id="hablaFamiliar" name="hablaFamiliar" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Siempre">Siempre</option>
+                      <option value="Casi siempre">Casi siempre</option>
+                      <option value="A veces">A veces</option>
+                      <option value="Casi nunca">Casi nunca</option>
+                      <option value="Nunca">Nunca</option>
+                    </select>
+                    <br>
+                    <label for="comunicacion" class="form-label">¿Consideras que te comunicas adecuadamente en casa?</label>
+                    <select class="form-control" id="comunicacion" name="comunicacion" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                </div>
+               </div>
+               <!--DATOS AFICIONES -->
+               <div class="tab-pane fade" id="datos-aficiones" role="tabpanel" aria-labelledby="datos-aficiones-tab">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <br>
+                    <label for="tiempoLibre" class="form-label">¿En qué sueles emplear tu tiempo libre mayoritariamente?</label>
+                    <select class="form-control" id="tiempoLibre" name="tiempoLibre" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Practicar algún deporte">Practicar algún deporte</option>
+                      <option value="Leer">Leer</option>
+                      <option value="Escuchar música">Escuchar música</option>
+                      <option value="Salir o estar con amigos">Salir o estar con amigos</option>
+                      <option value="Ir al cine">Ir al cine</option>
+                      <option value="Ver TV">Ver TV</option>
+                      <option value="Redes sociales">Redes sociales</option>
+                      <option value="Navegar en Internet">Navegar en Internet</option>
+                      <option value="Jugar juegos en computadora, celular">Jugar juegos en computadora, celular</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </div>
+                  <div  class="col-md-6 mb-3">
+                    <br>
+                    <label for="horasLibre" class="form-label">¿Cuánto tiempo diario dedicas a esa afición?</label>
+                    <select class="form-control" id="horasLibre" name="horasLibre" required>
+                      <option value="">Selecciona una opción</option>
+                      <option value="Media hora">Media hora</option>
+                      <option value="Una hora">Una hora</option>
+                      <option value="Hora y media">Hora y media</option>
+                      <option value="Dos horas">Dos horas</option>
+                      <option value="Tres horas">Tres horas</option>
+                      <option value="Más de tres horas">Más de tres horas</option>
+                    </select>
+                  </div>
+                </div>
+               </div>
+                <!-- DATOS DE SALUD -->
+                <div class="tab-pane fade" id="datos-salud" role="tabpanel" aria-labelledby="datos-salud-tab">
+                  <div class="row">
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="estadoSalud" class="form-label">¿Cómo consideras en general que es tu salud?</label>
+                        <select class="form-control" id="estadoSalud" name="estadoSalud" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Muy buena">Muy buena</option>
+                            <option value="Buena">Buena</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Mala">Mala</option>
+                        </select><br>
+                        <label for="enfermedadGrave" class="form-label">¿Has tenido alguna enfermedad grave?</label>
+                        <select class="form-control" id="enfermedadGrave" name="enfermedadGrave" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Si">Sí</option>
+                            <option value="No">No</option>
+                        </select><br>
+                        <label for="tipoEnfermedad" class="form-label">¿De qué tipo?</label>
+                        <input type="text" class="form-control" id="tipoEnfermedad" name="tipoEnfermedad" required><br>
+                        <label for="padecimientoCro" class="form-label">¿Tienes algún padecimiento o enfermedad crónica?</label>
+                        <input type="text" class="form-control" id="padecimientoCro" name="padecimientoCro" required><br>
+                        <label for="tipoPadecimiento" class="form-label">¿Cuál?</label>
+                        <input type="text" class="form-control" id="tipoPadecimiento" name="tipoPadecimiento" required>
+                    </div>
+                    <div class="col-md-6 mb-3"><br>
+                      <label for="operaciones" class="form-label">¿Te han operado alguna vez?</label>
+                      <select class="form-control" id="operaciones" name="operaciones" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Si">Sí</option>
+                            <option value="No">No</option>
+                        </select><br>
+                        <label for="causaOperacion" class="form-label">¿Cuál fue la causa?</label>
+                        <input type="text" class="form-control" id="causaOperacion" name="causaOperacion" required>
+                        <label for="problemaSalud" class="form-label">¿Padeces algún problema de salud que consideres pueda afectar tus estudios? Menciónalo</label>
+                        <input type="text" class="form-control" id="problemaSalud" name="problemaSalud" required><br>
+                        <label for="condiciones" class="form-label">¿Tienes alguna condición que afecte tu visión, audición, motricidad?</label>
+                        <select class="form-control" id="condiciones" name="condiciones" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Si">Sí</option>
+                            <option value="No">No</option>
+                        </select><br>
+                        <label for="tipoCondiciones" class="form-label">¿Cuál?</label>
+                        <input type="text" class="form-control" id="tipoCondiciones" name="tipoCondiciones" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                      <label for="comentario" class="form-label">Si tuvieras algún comentario o algo más que agregar, te pedimos que lo hagas en el siguiente espacio:</label>
+                        <textarea class="form-control" id="comentario" name="comentario" required rows="3"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+               <!-- BOTONES PARA DESPLAZAR DE PESTAÑA -->
+            <div class="d-flex justify-content-between mt-3">
+              <button type="button" class="btn btn-secondary" id="prevButton" style="display: none;">Anterior</button>
+              <button type="button" class="btn btn-primary" id="nextButton">Siguiente</button>
+              <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Enviar</button>
+            </div>
+             </div>
+             </form>
+             
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Advertencia -->
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="warningModalLabel">¡Advertencia!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Por favor, completa todos los campos requeridos antes de enviar el formulario.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

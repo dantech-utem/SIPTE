@@ -1,0 +1,116 @@
+/* Estilos para la tabla DataTable con ID avisoAlum */
+
+/* Encabezados de la tabla */
+#avisoAlum th {
+  background-color: #5AA86C !important; /* Color de fondo verde para los encabezados */
+  color: white !important; /* Texto en color blanco para los encabezados */
+  text-align: center; /* Alineación centrada del texto */
+  vertical-align: middle; /* Alineación vertical centrada */
+}
+
+/* Contenido de la tabla */
+#avisoAlum td {
+  text-align: center; /* Centrar el texto en las celdas */
+}
+
+/* Estilos para la paginación */
+#avisoAlum .page-link {
+  color: #eff7f1 !important; /* Cambia color verde */
+  background-color: #5AA86C !important; /* Cambia color verde de fondo */
+  border-color: #5AA86C !important; /* Cambia color de borde */
+}
+
+/* Estilos para los botones de paginación desactivados */
+#avisoAlum .page-item.disabled .page-link {
+  color: #888 !important; /* Cambia el color del texto del botón desactivado */
+  background-color: #e9ecef !important; /* Cambia el color de fondo del botón desactivado */
+  border-color: #dee2e6 !important; /* Cambia el color del borde del botón desactivado */
+}
+
+/* Estilos para la tabla DataTable con ID informeTable */
+
+/* Encabezados de la tabla */
+#informeTable th {
+  background-color: #5AA86C !important; /* Color de fondo verde para los encabezados */
+  color: white !important; /* Texto en color blanco para los encabezados */
+  text-align: center; /* Alineación centrada del texto */
+  vertical-align: middle; /* Alineación vertical centrada */
+}
+
+/* Contenido de la tabla */
+#informeTable td {
+  text-align: center; /* Centrar el texto en las celdas */
+}
+
+/* Estilos para la paginación */
+#informeTable .page-link {
+  color: #eff7f1 !important; /* Cambia color verde */
+  background-color: #5AA86C !important; /* Cambia color verde de fondo */
+  border-color: #5AA86C !important; /* Cambia color de borde */
+}
+
+/* Estilos para los botones de paginación desactivados */
+#informeTable .page-item.disabled .page-link {
+  color: #888 !important; /* Cambia el color del texto del botón desactivado */
+  background-color: #e9ecef !important; /* Cambia el color de fondo del botón desactivado */
+  border-color: #dee2e6 !important; /* Cambia el color del borde del botón desactivado */
+}
+
+/* Estilos para la tabla DataTable con ID avisosTable */
+
+/* Encabezados de la tabla */
+#avisosTable th {
+  background-color: #5AA86C !important; /* Color de fondo verde para los encabezados */
+  color: white !important; /* Texto en color blanco para los encabezados */
+  text-align: center; /* Alineación centrada del texto */
+  vertical-align: middle; /* Alineación vertical centrada */
+}
+
+/* Contenido de la tabla */
+#avisosTable td {
+  text-align: center; /* Centrar el texto en las celdas */
+}
+
+/* Estilos para la paginación */
+#avisosTable .page-link {
+  color: #eff7f1 !important; /* Cambia color verde */
+  background-color: #5AA86C !important; /* Cambia color verde de fondo */
+  border-color: #5AA86C !important; /* Cambia color de borde */
+}
+
+/* Estilos para los botones de paginación desactivados */
+#avisosTable .page-item.disabled .page-link {
+  color: #888 !important; /* Cambia el color del texto del botón desactivado */
+  background-color: #e9ecef !important; /* Cambia el color de fondo del botón desactivado */
+  border-color: #dee2e6 !important; /* Cambia el color del borde del botón desactivado */
+}
+
+/*Esto es para los accordion*/
+#colora {
+  color: black;
+  background-color: #AFD5B8;
+
+}
+
+#colorb {
+  color: black;
+  background-color: #AFD5B8;
+}
+
+.accordion-item {
+  margin: 5px;
+}
+
+#datosI {
+  background-color: #5AA86C;
+  color: white;
+  font-size: 18px;
+}
+
+#labels {
+  font-weight: 400;
+}
+
+#labelP {
+  font-weight: 700;
+}

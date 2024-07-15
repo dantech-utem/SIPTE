@@ -24,7 +24,7 @@
                 <option value="{{ periodo.id }}">{{ periodo.periodo }} {{ periodo.anio }}</option>
             {% endfor %}
         </select>
-        <a class="btnReportes" href="{% url 'ReportePDF' alumno_id %}"><i class="fa-solid fa-file-pdf"></i>Reporte general</a>
+        <a class="btnReportes" href="{% url 'ReportePDF' alumno_id %}"><i class="fa-solid fa-file-pdf"></i>Reporte</a>
     </div>
 
     <div class="cardReportes">
@@ -39,7 +39,7 @@
                     <th>OBSERVACIONES</th>
                     <th>DETALLES DE LA SESIÓN</th>
                     <th>FECHA</th>
-                    <th>ACCIONES</th>
+                    <!-- <th>ACCIONES</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +53,7 @@
                     <td>{{ reporte.observaciones }}</td>
                     <td>{{ reporte.detalles }}</td>
                     <td>{{ reporte.fecha }}</td>
-                    <td><a class="btnReportesIcon" href="{% url 'ReportePDF' alumno_id %}"><i class="fa-solid fa-file-pdf"></i></a></td>
+                    <!-- <td><a class="btnReportesIcon" href="{% url 'ReportePDF' alumno_id %}"><i class="fa-solid fa-file-pdf"></i></a></td> -->
                 </tr>
                 {% endfor %}
             </tbody>
@@ -100,7 +100,7 @@
                             '<td>' + reporte.observaciones + '</td>' +
                             '<td>' + reporte.detalles + '</td>' +
                             '<td>' + reporte.atencionIndividual__fecha + '</td>' +
-                            '<td><a class="btnReportesIcon" href="{% url 'ReportePDF' alumno_id %}"><i class="fa-solid fa-file-pdf"></i></a></td>' +
+                            // '<td><a class="btnReportesIcon" href="{% url 'ReportePDF' alumno_id %}"><i class="fa-solid fa-file-pdf"></i></a></td>' +
                             '</tr>'
                         );
                     });
@@ -129,7 +129,7 @@
                                 '<td>' + reporte.observaciones + '</td>' +
                                 '<td>' + reporte.detalles + '</td>' +
                                 '<td>' + reporte.atencionIndividual__fecha + '</td>' +
-                                '<td><a class="btnReportesIcon" href="#"><i class="fa-solid fa-file-pdf"></i></a></td>' +
+                                // '<td><a class="btnReportesIcon" href="#"><i class="fa-solid fa-file-pdf"></i></a></td>' +
                                 '</tr>'
                             );
                         });

@@ -674,14 +674,8 @@ def cerrarTurorias(request):
       userActual = request.user
       cierre  = CierreTutorias.objects.create(cierreTutorias=cierreTutorias, cicloAccion=cicloActual[0], tutor=userActual)
       cierre.save()
-<<<<<<< HEAD
       return redirect('Dashboard') 
-     
-=======
-      return redirect('Dashboard')
-     
 
->>>>>>> d25974af16f3f590fd760686051a7a71831f36c8
 class canalizacionReportes(View):
     def get(self, request, id):
         if request.GET.get('periodo_id'):
@@ -755,29 +749,52 @@ class generatePDF(View):
         elements.append(Paragraph(f'Reporte de Canalizaciones para {alumno.User.first_name} {alumno.User.last_name}',
                                   getSampleStyleSheet()['Title']))
 
-        data = [['Area', 'Nombre', 'Apellidos', 'No. de Control', 'Asunto', 'Observaciones', 'Detalles', 'Fecha']]
+        styles = getSampleStyleSheet()
+        normal_style = styles['Normal']
+        normal_style.wordWrap = 'CJK'
+        
+        header_style = styles['Normal'].clone('header')
+        header_style.textColor = colors.whitesmoke
+        header_style.fontName = 'Helvetica-Bold'
+
+        data = [
+            [
+                Paragraph('Area', header_style),
+                Paragraph('Nombre', header_style),
+                Paragraph('Apellidos', header_style),
+                Paragraph('No. de Control', header_style),
+                Paragraph('Asunto', header_style),
+                Paragraph('Observaciones', header_style),
+                Paragraph('Detalles', header_style),
+                Paragraph('Fecha', header_style)
+            ]
+        ]
         
         for canalizacion in canalizaciones:
             data.append([
-                canalizacion.area,
-                canalizacion.atencionIndividual.estudiante.User.first_name,
-                canalizacion.atencionIndividual.estudiante.User.last_name,
-                canalizacion.atencionIndividual.estudiante.noControl,
-                canalizacion.motivo,
-                canalizacion.observaciones,
-                canalizacion.detalles,
-                canalizacion.atencionIndividual.fecha.strftime('%d-%m-%Y')
+                Paragraph(canalizacion.area, normal_style),
+                Paragraph(canalizacion.atencionIndividual.estudiante.User.first_name, normal_style),
+                Paragraph(canalizacion.atencionIndividual.estudiante.User.last_name, normal_style),
+                Paragraph(str(canalizacion.atencionIndividual.estudiante.noControl), normal_style),
+                Paragraph(canalizacion.motivo, normal_style),
+                Paragraph(canalizacion.observaciones, normal_style),
+                Paragraph(canalizacion.detalles, normal_style),
+                Paragraph(canalizacion.atencionIndividual.fecha.strftime('%d-%m-%Y'), normal_style)
             ])
 
-        table = Table(data)
+        col_widths = [50, 70, 70, 60, 80, 100, 100, 60]
+
+        table = Table(data, colWidths=col_widths)
         table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), 
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
             ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
             ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ]))
         
         elements.append(table)

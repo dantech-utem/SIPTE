@@ -472,26 +472,19 @@ class canalizacionCalendario(View):
         tipo = request.user.usuarios.tipo.tipo
         canalizaciones = 0
         canalizaciones_mes = 0
-
+        areas = {'psicologo':'Psicólogia', 'pedagogo':'Pedagogía', 'becas':'Becas', 'enfermeria':'Enfermería', 'incubadora':'Incubadora', 'bolsadetrabajo':'Bolsa de trabajo', 'asesoracademico':'Asesor académico'}
        
         end_of_today = make_aware(datetime.datetime.now()).replace(hour=23, minute=59, second=59, microsecond=999999)
         # Realizar el filtro con el rango de fechas
         #añadir filtro por grupo si es tutor
-        if(tipo == 'tutor'):
-            canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False)
-            canalizaciones_mes = Canalizacion.objects.filter(
-                FechaInicio__isnull=False, 
-                FechaFinal__isnull=False,
-                FechaInicio__lte=end_of_today
-            ).order_by("FechaInicio")
-        else:
-            canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False,area=tipo)
-            canalizaciones_mes = Canalizacion.objects.filter(
-                FechaInicio__isnull=False, 
-                FechaFinal__isnull=False,
-                FechaInicio__lte=end_of_today,
-                area=tipo
-            ).order_by("FechaInicio")
+        
+        canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False,area=areas[tipo])
+        canalizaciones_mes = Canalizacion.objects.filter(
+            FechaInicio__isnull=False, 
+            FechaFinal__isnull=False,
+            FechaInicio__lte=end_of_today,
+            area=areas[tipo]
+        ).order_by("FechaInicio")
         
         lista_canalizaciones = []
         # start: '2020-09-16T16:00:00'
@@ -503,7 +496,8 @@ class canalizacionCalendario(View):
                     'apellido': canalizacion.atencionIndividual.estudiante.User.last_name,
                     'correo': canalizacion.atencionIndividual.estudiante.User.email
                 },
-                'title': canalizacion.atencionIndividual.estudiante.User.first_name,
+                'title': canalizacion.titulo,
+                'description': canalizacion.descripcion,
                 'observaciones':canalizacion.observaciones,
                 'motivo': canalizacion.motivo,
                 'detalles': canalizacion.detalles,

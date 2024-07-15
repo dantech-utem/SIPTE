@@ -14,8 +14,9 @@
                     <h4 class="mb-4">Citas de hoy</h4>
                     {% for canalizacion in canalizaciones_mes %}
                       <div class="fc-event">
-                          <h5>{{ canalizacion.atencionIndividual.estudiante.User.first_name }}{{ canalizacion.atencionIndividual.estudiante.User.last_name }}</h5>
-                          <p>{{ canalizacion.motivo }}</p>
+                          <h5>{{ canalizacion.titulo}}</h5>
+                          <p>{{ canalizacion.descripcion }}</p>
+                          <p>Alumno: {{ canalizacion.atencionIndividual.estudiante.User.first_name }}{{ canalizacion.atencionIndividual.estudiante.User.last_name }}</p>
                           <p>From: {{ canalizacion.FechaInicio }}</p>
                           <p>To: {{ canalizacion.FechaFinal }}</p>
                       </div>

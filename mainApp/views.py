@@ -425,34 +425,67 @@ def descargarReporte(request):
 
     tutor = request.user
     periodo_activo = Periodo.objects.filter(estado=True).first()
+    usuario_logueado = request.user
+    usuario_obj = Usuarios.objects.get(User=usuario_logueado)
+    grupo_usuario_logueado = usuario_obj.grupo
 
-    area_P = "pedagogía"
-    motivos = Canalizacion.objects.filter(area=area_P, cicloAccion=periodo_activo).values_list('motivo', flat=True)
-    count_pedagogia = Canalizacion.objects.filter(area=area_P).count()
+    area_P = "Pedagogía"
+    motivos = Canalizacion.objects.filter(
+        area=area_P, 
+        cicloAccion=periodo_activo,
+        atencionIndividual_estudiante_grupo=grupo_usuario_logueado
+    ).values_list('motivo', flat=True)
+
+    count_pedagogia = Canalizacion.objects.filter(area=area_P,cicloAccion=periodo_activo, atencionIndividual_estudiante_grupo=grupo_usuario_logueado).count()
 
     area_Psi = "Psicología"
-    motivo_psi = Canalizacion.objects.filter(area=area_Psi, cicloAccion=periodo_activo).values_list('motivo', flat=True)
-    count_Psicología = Canalizacion.objects.filter(area=area_Psi).count()
+    motivo_psi = Canalizacion.objects.filter(
+        area=area_Psi, 
+        cicloAccion=periodo_activo,
+        atencionIndividual_estudiante_grupo=grupo_usuario_logueado
+    ).values_list('motivo', flat=True)
+    count_Psicología = Canalizacion.objects.filter(area=area_Psi,cicloAccion=periodo_activo, atencionIndividual_estudiante_grupo=grupo_usuario_logueado).count()
 
     area_B = "Becas"
-    motivo_B = Canalizacion.objects.filter(area=area_B, cicloAccion=periodo_activo).values_list('motivo', flat=True)
-    count_Becas = Canalizacion.objects.filter(area=area_B).count()
+    motivo_B = Canalizacion.objects.filter(
+        area=area_B, 
+        cicloAccion=periodo_activo,
+        atencionIndividual_estudiante_grupo=grupo_usuario_logueado
+    ).values_list('motivo', flat=True)
+    count_Becas = Canalizacion.objects.filter(area=area_B,cicloAccion=periodo_activo, atencionIndividual_estudiante_grupo=grupo_usuario_logueado).count()
 
     area_E = "Enfermería"
-    motivo_E = Canalizacion.objects.filter(area=area_E, cicloAccion=periodo_activo).values_list('motivo', flat=True)
-    count_Enfermería = Canalizacion.objects.filter(area=area_E).count()
+    motivo_E = Canalizacion.objects.filter(
+        area=area_E, 
+        cicloAccion=periodo_activo,
+        atencionIndividual_estudiante_grupo=grupo_usuario_logueado
+    ).values_list('motivo', flat=True)
+    count_Enfermería = Canalizacion.objects.filter(area=area_E,cicloAccion=periodo_activo, atencionIndividual_estudiante_grupo=grupo_usuario_logueado).count()
 
     area_I = "Incubadora"
-    motivo_I = Canalizacion.objects.filter(area=area_I, cicloAccion=periodo_activo).values_list('motivo', flat=True)
-    count_Incubadora = Canalizacion.objects.filter(area=area_I).count()
+    motivo_I = Canalizacion.objects.filter(
+        area=area_I, 
+        cicloAccion=periodo_activo,
+        atencionIndividual_estudiante_grupo=grupo_usuario_logueado
+    ).values_list('motivo', flat=True)
+    count_Incubadora =  Canalizacion.objects.filter(area=area_I,cicloAccion=periodo_activo, atencionIndividual_estudiante_grupo=grupo_usuario_logueado).count()
+
 
     area_BT = "Bolsa de Trabajo"
-    motivo_BT = Canalizacion.objects.filter(area=area_BT, cicloAccion=periodo_activo).values_list('motivo', flat=True)
-    count_BT = Canalizacion.objects.filter(area=area_BT).count()
+    motivo_BT = Canalizacion.objects.filter(
+        area=area_BT, 
+        cicloAccion=periodo_activo,
+        atencionIndividual_estudiante_grupo=grupo_usuario_logueado
+    ).values_list('motivo', flat=True)
+    count_BT =  Canalizacion.objects.filter(area=area_BT,cicloAccion=periodo_activo, atencionIndividual_estudiante_grupo=grupo_usuario_logueado).count()
 
     area_AA = "Asesor Académico"
-    motivo_AA = Canalizacion.objects.filter(area=area_AA, cicloAccion=periodo_activo).values_list('motivo', flat=True)
-    count_AA = Canalizacion.objects.filter(area=area_AA).count()
+    motivo_AA = Canalizacion.objects.filter(
+        area=area_AA, 
+        cicloAccion=periodo_activo,
+        atencionIndividual_estudiante_grupo=grupo_usuario_logueado
+    ).values_list('motivo', flat=True)
+    count_AA = Canalizacion.objects.filter(area=area_AA,cicloAccion=periodo_activo, atencionIndividual_estudiante_grupo=grupo_usuario_logueado).count()
 
     Estado_Realizadas = 1
     Estado_Canalizadas = 2

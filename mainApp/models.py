@@ -169,7 +169,21 @@ class DatosFamiliares(models.Model):
         ('Madre', 'Madre'),
         ('Ambos', 'Ambos'),
     ])
-    totalHermanos = models.IntegerField()
+    totalHermanos = models.CharField(max_length=100, choices=[
+        ('', 'Selecciona una opción'),
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+        ('7', '7'),
+        ('8', '8'),
+        ('9', '9'),
+        ('10', '10'),
+        ('Más de 10', 'Más de 10'),
+    ])
     lugarHermano = models.IntegerField()
     estadoCivil = models.CharField(max_length=20, choices=[
         ('Soltero', 'Soltero'),

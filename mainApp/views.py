@@ -128,10 +128,9 @@ def editarAtencionIndividual(request, id):
     atencion = get_object_or_404(AtencionIndividual, id=id)
     tutor = request.user
     estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+
     
     if request.method == 'POST':
-        estudiante_id = request.POST.get('estudianteAtencion')
-        atencion.estudiante_id = estudiante_id  
         atencion.asuntoTratar = request.POST.get('asuntoTratar')
         atencion.observaciones = request.POST.get('observaciones')
         atencion.save()

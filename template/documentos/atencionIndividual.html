@@ -1,0 +1,66 @@
+{% extends '../dashboard.html' %}
+{% block title %}
+  Atención individual
+{% endblock %}
+{% block content %}
+<center>
+    <h3 class="titulos">Atención individual</h3>
+</center>
+<div class="container">
+    <div class="row">
+        <div class="col text-end">
+            <a href="{% url 'registrarAtencion' %}" class="btn btn-success botonesVerdes bi bi-clipboard2-plus">Registrar</a>
+        </div>
+    </div>
+</div>
+<div class="table-responsive py-2">
+    <table class="cell-border hover" cellspacing="0" width="100%" id="actividadTutorial">
+        <thead>
+            <tr class="text-center;">
+                <th style="text-align: center;">Nombre</th>
+                <th style="text-align: center;">Asunto a tratar</th>
+                <th style="text-align: center;">Observaciones</th>
+                <th style="text-align: center;">Fecha</th>
+                <th style="text-align: center;">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for atencion in atenciones %}
+            <tr>
+                <td class="textosJustificados">{{ atencion.estudiante.User.get_full_name }}</td>
+                <td class="textosJustificados">{{ atencion.asuntoTratar }}</td>
+                <td class="textosJustificados">{{ atencion.observaciones }}</td>
+                <td style="text-align: center;">{{ atencion.fecha }}</td>
+                <td style="text-align: center;">
+                    <a href="{% url 'editarAtencion' atencion.id %}" class="bi bi-pencil-square text-info-emphasis"></a>
+                    <a href="{% url 'eliminarAtencionIndividual' atencion.id %}" id="eliminar" onclick="return confirmarEliminacion()" class="bi bi-trash text-danger"></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5;">
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == "success" %}
+        <div id="box" class="alert alert-success alert-dismissible fade show shadow custom-messages">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong class="text-dark">{{ message }}</strong>
+        </div>
+      {% elif message.tags == "error" %}
+        <div id="box" class="alert alert-danger alert-dismissible fade show shadow custom-messages">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong class="text-dark">{{ message }}</strong>
+        </div>
+      {% else %}
+        <div id="box" class="alert alert-warning alert-dismissible fade show shadow custom-messages">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong class="text-dark">{{ message }}</strong>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}

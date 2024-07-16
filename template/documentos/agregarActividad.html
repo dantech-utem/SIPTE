@@ -1,0 +1,43 @@
+{% extends '../dashboard.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+{% block title %}
+Registro actividad tutorial
+{% endblock %} <!-- Se cambia el título -->
+
+{% block content %}
+<!-- Esta es para el navbar -->
+<div class="formsAgregar" >
+  <center>
+    <h3 class="titulos mt-3 text-center" style="color: #00005e;">Actividad tutorial</h3>
+  </center>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="row py-4 mx-4">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <!-- Contenido de la primera columna -->
+
+        <label class="mt-2">Tema</label>
+        <input type="text" class="form-control" name="tema" required />
+        <label class="mt-2">Objetivos</label>
+        <textarea class="form-control" rows="3" name="objetivos" required></textarea>
+        <label class="mt-2">Recursos</label>
+        <textarea class="form-control" rows="3" name="recursos" required></textarea>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+        <label class="mt-2">Actividades</label>
+        <textarea class="form-control" rows="6" name="actividades" required></textarea>
+        <label class="mt-2">Evidencia</label>
+        <textarea class="form-control" rows="3" name="evidencias" required></textarea>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a class="btn btn-secondary botonesGrises mt-2" href="{% url 'actividadTutorial' %}">Cerrar</a>
+          <button type="submit" class="btn btn-success botonesVerdes mt-2"
+            onclick="return confirmarAgregar()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+{% endblock %}

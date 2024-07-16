@@ -477,27 +477,42 @@ class canalizacionIndex(View):
 
 class canalizacionCalendario(View):
 
-   def get(self, request):
+    def get(self, request):
       #sacar area del usuario
         tipo = request.user.usuarios.tipo.tipo
+        grupo = request.user.usuarios.grupo
         canalizaciones = 0
         canalizaciones_mes = 0
         areas = {'psicologo':'Psicólogia', 'pedagogo':'Pedagogía', 'becas':'Becas', 'enfermeria':'Enfermería', 'incubadora':'Incubadora', 'bolsadetrabajo':'Bolsa de trabajo', 'asesoracademico':'Asesor académico'}
-       
-        end_of_today = make_aware(datetime.datetime.now()).replace(hour=23, minute=59, second=59, microsecond=999999)
-        # Realizar el filtro con el rango de fechas
-        #añadir filtro por grupo si es tutor
         
-        canalizaciones = Canalizacion.objects.filter(FechaInicio__isnull=False, FechaFinal__isnull=False,area=areas[tipo])
-        canalizaciones_mes = Canalizacion.objects.filter(
-            FechaInicio__isnull=False, 
-            FechaFinal__isnull=False,
-            FechaInicio__lte=end_of_today,
-            area=areas[tipo]
-        ).order_by("FechaInicio")
+        end_of_today = make_aware(datetime.datetime.now()).replace(hour=23, minute=59, second=59, microsecond=999999)
+        
+        if tipo == 'tutor':
+            canalizaciones = Canalizacion.objects.filter(
+                FechaInicio__isnull=False,
+                FechaFinal__isnull=False,
+                atencionIndividual__estudiante__grupo=grupo
+            )
+            canalizaciones_mes = Canalizacion.objects.filter(
+                FechaInicio__isnull=False, 
+                FechaFinal__isnull=False,
+                FechaInicio__lte=end_of_today,
+                atencionIndividual__estudiante__grupo=grupo
+            ).order_by("FechaInicio")
+        else:
+            canalizaciones = Canalizacion.objects.filter(
+                FechaInicio__isnull=False,
+                FechaFinal__isnull=False,
+                area=areas[tipo]
+            )
+            canalizaciones_mes = Canalizacion.objects.filter(
+                FechaInicio__isnull=False, 
+                FechaFinal__isnull=False,
+                FechaInicio__lte=end_of_today,
+                area=areas[tipo]
+            ).order_by("FechaInicio")
         
         lista_canalizaciones = []
-        # start: '2020-09-16T16:00:00'
         for canalizacion in canalizaciones:
             lista_canalizaciones.append({   
                 'estudiante': {
@@ -508,16 +523,15 @@ class canalizacionCalendario(View):
                 },
                 'title': canalizacion.titulo,
                 'description': canalizacion.descripcion,
-                'observaciones':canalizacion.observaciones,
+                'observaciones': canalizacion.observaciones,
                 'motivo': canalizacion.motivo,
-                'detalles': canalizacion.detalles,
                 'fecha': canalizacion.fecha.strftime("%Y-%m-%dT%H:%M:%S"),
                 'start': canalizacion.FechaInicio.strftime("%Y-%m-%dT%H:%M:%S"),
                 'end': canalizacion.FechaFinal.strftime("%Y-%m-%dT%H:%M:%S")
-                }
-            )
-        context = {'canalizaciones': lista_canalizaciones,'canalizaciones_mes': canalizaciones_mes}
-        return render(request,'Canalizacion/calendario.html', context)
+            })
+        
+        context = {'canalizaciones': lista_canalizaciones, 'canalizaciones_mes': canalizaciones_mes}
+        return render(request, 'Canalizacion/calendario.html', context)
    
 class canalizacionCompletarSesion(View):
     def get(self, request, id):

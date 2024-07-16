@@ -45,7 +45,7 @@
                     <label for="noControl" class="form-label">Número de control</label>
                       <input type="text" class="form-control" id="noControl" name="noControl" required maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                       <br>
-                      <label for="nombre" class="form-label">Nombre del Alumno</label>
+                      <label for="nombre" class="form-label">Nombre Completo</label>
                       <input type="text" class="form-control" id="nombre" name="nombre" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                       <br>
                       <label for="carrera" class="form-label">Carrera</label>
@@ -86,7 +86,7 @@
                     <label for="fechaR" class="form-label">Fecha</label>
                       <input type="date" class="form-control" id="fechaR" name="fechaR" required readonly>
                     <br>
-                      <label for="telCasa" class="form-label">Teléfono de Casa</label>
+                      <label for="telCasa" class="form-label">Teléfono de casa, en caso de no tener escribe "0000000000"</label>
                       <input type="text" class="form-control" id="telCasa" name="telCasa" required maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" >
                     <br>
                       <label for="correo" class="form-label">Correo Electrónico</label>
@@ -133,7 +133,7 @@
                       <option value="Solo">Solo</option>
                       <option value="Otra situación">Otra situación</option>
                     </select><br>
-                    <label for="otra_situacion" class="form-label">Si "otra situación", descríbela</label>
+                    <label for="otra_situacion" class="form-label">Si "otra situación", descríbela. (Si no es tu caso, escribe "No aplica")</label>
                     <input type="text" class="form-control" id="otra_situacion" name="otra_situacion" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                   </div>
                   <div class="col-md-6 mb-3"><br>
@@ -156,6 +156,7 @@
                     <label for="totalHermanos" class="form-label">Número de hermanos(as)</label>
                     <select class="form-control" id="totalHermanos" name="totalHermanos" required>
                       <option value="">Selecciona una opción</option>
+                      <option value="0">0</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -166,9 +167,9 @@
                       <option value="8">8</option>
                       <option value="9">9</option>
                       <option value="10">10</option>
-                      <option value="11">Más de 10</option>
+                      <option value="Más de 10">Más de 10</option>
                     </select><br>
-                    <label for="lugarHermano" class="form-label">Lugar que ocupas</label>
+                    <label for="lugarHermano" class="form-label">Lugar que ocupas.(En caso de ser hijo único selecciona 1)</label>
                       <select class="form-control" id="lugarHermano" name="lugarHermano" required>
                           <option value="">Selecciona una opción</option>
                           <option value="1">1</option>
@@ -648,7 +649,7 @@
             </div>
              </div>
              </form>
-             
+
         </div>
       </div>
     </div>

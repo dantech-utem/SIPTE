@@ -13,18 +13,20 @@
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" disabled value="{{ atencion.estudiante.User.get_full_name }}">
+                            <input type="text" class="form-control"  disabled value="{{ atencion.estudiante.User.get_full_name }}">
+                    
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="asuntoTratar" class="form-label">Asunto a tratar</label>
-                        <select class="form-control" id="asuntoTratar" name="asuntoTratar" rows="3" required>
-                          <option value="Asesoría">Asesoría</option>
-                          <option value="Disciplina">Disciplina</option>
-                          <option value="Orientación">Orientación</option>
-                          <option value="Administrativa">Administrativa</option>
-                          <option value="Otra">Otra</option>{{ atencion.asuntoTratar }}
+                        <select class="form-control" id="asuntoTratar" name="asuntoTratar" required>
+                          <option value="Asesoría" {% if atencion.asuntoTratar == "Asesoría" %}selected{% endif %}>Asesoría</option>
+                          <option value="Disciplina" {% if atencion.asuntoTratar == "Disciplina" %}selected{% endif %}>Disciplina</option>
+                          <option value="Orientación" {% if atencion.asuntoTratar == "Orientación" %}selected{% endif %}>Orientación</option>
+                          <option value="Administrativa" {% if atencion.asuntoTratar == "Administrativa" %}selected{% endif %}>Administrativa</option>
+                          <option value="Otra" {% if atencion.asuntoTratar == "Otra" %}selected{% endif %}>Otra</option>
                         </select>
+                        
                     </div>
                 </div>
                 <div class="col-md-6">

@@ -10,7 +10,7 @@ from openpyxl.drawing.image import Image
 from io import BytesIO
 import os
 from django.conf import settings
-from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor, Canalizacion
+from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor, Canalizacion, CierreTutorias
 from django.contrib import messages #Importamos para presentar mensajes
 
 
@@ -429,6 +429,15 @@ def descargarReporte(request):
     usuario_obj = Usuarios.objects.get(User=usuario_logueado)
     grupo_usuario_logueado = usuario_obj.grupo
 
+
+    noProgramadas= AtencionIndividual. objects.filter(cicloAccion=periodo_activo, estudiante__grupo=grupo_usuario_logueado).count()
+    
+ 
+    dificultadCierre = CierreTutorias.objects.filter(tutor=tutor, cicloAccion=periodo_activo).values_list('cierreTutorias', flat=True)
+
+    
+    
+    
     area_P = "Pedagogía"
     motivos = Canalizacion.objects.filter(
         area=area_P, 
@@ -487,7 +496,29 @@ def descargarReporte(request):
     ).values_list('motivo', flat=True)
     count_AA = Canalizacion.objects.filter(area=area_AA,cicloAccion=periodo_activo, atencionIndividual__estudiante__grupo=grupo_usuario_logueado).count()
 
-    Estado_Realizadas = 1
+
+    AsuntoAsesoria = 'Asesoría'
+    AsuntoDiciplina = 'Disciplina'
+    AsuntoOrientacion = 'Orientación'
+    AsuntoAdministrativa = 'Administrativa'
+    AsuntoOtra = 'Otra'
+    
+    count_Asesoria = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAsesoria).count()
+    count_Diciplina = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoDiciplina).count()
+    count_Orientacion = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOrientacion).count()
+    count_Administrativa = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAdministrativa).count()
+    count_Otra = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOtra).count()
+    
+    
+    
+    observaciones_Asesoria = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAsesoria).values_list('observaciones', flat=True)
+    observaciones_Diciplina = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoDiciplina).values_list('observaciones', flat=True)
+    observaciones_Orientacion = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOrientacion).values_list('observaciones', flat=True)
+    observaciones_Administrativa = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAdministrativa).values_list('observaciones', flat=True)
+    observaciones_Otra = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOtra).values_list('observaciones', flat=True)
+    
+    
+    Estado_Realizadas = 1   
     Estado_Canalizadas = 2
     Estado_Programadas = 0
 
@@ -519,6 +550,35 @@ def descargarReporte(request):
     ws['A9'] = count_EstadoP
     ws['B9'] = count_EstadoR
     ws['C9'] = count_EstadoC
+    
+    ws['A22'] = noProgramadas
+
+    ws['E22'] = count_Asesoria
+    ws['E23'] = count_Diciplina
+    ws['E24'] = count_Orientacion
+    ws['E25'] = count_Administrativa
+    ws['E26'] = count_Otra
+    
+    if dificultadCierre:
+     ws['G23'] = dificultadCierre[0]
+    else:
+     ws['G23'] = 'No hay comentario'
+     
+     
+    ws['F22'] = convert_to_string(observaciones_Asesoria)
+    ws['F23'] = convert_to_string(observaciones_Diciplina)
+    ws['F24'] = convert_to_string(observaciones_Orientacion)
+    ws['F25'] = convert_to_string(observaciones_Administrativa)
+    ws['F26'] = convert_to_string(observaciones_Otra)
+    
+    ws['D22'] = AsuntoAsesoria
+    ws['D23'] = AsuntoDiciplina
+    ws['D24'] = AsuntoOrientacion
+    ws['D25'] = AsuntoAdministrativa
+    ws['D26'] = AsuntoOtra
+
+
+    
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Reporte.xlsx'

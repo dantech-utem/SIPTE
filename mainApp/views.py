@@ -516,8 +516,6 @@ class canalizacionCalendario(View):
                 area=areas[tipo]
             ).order_by("FechaInicio")
 
-            print('algo: ', areas[tipo])
-
         lista_canalizaciones = []
         for canalizacion in canalizaciones:
             start = timezone.localtime(canalizacion.FechaInicio).strftime("%Y-%m-%dT%H:%M:%S")
@@ -927,9 +925,7 @@ class canalizacionResultadosCanalizacion(View):
    def get(self, request):
       user = request.user.usuarios.tipo.tipo
 
-      areas = {'psicologo':'Psicólogia', 'pedagogo':'Pedagogía', 'becas':'Becas', 'enfermeria':'Enfermería', 'incubadora':'Incubadora', 'bolsadetrabajo':'Bolsa de trabajo', 'asesoracademico':'Asesor académico'}
-
-      print('test: ', areas[user])
+      areas = {'psicologo':'Psicología', 'pedagogo':'Pedagogía', 'becas':'Becas', 'enfermeria':'Enfermería', 'incubadora':'Incubadora', 'bolsadetrabajo':'Bolsa de trabajo', 'asesoracademico':'Asesor académico'}
 
       tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=areas[user]).order_by('-fecha')
       context = {

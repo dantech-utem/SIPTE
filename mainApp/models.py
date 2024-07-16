@@ -53,10 +53,11 @@ class EvaluacionTutor(models.Model):
     cicloEvaluacion = models.ForeignKey(Periodo, on_delete=models.CASCADE)
 
 class BajaAlumnos(models.Model):
-    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True, blank=True)
+    estudiante = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
     tipo = models.CharField(max_length=100)
-    observaciones = models.TextField()
-    motivo = models.TextField()
+    observaciones = models.TextField(null=True)
+    motivo = models.TextField(null=True)
     fecha = models.DateTimeField(auto_now_add=True)
 
 class AtencionIndividual(models.Model):

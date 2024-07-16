@@ -28,6 +28,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.units import cm, inch, mm
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+from reportlab.platypus import Image as ImageCanalizacion
 from reportlab.lib.styles import getSampleStyleSheet
 from django.utils import timezone
 
@@ -769,7 +770,7 @@ class generatePDF(View):
         elements = []
 
         logo_path = finders.find('../statics/assets/img/utem.png')
-        elements.append(Image(logo_path, 1*inch, 1*inch))
+        elements.append(ImageCanalizacion(logo_path, 1*inch, 1*inch))
 
         elements.append(Spacer(1, 12))
         elements.append(Paragraph(f'Reporte de Canalizaciones para {alumno.User.first_name} {alumno.User.last_name}',

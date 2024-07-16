@@ -1481,7 +1481,53 @@ def descargarReporte(request):
     ws['D25'] = AsuntoAdministrativa
     ws['D26'] = AsuntoOtra
 
+    # Obtiene todas las bajas de alumnos del grupo del tutor
+    bajas = BajaAlumnos.objects.filter(estudiante__usuarios__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo)
 
+    # Diccionario para mapear motivos de baja a filas
+    motivos_fila = {
+    "No se cumplieron expectativas": 9,
+    "Reprobación": 10,
+    "Problemas económicos": 11,
+    "Dificultades para el transporte": 12,
+    "Problemas de trabajo": 13,
+    "Cambio de carrera": 14,
+    "Incompatibilidad de horario": 15,
+    "Faltas al reglamento": 16,
+    "Cambio de residencia": 17,
+    "Cambio de universidad": 18,
+    "Problemas familiares": 19,
+    "Problemas personales": 20,
+    "Otra": 21,
+    }
+
+    # Inicializa los contadores de cantidad y listas para tipos y observaciones
+    cantidad_dict = {motivo: 0 for motivo in motivos_fila.keys()}
+    tipos_dict = {motivo: [] for motivo in motivos_fila.keys()}
+    observaciones_dict = {motivo: [] for motivo in motivos_fila.keys()}
+
+    # Itera sobre las bajas y cuenta las cantidades por motivo
+    for baja in bajas:
+        fila = motivos_fila.get(baja.motivo)
+        if fila is not None:
+            cantidad_dict[baja.motivo] += 1
+            tipos_dict[baja.motivo].append(baja.tipo)
+            observaciones_dict[baja.motivo].append(baja.observaciones)
+
+        ws[f'I{fila}'] = cantidad_dict[baja.motivo]
+        ws[f'J{fila}'] = ', '.join(tipos_dict[baja.motivo])
+        ws[f'K{fila}'] = ', '.join(observaciones_dict[baja.motivo])
+
+        # Obtén la celda superior izquierda del rango fusionado para observaciones
+        merged_cells = ws.merged_cells.ranges
+        assigned = False
+        for merged_cell in merged_cells:
+            if merged_cell.min_row <= fila <= merged_cell.max_row and merged_cell.min_col <= 11 <= merged_cell.max_col:
+                ws.cell(row=merged_cell.min_row, column=merged_cell.min_col, value=', '.join(observaciones_dict[baja.motivo]))
+                assigned = True
+                break
+        if not assigned:
+            ws[f'L{fila}'] = ', '.join(observaciones_dict[baja.motivo])
     
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')

@@ -1033,7 +1033,8 @@ def agregarAtencionIndividual(request):
         estudiante_id = request.POST.get('estudianteAtencion')
         asuntoTratar = request.POST.get('asuntoTratar')
         observaciones = request.POST.get('observaciones')
-        
+    
+
         # Crear la instancia de AtencionIndividual
         AtencionIndividual.objects.create(
             estudiante_id=estudiante_id,
@@ -1042,6 +1043,13 @@ def agregarAtencionIndividual(request):
             cicloAccion=periodo_activo
             
         )
+
+        cambioEstado=Usuarios.objects.get(id=estudiante_id)
+        cambioEstado.estado= 2
+        cambioEstado.save()
+
+        
+        # cambioEstado.save()
 
         messages.success(request, '¡Atención individual registrada con éxito!')
         return redirect('atencionIndividual')
@@ -1071,6 +1079,11 @@ def editarAtencionIndividual(request, id):
 
 def eliminarAtencionIndividual(request, id):
     atencion = get_object_or_404(AtencionIndividual, id=id)
+    usuarioId=atencion.estudiante.id
+    cambioEstado=Usuarios.objects.get(id=usuarioId)
+    cambioEstado.estado= 1
+    cambioEstado.save()
+    
     atencion.delete()
     messages.success(request, '¡Atención individual eliminada con éxito!')
     return redirect('atencionIndividual')

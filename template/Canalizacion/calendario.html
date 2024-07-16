@@ -127,6 +127,7 @@
           events: {{canalizaciones|safe}},
         });
         calendar.render();
+        console.log("Datos de canalizaciones:", {{ canalizaciones|safe }});
     });
     const closeBtn3 = document.getElementById('modalDetailClose');
     closeBtn3.addEventListener('click',()=>{

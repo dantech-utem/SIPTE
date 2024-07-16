@@ -1,0 +1,69 @@
+{% extends '../dashboard.html' %}
+{% block title %}
+  Editar atención individual
+{% endblock %}
+{% block content %}
+<div class="formsAgregar">
+    <div class="card-body ">
+        <h4 class="titulos mt-3 text-center" style="color: #00005e;">Editar atención individual</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control"  disabled value="{{ atencion.estudiante.User.get_full_name }}">
+                    
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="asuntoTratar" class="form-label">Asunto a tratar</label>
+                        <select class="form-control" id="asuntoTratar" name="asuntoTratar" required>
+                          <option value="Asesoría" {% if atencion.asuntoTratar == "Asesoría" %}selected{% endif %}>Asesoría</option>
+                          <option value="Disciplina" {% if atencion.asuntoTratar == "Disciplina" %}selected{% endif %}>Disciplina</option>
+                          <option value="Orientación" {% if atencion.asuntoTratar == "Orientación" %}selected{% endif %}>Orientación</option>
+                          <option value="Administrativa" {% if atencion.asuntoTratar == "Administrativa" %}selected{% endif %}>Administrativa</option>
+                          <option value="Otra" {% if atencion.asuntoTratar == "Otra" %}selected{% endif %}>Otra</option>
+                        </select>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="observaciones" class="form-label">Observaciones</label>
+                        <textarea class="form-control" id="observaciones" name="observaciones" rows="5" required>{{ atencion.observaciones }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-secondary me-2" href="{% url 'atencionIndividual' %}">Cerrar</a>
+                <button type="submit" class="btn btn-success" onclick="return confirmarEditar()">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5;">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "success" %}
+          <div id="box" class="alert alert-success alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% elif message.tags == "error" %}
+          <div id="box" class="alert alert-danger alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% else %}
+          <div id="box" class="alert alert-warning alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

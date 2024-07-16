@@ -13,3 +13,5 @@ admin.site.register(Canalizacion)
 admin.site.register(Aviso)
 admin.site.register(Estudiante)
 admin.site.register(DatosFamiliares)
+
+

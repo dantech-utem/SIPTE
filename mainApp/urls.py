@@ -53,4 +53,20 @@ urlpatterns = [
     path('Reportes/<int:id>/pdf/', generatePDF.as_view(), name='ReportePDF'),
     path('ResultadosCanalizacion', canalizacionResultadosCanalizacion.as_view(), name="ResultadosCanalizacion"),
     path("cerrarTurorias/" , views.cerrarTurorias,name="cerrarTurorias"),
+    
+    
+    path('actividadTutorial', views.actividadTutorial, name="actividadTutorial"),
+    path('agregarActividad', views.agregarActividadTutorial, name='agregarActividad'),
+    path('editarActividad/<int:id>/', views.editarActividadTutorial, name='editarActividad'),
+    path('infoActividad/<int:id>/', views.infoActividadTutorial, name='infoActividad'),
+    path('eliminarActividad/<int:id>/', views.eliminarActividadTutorial, name='eliminarActividad'),
+    path('atencionIndividual/', views.infoatencionIndividual, name='atencionIndividual'),
+    path('atencionIndividual/agregar/', views.agregarAtencionIndividual, name='registrarAtencion'),
+    path('atencionIndividual/editar/<int:id>/', views.editarAtencionIndividual, name='editarAtencion'),
+    path('atencionIndividual/eliminar/<int:id>/', views.eliminarAtencionIndividual, name='eliminarAtencionIndividual'),
+    path('reportePlanAccion', views.reportePlanAccion, name='reportePlanAccion'),
+    path('informePlanAccion', views.descargarXLSX, name='informePlanAccion'),
+    path('XLSXReportePlanAccion', views.descargarReporte, name='XLSXReporte'),
+    path('evaluacionAcTutorial', views.evaluacionAcTutorial, name='Evaluacion')
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

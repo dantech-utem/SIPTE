@@ -520,6 +520,17 @@ class canalizacionCalendario(View):
                 FechaInicio__lte=end_of_today,
                 atencionIndividual__estudiante__grupo=grupo
             ).order_by("FechaInicio")
+        elif tipo == 'admin':
+            canalizaciones = Canalizacion.objects.filter(
+                FechaInicio__isnull=False,
+                FechaFinal__isnull=False,
+            )
+            canalizaciones_mes = Canalizacion.objects.filter(
+                FechaInicio__isnull=False,
+                FechaFinal__isnull=False,
+                FechaInicio__gte=start_of_today,
+                FechaInicio__lte=end_of_today,
+            ).order_by("FechaInicio")
         else:
             canalizaciones = Canalizacion.objects.filter(
                 FechaInicio__isnull=False,
@@ -850,13 +861,22 @@ class generatePDF(View):
 class canalizacionIndex(View):
    def get(self, request):
       tutor = request.user
-      estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
-      periodo = Periodo.objects.filter(estado=1)
-      context = {
-         'TablaViews': estudiantes,
-         'Periodo': periodo
+      if tutor.usuarios.grupo == None:
+        estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante')
+        periodo = Periodo.objects.filter(estado=1)
+        context = {
+            'TablaViews': estudiantes,
+            'Periodo': periodo
 
-      } 
+        }
+      else:
+        estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+        periodo = Periodo.objects.filter(estado=1)
+        context = {
+            'TablaViews': estudiantes,
+            'Periodo': periodo
+        }
+
       return render(request, 'Canalizacion/index.html', context)
    
   
@@ -945,10 +965,16 @@ class canalizacionResultadosCanalizacion(View):
 
       areas = {'psicologo':'Psicología', 'pedagogo':'Pedagogía', 'becas':'Becas', 'enfermeria':'Enfermería', 'incubadora':'Incubadora', 'bolsadetrabajo':'Bolsa de trabajo', 'asesoracademico':'Asesor académico'}
 
-      tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=areas[user]).order_by('-fecha')
-      context = {
-         'TablaResultados': tabla,
-      }
+      if user=='admin':
+        tabla = Canalizacion.objects.select_related('atencionIndividual').order_by('-fecha')
+        context = {
+            'TablaResultados': tabla,
+        }
+      else:    
+        tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=areas[user]).order_by('-fecha')
+        context = {
+            'TablaResultados': tabla,
+        }
       return render(request,'Canalizacion/resultadosCanalizacion.html', context)
   
   

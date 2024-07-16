@@ -1,0 +1,58 @@
+{% extends '../dashboard.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+{% block title %}
+  Actividad tutorial
+{% endblock %} <!-- Se cambia el título -->
+
+{% block content %}
+  <!-- Esta es para el navbar -->
+
+  <center>
+    <h3 class="titulos">{{actividad.tema}}</h3>
+  </center>
+  <hr />
+
+  <div class="row py-2">
+    <div class="col-lg-2 col-md-12 col-sm-12">
+      <div class="card cardsVerdes">
+        <div class="card-body text-center">Objetivos</div>
+      </div>
+    </div>
+    <div class="col-lg-10 col-md-12 col-sm-12">
+      <label class="textosJustificados" for="">{{actividad.objetivos}}</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-2 col-md-12 col-sm-12">
+      <div class="card cardsVerdes">
+        <div class="card-body text-center">Actividades</div>
+      </div>
+    </div>
+    <div class="col-lg-10 col-md-12 col-sm-12">
+      <label class="textosJustificados">{{actividad.actividades}}</label>
+    </div>
+  </div>
+
+  <div class="row py-2">
+    <div class="col-lg-2 col-md-12 col-sm-12">
+      <div class="card cardsVerdes">
+        <div class="card-body text-center">Recursos</div>
+      </div>
+    </div>
+    <div class="col-lg-10 col-md-12 col-sm-12">
+      <label class="textosJustificados">{{actividad.recursos}}</label>
+    </div>
+  </div>
+
+  <div class="row py-2">
+    <div class="col-lg-2 col-md-12 col-sm-12">
+      <div class="card cardsVerdes">
+        <div class="card-body text-center">Evidencia</div>
+      </div>
+    </div>
+    <div class="col-lg-10 col-md-12 col-sm-12">
+      <label class="textosJustificados">{{actividad.evidencias}}</label>
+    </div>
+  </div>
+{% endblock %}

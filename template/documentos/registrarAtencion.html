@@ -1,0 +1,59 @@
+{% extends '../dashboard.html' %}
+{% block title %}
+Registro de atención individual
+{% endblock %}
+{% block content %}
+<div class="formsAgregar">
+  <div class="card-body ">
+    <h4 class="titulos mt-3 text-center" style="color: #00005e;">Registro de atención individual</h4>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <div class="input-group">
+              <!-- <select class="form-control" id="nombre" name="estudiante" required>
+                {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante.noControl }} - {{ estudiante.User }}</option>
+                {% endfor %}
+              </select> -->
+              
+              <select id="selectid" style="width: 100%;" class="form-control form-control-sm" required>
+                <option value="" selected disabled>Seleccione un estudiante</option>
+                {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante.noControl }} - {{ estudiante.User.get_full_name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="hidden" id="estudianteAtencion" name="estudianteAtencion" >
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="asuntoTratar" class="form-label">Asunto a tratar</label>
+            <select class="form-control" id="asuntoTratar" name="asuntoTratar" rows="3" required>
+              <option value="Asesoría">Asesoría</option>
+              <option value="Disciplina">Disciplina</option>
+              <option value="Orientación">Orientación</option>
+              <option value="Administrativa">Administrativa</option>
+              <option value="Otra">Otra</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea class="form-control" id="observaciones" name="observaciones" rows="5" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <a class="btn btn-secondary me-2" href="{% url 'atencionIndividual' %}">Cerrar</a>
+        <button type="submit" class="btn btn-success" onclick="return confirmarAgregar()">Registrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

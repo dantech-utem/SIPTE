@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 class TipoUsuario(models.Model):
     tipo = models.CharField(max_length=100)
+    def __str__(self):
+        return self.tipo
     
 class Usuarios(models.Model):
     User = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -170,7 +172,6 @@ class DatosFamiliares(models.Model):
         ('Ambos', 'Ambos'),
     ])
     totalHermanos = models.CharField(max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('0', '0'),
         ('1', '1'),
         ('2', '2'),
@@ -184,7 +185,21 @@ class DatosFamiliares(models.Model):
         ('10', '10'),
         ('Más de 10', 'Más de 10'),
     ])
-    lugarHermano = models.IntegerField()
+    lugarHermano = models.CharField(max_length=100,choices=[
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+        ('7', '7'),
+        ('8', '8'),
+        ('9', '9'),
+        ('10', '10'),
+        ('Más de 10', 'Más de 10'),
+        ('Soy hijo único', 'Soy hijo único'),
+
+    ])
     estadoCivil = models.CharField(max_length=20, choices=[
         ('Soltero', 'Soltero'),
         ('Casado', 'Casado'),
@@ -201,7 +216,6 @@ class DatosFamiliares(models.Model):
 class Socioeconomicos(models.Model):
     idEstudiante = models.ForeignKey(Estudiante, null=True, blank=True, on_delete=models.CASCADE)
     vivienda = models.CharField('vivienda', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('Casa', 'Casa'),
         ('Casa en coto privado', 'Casa en coto privado'),
         ('Departamento', 'Departamento'),
@@ -210,7 +224,6 @@ class Socioeconomicos(models.Model):
     ], default='')
 
     tenencia = models.CharField('tenencia', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('Propia', 'Propia'),
         ('Rentada', 'Rentada'),
         ('Prestada', 'Prestada'),
@@ -219,7 +232,6 @@ class Socioeconomicos(models.Model):
     ], default='')
 
     habitaciones = models.CharField('habitaciones', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('1', '1'),
         ('2', '2'),
         ('3', '3'),
@@ -234,7 +246,7 @@ class Socioeconomicos(models.Model):
     ], default='')
 
     vehiculos = models.CharField('vehiculos', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
+        ('0', '0'),
         ('1', '1'),
         ('2', '2'),
         ('3', '3'),
@@ -249,7 +261,6 @@ class Socioeconomicos(models.Model):
     ], default='')
 
     trabajoPapa = models.CharField('trabajoPapa', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('Desempleado(a)', 'Desempleado(a)'),
         ('Jubilado(a) o pensionado(a)', 'Jubilado(a) o pensionado(a)'),
         ('Empleado del gobierno(a)', 'Empleado del gobierno(a)'),
@@ -264,7 +275,6 @@ class Socioeconomicos(models.Model):
     trabajoextraPapa = models.CharField('trabajoextraPapa', max_length=100, blank=True)
 
     trabajoMama = models.CharField('trabajoMama', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('Desempleado(a)', 'Desempleado(a)'),
         ('Jubilado(a) o pensionado(a)', 'Jubilado(a) o pensionado(a)'),
         ('Empleado del gobierno(a)', 'Empleado del gobierno(a)'),
@@ -279,7 +289,6 @@ class Socioeconomicos(models.Model):
     trabajoextraMama = models.CharField('trabajoextraMama', max_length=100, blank=True)
 
     manutencion = models.CharField('manutencion', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('Por cuenta propia', 'Por cuenta propia'),
         ('Mis papás costean mis gastos', 'Mis papás costean mis gastos'),
         ('Parte mis papás, parte yo', 'Parte mis papás, parte yo'),
@@ -291,14 +300,13 @@ class Socioeconomicos(models.Model):
     ])
 
     relacionCarrera = models.CharField('relacionCarrera', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('Mucho', 'Mucho'),
         ('Algo', 'Algo'),
         ('Nada', 'Nada'),
+        ('No aplica', 'No aplica'),
     ], default='')
 
     ingresoFam = models.CharField('ingresoFam', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('De 3,000 a 5,000', 'De 3,000 a 5,000'),
         ('De 5,001 a 10,000', 'De 5,001 a 10,000'),
         ('De 10,001 a 15,000', 'De 10,001 a 15,000'),
@@ -310,7 +318,6 @@ class Socioeconomicos(models.Model):
     ], default='')
 
     contribuyentes = models.CharField('contribuyentes', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('1', '1'),
         ('2', '2'),
         ('3', '3'),
@@ -320,7 +327,6 @@ class Socioeconomicos(models.Model):
     ], default='')
 
     dependientesIngresos = models.CharField('dependientesIngresos', max_length=100, choices=[
-        ('', 'Selecciona una opción'),
         ('1', '1'),
         ('2', '2'),
         ('3', '3'),
@@ -367,7 +373,15 @@ class AntecedenteAcademico(models.Model):
     ])
     materiasFacil = models.CharField(max_length=100)
     materiasDificil = models.CharField(max_length=100)
-    materiasExtras = models.IntegerField()
+    materiasExtras = models.CharField(max_length=50, choices=[
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('Más de 5', 'Más de 5'),
+        ('No aplica', 'No aplica'),  
+    ])
     cualesExtras = models.CharField(max_length=100)
     repAnio = models.CharField(max_length=10, choices=[
         ('Si', 'Si'),
@@ -379,6 +393,7 @@ class AntecedenteAcademico(models.Model):
         ('Bachillerato', 'Bachillerato'),
         ('Carrera Técnica', 'Carrera Técnica'),
         ('Otra', 'Otra'),
+        ('No aplica', 'No aplica'), 
     ])
     obstaculos = models.TextField()
 
@@ -410,6 +425,7 @@ class HabitosEstudio(models.Model):
         ('Artículos de divulgación', 'Artículos de divulgación'),
         ('Artículos de opinión', 'Artículos de opinión'),
         ('Otro', 'Otro'),
+        ('Ninguna', 'Ninguna'),
     ])
     sitioLectura = models.CharField(max_length=10, choices=[
         ('Si', 'Si'),
@@ -423,6 +439,7 @@ class HabitosEstudio(models.Model):
         ('4', '4'),
         ('5', '5'),
         ('Más de 5', 'Más de 5'),
+        ('Ninguna', 'Ninguna'),
     ])
     horario = models.CharField(max_length=10, choices=[
         ('Si', 'Si'),
@@ -442,7 +459,6 @@ class HabitosEstudio(models.Model):
 class DatosAficiones(models.Model):
     idEstudiante = models.ForeignKey(Estudiante, null=True, blank=True, on_delete=models.CASCADE)
     tiempoLibre = [
-        ('', 'Selecciona una opción'),
         ('Practicar algún deporte', 'Practicar algún deporte'),
         ('Leer', 'Leer'),
         ('Escuchar música', 'Escuchar música'),
@@ -456,7 +472,6 @@ class DatosAficiones(models.Model):
     ]
     
     horasLibre = [
-        ('', 'Selecciona una opción'),
         ('Media hora', 'Media hora'),
         ('Una hora', 'Una hora'),
         ('Hora y media', 'Hora y media'),

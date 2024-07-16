@@ -1,0 +1,64 @@
+{% extends '../dashboard.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+{% block title %}
+Editar actividad tutorial
+{% endblock %} <!-- Se cambia el título -->
+
+{% block content %}
+<!-- Esta es para el navbar -->
+
+<div class="formsAgregar" >
+
+
+  <form action="" method="POST">   {% csrf_token %}
+      <h3 class="titulos mt-3 text-center" style="color: #00005e;">Editar actividad tutorial</h3>
+  <div class="row py-4 mx-2">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <!-- Contenido de la primera columna -->
+
+      <label class="mt-1">Tema</label>
+      <input type="text" class="form-control" name="tema" value="{{ actividad.tema }}" />
+      <label class="mt-2">Objetivos</label>
+      <textarea class="form-control" rows="3" name="objetivos">{{ actividad.objetivos }}</textarea>
+      <label class="mt-2">Recursos</label>
+      <textarea class="form-control" rows="3" name="recursos">{{ actividad.recursos }}</textarea>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 mt-3">
+      <label>Actividades</label>
+      <textarea class="form-control" rows="6" name="actividades">{{ actividad.actividades }}</textarea>
+      <label class="mt-2">Evidencia</label>
+      <textarea class="form-control" rows="3" name="evidencias">{{ actividad.evidencias }}</textarea>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-secondary botonesGrises mt-2" href="{% url 'actividadTutorial' %}">Cerrar</a>
+        <button type="submit" class="btn btn-success botonesVerdes mt-2" onclick="return confirmarEditar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5;">
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == "success" %}
+        <div id="box" class="alert alert-success alert-dismissible fade show shadow custom-messages">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong class="text-dark">{{ message }}</strong>
+        </div>
+      {% elif message.tags == "error" %}
+        <div id="box" class="alert alert-danger alert-dismissible fade show shadow custom-messages">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong class="text-dark">{{ message }}</strong>
+        </div>
+      {% else %}
+        <div id="box" class="alert alert-warning alert-dismissible fade show shadow custom-messages">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong class="text-dark">{{ message }}</strong>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

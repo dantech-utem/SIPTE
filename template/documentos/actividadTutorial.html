@@ -1,0 +1,80 @@
+{% extends '../dashboard.html' %}
+<!-- Se incluye en archivo de base con lo demás -->
+{% block title %}
+  Actividad tutorial
+{% endblock %} <!-- Se cambia el título -->
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/documentos.css' %}" />
+  <!-- Esta es para el navbar -->
+
+  <center>
+    <h3 class="titulos">Actividad tutorial</h3>
+  </center>
+  <div class="container">
+    <div class="row">
+      <div class="col text-end">
+        <a href="{% url 'agregarActividad' %}" class="btn btn-success botonesVerdes bi bi-clipboard2-plus">Registrar</a>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="table-responsive py-2">
+    <!-- Hacemos responsiva -->
+    <table class="cell-border hover" cellspacing="0" width="100%" id="actividadTutorial">
+      <thead>
+        <!-- Encabezados -->
+        <tr class="text-center;">
+          <th style="text-align: center;">Tema</th>
+          <th style="text-align: center;">Objetivos</th>
+          <th style="text-align: center;">Recursos</th>
+          <th style="text-align: center;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          {% for actividad in actividades %}
+          <tr>
+          <td class="textosJustificados">{{actividad.tema}}</td>
+          <td class="textosJustificados">{{actividad.objetivos}}</td>
+          <td class="textosJustificados">{{actividad.recursos}}</td>
+          <td style="text-align: center; ">
+            <a href="{% url 'infoActividad' id=actividad.id %}" class="bi bi-info-circle text-black"></a>
+            <a href="{% url 'editarActividad' id=actividad.id %}" class="bi bi-pencil-square text-info-emphasis"></a>
+            <a href="{% url 'eliminarActividad' id=actividad.id %}" id="eliminar" onclick="return confirmarEliminacion()" class="bi bi-trash text-danger"></a>
+          </td>
+        </tr>
+          {% endfor %}
+  
+      </tbody>
+    </table>
+  </div>
+
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5;">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "success" %}
+          <div id="box" class="alert alert-success alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% elif message.tags == "error" %}
+          <div id="box" class="alert alert-danger alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% else %}
+          <div id="box" class="alert alert-warning alert-dismissible fade show shadow custom-messages">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="text-dark">{{ message }}</strong>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  
+  {% endblock %}

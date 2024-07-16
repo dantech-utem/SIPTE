@@ -31,8 +31,10 @@
         <!-- Mostrar el botón para ver el resumen de respuesta -->
         <a href="{% url 'resumenresp' idEstudiante=estudiante.id %}" class="btn btn-primary">Ver Resumen</a>
     {% else %}
-        <!-- Mostrar el botón para completar el formulario inicial -->
-        <a href="{% url 'formulario' %}" class="btn btn-success">Entrevista Inicial</a>
+    {% endif %}
+    {% if not estudiante_exists %}
+    <!-- Mostrar el botón para completar el formulario inicial si no hay registro -->
+    <a href="{% url 'formulario' %}" class="btn btn-success">Entrevista Inicial</a>
     {% endif %}
 
 </div>

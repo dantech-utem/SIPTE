@@ -1,3 +1,19 @@
 Admin:
     admin
     admin123
+
+	directorcarrera
+	encargadotutorias
+	director
+	tutor
+	asesoracademico
+	bolsadetrabajo
+	incubadora
+	enfermeria
+	becas
+	pedagogo
+	psicologo
+	estudiante
+	admin
+    
+pip install -r requirements.txt

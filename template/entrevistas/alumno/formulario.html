@@ -269,7 +269,7 @@
                         <option value="Otro">Otro</option>
                       </select><br>
                       <label for="trabajoextraPapa" class="form-label">Si "otra situación", descríbela.(Si no es tu caso, escribe "No aplica")</label>
-                      <input type="text" class="form-control" id="trabajoextraPapa" name="trabajoextraPapa" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                      <input type="text" class="form-control" id="trabajoextraPapa" name="trabajoextraPapa" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                       <br>
                       <label for="trabajoMama" class="form-label">Trabajo de la mamá</label>
                         <select class="form-control" id="trabajoMama" name="trabajoMama" required>
@@ -285,7 +285,7 @@
                           <option value="Otro">Otro</option>
                         </select><br>
                         <label for="trabajoextraMama" class="form-label">Si "otra situación", descríbela.(Si no es tu caso, escribe "No aplica")</label>
-                        <input type="text" class="form-control" id="trabajoextraMama" name="trabajoextraMama" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+                        <input type="text" class="form-control" id="trabajoextraMama" name="trabajoextraMama" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="manutencion" class="form-label">Manutención</label>
@@ -418,7 +418,7 @@
                   </select>
                   <br>
                   <label for="cualesExtras" class="form-label">¿Cuáles? (Si no es tu caso, escribe "No aplica")</label>
-                  <textarea class="form-control" id="cualesExtras" name="cualesExtras" rows="3"></textarea>
+                  <textarea class="form-control" id="cualesExtras" name="cualesExtras" required rows="3"></textarea>
                   <br>
                   <label for="repAnio" class="form-label">¿Repetiste algún año o grado en niveles anteriores?</label>
                   <select class="form-control" id="repAnio" name="repAnio" required>

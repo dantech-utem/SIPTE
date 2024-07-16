@@ -80,10 +80,6 @@
                 </div>
                 <div>SISTEMA INTEGRAL DE PEDAGOGIA Y TUTORIA EDUCATIVA</div>
 
-                {% if "mainApp.update_periodo" in Permisos %}
-                data respuesta data result data submit          
-                
-                {% endif %}
                 <div class="d-flex">
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item bg-soft-light border-start border-end"
@@ -127,7 +123,8 @@
                                     <div id="sidebar-menu">
                                         <!-- Left Menu Start -->
                                         <ul class="metismenu list-unstyled" id="side-menu">
-
+                                            {% with tipo=request.user.usuarios.tipo.tipo %}
+                                            {% if tipo == "admin" or tipo == "directorcarrera" or tipo == "tutor" or tipo == "estudiante" or tipo == "encargadotutorias" or tipo == "director" %}
                                             <li>
                                                 <a href="#"
                                                     class="has-arrow">
@@ -140,38 +137,63 @@
                                                 <ul
                                                     class="sub-menu mm-collapse"
                                                     aria-expanded="false">
+                                                    {% if tipo == "admin" or tipo == "estudiante" %}
+
                                                     <li><a href="{% url 'aviso'  %}"
-                                                            data-key="t-Aviso">Aviso</a></li>
-                                                    
+                                                            data-key="t-Aviso">Aviso</a>
+                                                    </li>
+                                                    {% endif %}
+
+                                                    {% if tipo == "admin" or tipo == "directorcarrera" or tipo == "tutor" or tipo == "encargadotutorias" or tipo == "director" %}
                                                     <li><a href="{% url 'index' %}"
-                                                                data-key="t-index">Registro de avisos</a></li>
+                                                                data-key="t-index">Registro de avisos</a>
+                                                    </li>
 
                                                     <li><a href="{% url 'informe' %}"
-                                                                data-key="t-informe">Informe de respuestas</a></li>     
+                                                                data-key="t-informe">Informe de respuestas</a>
+                                                    </li>  
+                                                    {% endif %}
+   
                                                 </ul>
                                             </li>
+                                            {% endif %}
+                                            {% endwith %}
 
+                                            {% with tipo=request.user.usuarios.tipo.tipo %}
+                                            {% if tipo == "admin" or tipo == "directorcarrera" or tipo == "tutor" or tipo == "asesoracademico" or tipo == "bolsadetrabajo" or tipo == "incubadora" or tipo == "enfermeria" or tipo == "becas" or tipo == "pedagogo" or tipo == "psicologo" %}
                                             <li>
                                                 <a href="#" class="has-arrow">
                                                     <i class="fa-solid fa-user"></i>
                                                     <span data-key="t-Canalizacion">Canalización</span>
                                                 </a>
                                                 <ul class="sub-menu mm-collapse" aria-expanded="false">
+                                                    {% if tipo == "admin" or tipo == "tutor" %}
                                                     <li>
                                                         <a href="{% url 'Dashboard' %}"
                                                             data-key="t-GenerarNuevo">Dashboard</a>
                                                     </li>
+                                                    {% endif %}
+
+                                                    {% if tipo == "admin" or tipo == "directorcarrera" or tipo == "tutor" or tipo == "asesoracademico" or tipo == "bolsadetrabajo" or tipo == "incubadora" or tipo == "enfermeria" or tipo == "becas" or tipo == "pedagogo" or tipo == "psicologo" %}
                                                     <li>
                                                         <a href="{% url 'Calendario' %}"
                                                             data-key="t-GenerarNuevo">Calendario</a>
                                                     </li>
+                                                    {% endif %}
+
+                                                    {% if tipo == "admin" or tipo == "directorcarrera" or tipo == "asesoracademico" or tipo == "bolsadetrabajo" or tipo == "incubadora" or tipo == "enfermeria" or tipo == "becas" or tipo == "pedagogo" or tipo == "psicologo" %}
                                                     <li>
                                                         <a href="{% url 'ResultadosCanalizacion' %}"
                                                             data-key="t-GenerarNuevo">Resultados canalización</a>
                                                     </li>
+                                                    {% endif %}
+
                                                 </ul>
                                             </li>
+                                            {% endif %}
+                                            {% endwith %}
 
+                                            {% if request.user.usuarios.tipo.tipo == "admin" or request.user.usuarios.tipo.tipo == "tutor" %}
                                             <li>
                                                 <a href="#" class="has-arrow">
                                                     <i class="fa-solid fa-file"></i>
@@ -182,7 +204,9 @@
                                                     <li><a href="{% url 'informePlanAccion' %}" data-key="t-Informes">Informe plan de acción</a></li>
                                                 </ul>
                                             </li>
+                                            {% endif %}
 
+                                            {% if request.user.usuarios.tipo.tipo == "admin" %}
                                             <li>
                                                 <a href="#" class="has-arrow">
                                                     <i class="fa-solid fa-book-open"></i>
@@ -193,29 +217,27 @@
                                                     <li><a href="#" data-key="t-Tutorias">Tutorías</a></li>
                                                 </ul>
                                             </li>
+                                            {% endif %}
 
-                                            <li>
-                                                <a href="#" class="has-arrow">
-                                                    <i class="fa-solid fa-copy"></i>
-                                                    <span data-key="t-Canalizacion">Reportes</span>
-                                                </a>
-                                                <ul class="sub-menu mm-collapse" aria-expanded="false">
-                                                    <li><a href="#" data-key="t-verReportes">Ver
-                                                            reportes</a></li>
-                                                    <li><a href="#" data-key="t-GenerarReportes">Generar</a></li>
-                                                </ul>
-                                            </li>
-
+                                            {% if request.user.usuarios.tipo.tipo == "admin" or request.user.usuarios.tipo.tipo == "tutor" %}
                                             <li>
                                                 <a href="{% url 'actividadTutorial' %}"><i class="fa-solid fa-chalkboard-user"></i><span data-key="t-dashboard">Actividad tutorial</span></a>
-                                                </li>
-                                              <li>
-                                                <a href="{% url 'Evaluacion' %}"><i class="fa-solid fa-clipboard-list"></i><span data-key="t-dashboard">Evaluación tutorial</span></a>
-                                              </li>
-                                              <li>
-                                                  <a href="{% url 'atencionIndividual' %}"><i class="fa-solid fa-circle-exclamation"></i><span data-key="t-dashboard">Atención individual</span></a>
-                                              </li>
+                                            </li>
+                                            {% endif %}
 
+                                            {% if request.user.usuarios.tipo.tipo == "admin" or request.user.usuarios.tipo.tipo == "estudiante" %}
+                                            <li>
+                                                <a href="{% url 'Evaluacion' %}"><i class="fa-solid fa-clipboard-list"></i><span data-key="t-dashboard">Evaluación tutorial</span></a>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if request.user.usuarios.tipo.tipo == "admin" or request.user.usuarios.tipo.tipo == "tutor" %}
+                                            <li>
+                                                  <a href="{% url 'atencionIndividual' %}"><i class="fa-solid fa-circle-exclamation"></i><span data-key="t-dashboard">Atención individual</span></a>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if request.user.usuarios.tipo.tipo == "admin" %}
                                             <li>
                                                 <a href="#">
                                                     <i class="fa-solid fa-user-plus"></i>
@@ -223,13 +245,16 @@
                                                         tutorial</span>
                                                 </a>
                                             </li>
+                                            {% endif %}
 
+                                            {% if request.user.usuarios.tipo.tipo == "admin" %}
                                             <li>
                                                 <a href="#">
                                                     <i class="fa-solid fa-comment"></i>
                                                     <span data-key="t-consultas">Consultas</span>
                                                 </a>
                                             </li>
+                                            {% endif %}
 
                                         </ul>
 

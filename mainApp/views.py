@@ -40,6 +40,9 @@ from io import BytesIO
 import os
 from .models import Periodo, AccionTutorial, AtencionIndividual, Usuarios, EvaluacionTutor, Canalizacion, CierreTutorias
 from django.contrib import messages #Importamos para presentar mensajes
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 
 class TokenSerializer(serializers.ModelSerializer):
@@ -125,11 +128,26 @@ def eliminarAviso(request, idAvisos):
     return redirect('index')
 
 #ALUMNO
+@method_decorator(login_required, name='dispatch')
 class aviso(View):
     def get(self, request):
-        avisos = Aviso.objects.all()
-        return render(request, "entrevistas/alumno/aviso.html", {'avisos': avisos})
+        user = request.user
+        try:
+            usuario = Usuarios.objects.get(User=user)
+            no_control = usuario.noControl
+            estudiante_exists = Estudiante.objects.filter(noControl=no_control).exists()
+        except Usuarios.DoesNotExist:
+            return render(request, 'error.html', {'message': 'Usuario no registrado en la tabla Usuarios'})
 
+        avisos = Aviso.objects.all()
+
+        context = {
+            'estudiante_exists': estudiante_exists,
+            'no_control': no_control,
+            'avisos': avisos,
+        }
+        return render(request, "entrevistas/alumno/aviso.html", context)
+    
 class informe(View):
     def get(self, request):
         estudiantes = Estudiante.objects.all()
@@ -365,8 +383,7 @@ def crearEstudiante(request):
         )
 
         return redirect('resumenresp', idEstudiante=estudiante.idEstudiante)
-    
-
+#Aqui termina parte de entrevistas
 class prueba2(View):
    def get(self, request):
         return render(request, 'test/prueba2.html')

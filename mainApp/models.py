@@ -96,8 +96,8 @@ class Aviso(models.Model):
     
 class Estudiante(models.Model):
     idEstudiante = models.AutoField(primary_key=True)
-    noControl = models.CharField(max_length=8)
-    nombre = models.CharField(max_length=200)
+    noControl = models.CharField(max_length=8,unique=True)
+    nombre = models.CharField(max_length=200,unique=True)
     carrera = models.CharField(max_length=200, choices=[
         ('Licenciatura en Diseño y Gestión de Redes Logísticas', 'Licenciatura en Diseño y Gestión de Redes Logísticas'),
         ('Ingeniería en Energías Renovables', 'Ingeniería en Energías Renovables'),
@@ -125,8 +125,8 @@ class Estudiante(models.Model):
     ])
     fechaR = models.DateField(auto_now_add=True)
     telCasa = models.CharField(max_length=10)
-    correo = models.EmailField()
-    telCelular = models.CharField(max_length=10)
+    correo = models.EmailField(unique=True)
+    telCelular = models.CharField(max_length=10,unique=True)
     edad = models.CharField(max_length=10, choices=[
         ('16', '16'),
         ('17', '17'),

@@ -194,18 +194,26 @@ def crearEstudiante(request):
 
 
         # Crear el estudiante
-        estudiante = Estudiante.objects.create(
-            carrera=carrera,
-            tutor=tutor,
-            grupo=grupo,
-            fechaR=fechaR,
-            nombre=nombre,
-            noControl=noControl,
-            telCasa=telCasa,
-            correo=correo,
-            telCelular=telCelular,
-            edad=edad
-        )
+        try:
+            estudiante = Estudiante.objects.create(
+                carrera=carrera,
+                tutor=tutor,
+                grupo=grupo,
+                fechaR=fechaR,
+                nombre=nombre,
+                noControl=noControl,
+                telCasa=telCasa,
+                correo=correo,
+                telCelular=telCelular,
+                edad=edad
+            )
+        except IntegrityError:
+            # Mostrar un mensaje de error si ocurre una excepción de integridad de datos
+            return render(request, 'entrevistas/alumno/formulario.html', {
+                'error_message': 'Los datos ya están registrados. Por favor, verifica la información e intenta nuevamente.'
+            })
+
+        
         # Obtener los datos del familiares
         conviveCon = request.POST.get('conviveCon')
         otra_situacion = request.POST.get('otra_situacion')

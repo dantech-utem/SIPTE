@@ -49,9 +49,25 @@ document.addEventListener('DOMContentLoaded', function() {
             success: function(response) {
                 console.log(response.valid);
                 if (response.valid == true) {
-
+                    console.log(response.tipo);
+                    var tipo = response.tipo
                     // El token es válido, realiza la acción deseada (por ejemplo, remover una clase)
-                    window.location.href = '/prueba2';
+                    if(tipo == "admin"){
+                        window.location.href = '/Calendario';
+                    }else if (tipo == "estudiante"){
+                        console.log(response.alumno)
+                        if (response.alumno == true){
+                            window.location.href = '/aviso';
+                        }else{
+                            window.location.href = '/formulario';
+                        }
+                    }else if (tipo == "tutor"){
+                        window.location.href = '/Dashboard';
+                    }else if (tipo == "director" || tipo == "encargadotutorias" || tipo == "directorcarrera"){
+                        window.location.href = '/index';
+                    }else if (tipo != "admin" || tipo != "estudiante" || tipo != "tutor" || tipo != "director" || tipo != "encargadotutorias"){
+                        window.location.href = '/Calendario';
+                    }
                 } else {
                     // El token no es válido, limpia el localStorage y redirige al login
                     localStorage.removeItem('sso_token');

@@ -438,7 +438,25 @@ def login_sso(request):
                 return render(request, 'login.html', {'Error': 'Usuario no registrado en la tabla Usuarios', 'Email': email})
 
             # Establecer una cookie con el token
-            response = redirect(reverse('prueba2'))
+
+            tipo=request.user.usuarios.tipo.tipo
+            if tipo == "admin":
+                response = redirect(reverse('Calendario'))
+            elif tipo == "estudiante":
+                no_control_usuario = request.user.usuarios.noControl
+                existe = Estudiante.objects.filter(noControl=no_control_usuario).exists()
+                if existe == True:   
+                    response = redirect(reverse('aviso'))
+                else:
+                    response = redirect(reverse('formulario'))
+            elif tipo == "tutor":
+                response = redirect(reverse('Dashboard'))
+            elif tipo == "director" or tipo == "encargadotutorias" or tipo == "directorcarrera":
+                response = redirect(reverse('index'))
+
+            elif tipo != "admin" or tipo != "estudiante" or tipo != "tutor" or tipo != "director" or tipo != "encargadotutorias":
+                response = redirect(reverse('Calendario'))
+                
             response.set_cookie('sso_token', token, httponly=False)  # httponly=False para que sea accesible por JavaScript
             return response
         else:
@@ -480,7 +498,13 @@ def validate_token(request):
                     print("Entro")
                     user_id = payload.get('user_id')
                     user = User.objects.get(pk=user_id)
-                    return JsonResponse({'valid': True})
+                    tipo=request.user.usuarios.tipo.tipo
+                    if tipo == "estudiante":
+                        no_control_usuario = request.user.usuarios.noControl
+                        existe = Estudiante.objects.filter(noControl=no_control_usuario).exists()
+                    else:
+                        existe = False
+                    return JsonResponse({'valid': True, 'tipo':tipo, 'alumno':existe})
                 else:
                     logout(request)
                     return JsonResponse({'valid': False})

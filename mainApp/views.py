@@ -1237,9 +1237,9 @@ def descargarXLSX(request):
     atenciones= AtencionIndividual.objects.filter(cicloAccion__estado=True, estudiante__grupo=grupo)
     actividad = AccionTutorial.objects.filter(tutor=tutor, cicloAccion=periodo_activo)
 # Cargar el archivo base
-    path_archivo_base = os.path.join(settings.BASE_DIR, 'mainApp', 'data', 'basePlanAccion.xlsx')
+    path_archivo_base_uno = os.path.join(settings.BASE_DIR, 'mainApp', 'data', 'basePlanAccion.xlsx')
     # Cargar el archivo base
-    wb = load_workbook(filename=path_archivo_base, read_only=False)
+    wb = load_workbook(filename=path_archivo_base_uno, read_only=False)
     ws = wb.active
 
     if periodo_activo:
@@ -1581,7 +1581,7 @@ def descargarReporte(request):
     ws['D26'] = AsuntoOtra
 
     # Obtiene todas las bajas de alumnos del grupo del tutor
-    bajas = BajaAlumnos.objects.filter(estudiante__usuarios__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo)
+    bajas = BajaAlumnos.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo)
 
     # Diccionario para mapear motivos de baja a filas
     motivos_fila = {

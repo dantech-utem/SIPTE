@@ -604,17 +604,9 @@ class canalizacionCalendario(View):
 
 class canalizacionCompletarSesion(View):
     def get(self, request, id):
-        try:
-            canalizacion = Canalizacion.objects.filter(atencionIndividual__estudiante=id).order_by('-fecha').first()
-
-            context = {
-                'id': id,
-                'datos': canalizacion
-            }
-        except Canalizacion.DoesNotExist:
-            context = {
-                'id': id,
-            }
+        context = {
+            'id': id,
+        }
 
         return render(request, 'Canalizacion/completarSesion.html', context)
 
@@ -1118,7 +1110,7 @@ def agregarAtencionIndividual(request):
 
     # Filtrar estudiantes que pertenecen al grupo del tutor actual y que son de tipo 'estudiante'
     tutor = request.user
-    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
+    estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo, estado=1)
 
     return render(request, 'documentos/registrarAtencion.html', {'estudiantes': estudiantes})
 

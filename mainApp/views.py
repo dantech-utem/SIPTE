@@ -820,75 +820,79 @@ class canalizacionReportes(View):
 
 class generatePDF(View):
     def get(self, request, id):
-        alumno = get_object_or_404(Usuarios, id=id)
-        canalizaciones = Canalizacion.objects.filter(atencionIndividual__estudiante_id=id).select_related('atencionIndividual', 'atencionIndividual__estudiante')
+        try:
+            alumno = get_object_or_404(Usuarios, id=id)
+            canalizaciones = Canalizacion.objects.filter(atencionIndividual__estudiante_id=id).select_related('atencionIndividual', 'atencionIndividual__estudiante')
 
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="reporte_{alumno.User.first_name}_{alumno.User.last_name}.pdf"'
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="reporte_{alumno.User.first_name}_{alumno.User.last_name}.pdf"'
 
-        doc = SimpleDocTemplate(response, pagesize=letter)
-        elements = []
+            doc = SimpleDocTemplate(response, pagesize=letter)
+            elements = []
 
-        logo_path = finders.find('../statics/assets/img/utem.png')
-        elements.append(ImageCanalizacion(logo_path, 1*inch, 1*inch))
+            logo_path = finders.find('../statics/assets/img/utem.png')
+            elements.append(ImageCanalizacion(logo_path, 1*inch, 1*inch))
 
-        elements.append(Spacer(1, 12))
-        elements.append(Paragraph(f'Reporte de Canalizaciones para {alumno.User.first_name} {alumno.User.last_name}',
-                                  getSampleStyleSheet()['Title']))
+            elements.append(Spacer(1, 12))
+            elements.append(Paragraph(f'Reporte de Canalizaciones para {alumno.User.first_name} {alumno.User.last_name}',
+                                      getSampleStyleSheet()['Title']))
 
-        styles = getSampleStyleSheet()
-        normal_style = styles['Normal']
-        normal_style.wordWrap = 'CJK'
+            styles = getSampleStyleSheet()
+            normal_style = styles['Normal']
+            normal_style.wordWrap = 'CJK'
 
-        header_style = styles['Normal'].clone('header')
-        header_style.textColor = colors.whitesmoke
-        header_style.fontName = 'Helvetica-Bold'
+            header_style = styles['Normal'].clone('header')
+            header_style.textColor = colors.whitesmoke
+            header_style.fontName = 'Helvetica-Bold'
 
-        data = [
-            [
-                Paragraph('Area', header_style),
-                Paragraph('Nombre', header_style),
-                Paragraph('Apellidos', header_style),
-                Paragraph('No. de Control', header_style),
-                Paragraph('Asunto', header_style),
-                Paragraph('Observaciones', header_style),
-                Paragraph('Detalles', header_style),
-                Paragraph('Fecha', header_style)
+            data = [
+                [
+                    Paragraph('Area', header_style),
+                    Paragraph('Nombre', header_style),
+                    Paragraph('Apellidos', header_style),
+                    Paragraph('No. de Control', header_style),
+                    Paragraph('Asunto', header_style),
+                    Paragraph('Observaciones', header_style),
+                    Paragraph('Detalles', header_style),
+                    Paragraph('Fecha', header_style)
+                ]
             ]
-        ]
 
-        for canalizacion in canalizaciones:
-            data.append([
-                Paragraph(canalizacion.area, normal_style),
-                Paragraph(canalizacion.atencionIndividual.estudiante.User.first_name, normal_style),
-                Paragraph(canalizacion.atencionIndividual.estudiante.User.last_name, normal_style),
-                Paragraph(str(canalizacion.atencionIndividual.estudiante.noControl), normal_style),
-                Paragraph(canalizacion.motivo, normal_style),
-                Paragraph(canalizacion.observaciones, normal_style),
-                Paragraph(canalizacion.detalles, normal_style),
-                Paragraph(canalizacion.atencionIndividual.fecha.strftime('%d-%m-%Y'), normal_style)
-            ])
+            for canalizacion in canalizaciones:
+                data.append([
+                    Paragraph(canalizacion.area, normal_style),
+                    Paragraph(canalizacion.atencionIndividual.estudiante.User.first_name, normal_style),
+                    Paragraph(canalizacion.atencionIndividual.estudiante.User.last_name, normal_style),
+                    Paragraph(str(canalizacion.atencionIndividual.estudiante.noControl), normal_style),
+                    Paragraph(canalizacion.motivo, normal_style),
+                    Paragraph(canalizacion.observaciones, normal_style),
+                    Paragraph(canalizacion.detalles, normal_style),
+                    Paragraph(canalizacion.atencionIndividual.fecha.strftime('%d-%m-%Y'), normal_style)
+                ])
 
-        col_widths = [50, 70, 70, 60, 80, 100, 100, 60]
+            col_widths = [50, 70, 70, 60, 80, 100, 100, 60]
 
-        table = Table(data, colWidths=col_widths)
-        table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-            ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
-            ('GRID', (0, 0), (-1, -1), 1, colors.black),
-            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ]))
+            table = Table(data, colWidths=col_widths)
+            table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ]))
 
-        elements.append(table)
+            elements.append(table)
 
-        doc.build(elements)
+            doc.build(elements)
 
-        return response
+            return response
+
+        except Exception as e:
+            return HttpResponse("Ocurrió un error al generar el PDF. Por favor,complete la canalización e inténtelo de nuevo.")
 
 class canalizacionIndex(View):
    def get(self, request):

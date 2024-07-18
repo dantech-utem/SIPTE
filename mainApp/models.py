@@ -54,7 +54,7 @@ class EvaluacionTutor(models.Model):
     cicloEvaluacion = models.ForeignKey(Periodo, on_delete=models.CASCADE,null=True)
 
 class BajaAlumnos(models.Model):
-    estudiante = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    estudiante = models.ForeignKey(Usuarios, on_delete=models.CASCADE, blank=True, null=True)
     cicloAccion = models.ForeignKey(Periodo, on_delete=models.CASCADE, null=True)
     tipo = models.CharField(max_length=100)
     observaciones = models.TextField(null=True)

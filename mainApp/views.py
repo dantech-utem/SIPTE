@@ -58,36 +58,36 @@ class TokenViewSet(viewsets.ModelViewSet):
 class inicio(View):
    def get(self, request):
         return render(request, 'login.html')
-     
+
 class loginTest(View):
-   def get(self, request): 
+   def get(self, request):
       return render(request,'test/prueba.html')
-   
+
 class aviso(View):
    def get(self, request):
       return render(request,'entrevistas/alumno/aviso.html')
-   
+
 class formulario(View):
    def get(self, request):
       return render(request,'entrevistas/alumno/formulario.html')
-   
+
 class resumenresp(View):
    def get(self, request):
       return render(request,'entrevistas/alumno/resumenresp.html')
-   
+
 class index(View):
    def get(self, request):
       avisos = Aviso.objects.all()
       return render(request,'entrevistas/administrador/index.html', {'avisos': avisos})
-   
+
 class registro(View):
    def get(self, request):
       return render(request,'entrevistas/administrador/registro.html')
-   
+
 class informe(View):
    def get(self, request):
       return render(request,'entrevistas/administrador/informe.html')
-   
+
 class ver(View):
    def get(self, request):
       return render(request,'entrevistas/administrador/ver.html')
@@ -147,7 +147,7 @@ class aviso(View):
             'avisos': avisos,
         }
         return render(request, "entrevistas/alumno/aviso.html", context)
-    
+
 class informe(View):
     def get(self, request):
         estudiantes = Estudiante.objects.all()
@@ -163,7 +163,7 @@ class resumenresp(View):
         datos_aficiones = get_object_or_404(DatosAficiones,idEstudiante=estudiante)
         datos_personalidad = get_object_or_404(DatosPersonalidad,idEstudiante=estudiante)
         datos_salud = get_object_or_404(DatosSalud,idEstudiante=estudiante)
-        
+
         context = {
             'estudiante': estudiante,
             'datos_familiares': datos_familiares,
@@ -174,8 +174,8 @@ class resumenresp(View):
             'datos_personalidad':datos_personalidad,
             'datos_salud':datos_salud
         }
-   
-        return render(request, 'entrevistas/alumno/resumenresp.html', context)   
+
+        return render(request, 'entrevistas/alumno/resumenresp.html', context)
 
 
 def crearEstudiante(request):
@@ -213,7 +213,7 @@ def crearEstudiante(request):
                 'error_message': 'Los datos ya están registrados. Por favor, verifica la información e intenta nuevamente.'
             })
 
-        
+
         # Obtener los datos del familiares
         conviveCon = request.POST.get('conviveCon')
         otra_situacion = request.POST.get('otra_situacion')
@@ -313,7 +313,7 @@ def crearEstudiante(request):
         horas = request.POST.get('horas')
         horario = request.POST.get('horario')
         musica = request.POST.get('musica')
-        
+
 
 
         _idestudiante = estudiante.idEstudiante
@@ -332,8 +332,8 @@ def crearEstudiante(request):
          # Obtener los datos aficiones
         tiempoLibre = request.POST.get('tiempoLibre')
         horasLibre = request.POST.get('horasLibre')
-   
-  
+
+
         _idestudiante = estudiante.idEstudiante
         # Crear los datos aficiones asociados al estudiante encontrado
         datos_aficiones = DatosAficiones.objects.create(
@@ -395,7 +395,7 @@ def crearEstudiante(request):
 class prueba2(View):
    def get(self, request):
         return render(request, 'test/prueba2.html')
-    
+
 def validar_email(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -420,7 +420,7 @@ def login_sso(request):
 
         if user_authenticated is not None:
             login(request, user_authenticated)
-            
+
             # Crear token JWT
             payload = {
                 'user_id': user_authenticated.id,
@@ -445,7 +445,7 @@ def login_sso(request):
             elif tipo == "estudiante":
                 no_control_usuario = request.user.usuarios.noControl
                 existe = Estudiante.objects.filter(noControl=no_control_usuario).exists()
-                if existe == True:   
+                if existe == True:
                     response = redirect(reverse('aviso'))
                 else:
                     response = redirect(reverse('formulario'))
@@ -455,8 +455,8 @@ def login_sso(request):
                 response = redirect(reverse('index'))
 
             elif tipo != "admin" or tipo != "estudiante" or tipo != "tutor" or tipo != "director" or tipo != "encargadotutorias":
-                response = redirect(reverse('Calendario'))
-                
+                response = redirect(reverse('ResultadosCanalizacion'))
+
             response.set_cookie('sso_token', token, httponly=False)  # httponly=False para que sea accesible por JavaScript
             return response
         else:
@@ -468,7 +468,7 @@ def logout_view(request):
     # Eliminar el token del localStorage en el cliente (JavaScript)
     response = redirect('inicio')  # Ajusta 'login' a la URL de tu página de inicio de sesión
     response.delete_cookie('sso_token')
-    
+
     # Eliminar el token de la base de datos
     if request.user.is_authenticated:
         try:
@@ -477,7 +477,7 @@ def logout_view(request):
             usuario.save()
         except Usuarios.DoesNotExist:
             pass  # Maneja la excepción según sea necesario
-        
+
     logout(request)
     return response
 
@@ -521,7 +521,7 @@ def validate_token(request):
 
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-   
+
 class canalizacionIndex(View):
    def get(self, request):
       return render(request,'Canalizacion/index.html')
@@ -601,12 +601,12 @@ class canalizacionCalendario(View):
         context = {'canalizaciones': lista_canalizaciones, 'canalizaciones_mes': canalizaciones_mes}
 
         return render(request, 'Canalizacion/calendario.html', context)
-   
+
 class canalizacionCompletarSesion(View):
     def get(self, request, id):
         try:
-            canalizacion = Canalizacion.objects.filter(atencionIndividual__estudiante__User__id=id).order_by('-fecha').first()
-            
+            canalizacion = Canalizacion.objects.filter(atencionIndividual__estudiante=id).order_by('-fecha').first()
+
             context = {
                 'id': id,
                 'datos': canalizacion
@@ -615,49 +615,49 @@ class canalizacionCompletarSesion(View):
             context = {
                 'id': id,
             }
-        
+
         return render(request, 'Canalizacion/completarSesion.html', context)
 
 class viewCanalizacionCompletarSesion(View):
     def get(self, request, id):
         datos = get_object_or_404(Canalizacion, id=id)
-        
+
         context = {
             'id': id,
             'datos': datos
         }
-        
+
         return render(request, 'Canalizacion/viewCompletarSesion.html', context)
-   
+
 def canalizacionFormCompletarSesion(request, id):
     if request.method == "POST":
         datos = get_object_or_404(Canalizacion, id=id)
-        
+
         if datos:
 
             datos.detalles = request.POST['detalles']
             datos.estadoCanalizados = 3
             datos.save()
 
-            estudiante_id = datos.atencionIndividual.estudiante.User.id
-            usuario = Usuarios.objects.get(User_id=estudiante_id)
+            estudiante_id = datos.atencionIndividual.estudiante.id
+            usuario = Usuarios.objects.get(id=estudiante_id)
             usuario.estado = 1
             usuario.save()
 
             return redirect('ResultadosCanalizacion')
 
-    
+
 class viewCanalizar(View):
     def get(self, request, id):
         datos = get_object_or_404(Canalizacion, id=id)
-        
+
         context = {
             'id': id,
             'datos': datos
         }
-        
+
         return render(request, 'Canalizacion/viewCanalizar.html', context)
-   
+
 class formCalendario(View):
    def get(self, request, id):
       return render(request,'Canalizacion/formCalendario.html', {'id': id})
@@ -674,12 +674,12 @@ def canalizacionFormCalendario(request, id):
         datos.save()
 
         return redirect('ResultadosCanalizacion')
-   
+
 class canalizacionBajas(View):
     def get(self, request, id):
         try:
-            baja = BajaAlumnos.objects.get(estudiante__id=id)
-            estudiante = Usuarios.objects.get(User__id=id)
+            baja = BajaAlumnos.objects.get(estudiante=id)
+            estudiante = Usuarios.objects.get(id=id)
             context = {
                 'id': id,
                 'baja': baja,
@@ -689,9 +689,9 @@ class canalizacionBajas(View):
             context = {
                 'id': id,
             }
-        
+
         return render(request, 'Canalizacion/formBaja.html', context)
-   
+
 def canalizacionBajaAlumno(request, id):
    if request.method == "POST":
       datos = Usuarios.objects.get(id = id)
@@ -700,20 +700,20 @@ def canalizacionBajaAlumno(request, id):
       motivo = request.POST['motivo']
       cicloActual = Periodo.objects.filter(estado = True).first()
 
-      Baja  = BajaAlumnos.objects.create(tipo=tipo, observaciones=observaciones, motivo=motivo, cicloAccion=cicloActual, estudiante=datos.User)
+      Baja  = BajaAlumnos.objects.create(tipo=tipo, observaciones=observaciones, motivo=motivo, cicloAccion=cicloActual, estudiante=datos)
 
       datos.estado = 3
       datos.save()
 
       return redirect('Dashboard')
-   
+
 class canalizacionFormCanalizar(View):
     def get(self, request, id):
         try:
-            atencion_individual = AtencionIndividual.objects.filter(estudiante__User__id=id).order_by('-fecha').first()
+            atencion_individual = AtencionIndividual.objects.filter(estudiante=id).order_by('-fecha').first()
 
             canalizacion = Canalizacion.objects.filter(atencionIndividual=atencion_individual).first()
-            
+
             context = {
                 'id': id,
                 'canalizacion': canalizacion,
@@ -723,13 +723,13 @@ class canalizacionFormCanalizar(View):
             context = {
                 'id': id,
             }
-        
+
         return render(request, 'Canalizacion/formCanalizar.html', context)
-   
+
 def canalizacionFormCanalizarAlumno(request, id):
     if request.method == "POST":
-        
-        atencion_individual = AtencionIndividual.objects.filter(estudiante__User__id=id).order_by('-fecha').first()
+
+        atencion_individual = AtencionIndividual.objects.filter(estudiante=id).order_by('-fecha').first()
 
         area = request.POST.get('area')
         observaciones = request.POST.get('observaciones')
@@ -743,13 +743,13 @@ def canalizacionFormCanalizarAlumno(request, id):
             atencionIndividual=atencion_individual,
             estadoCanalizados=1
         )
-        
+
         usuario = atencion_individual.estudiante
         usuario.estado = 4
         usuario.save()
-        
+
         return redirect('Dashboard')
-   
+
 class canalizacionFormCerrarTutorias(View):
    def get(self, request):
       return render(request,'Canalizacion/formCerrarTutorias.html')
@@ -761,7 +761,7 @@ def cerrarTurorias(request):
       userActual = request.user
       cierre  = CierreTutorias.objects.create(cierreTutorias=cierreTutorias, cicloAccion=cicloActual[0], tutor=userActual)
       cierre.save()
-      return redirect('Dashboard') 
+      return redirect('Dashboard')
 
 class canalizacionReportes(View):
     def get(self, request, id):
@@ -772,9 +772,9 @@ class canalizacionReportes(View):
 
     def get_page_response(self, request, id):
         periodos = Periodo.objects.all().order_by('-id')
-        alumno = Usuarios.objects.select_related('User').get(User_id=id)
-        canalizaciones = Canalizacion.objects.filter(atencionIndividual__estudiante_id=id).select_related('atencionIndividual', 'atencionIndividual__estudiante')
-        
+        alumno = Usuarios.objects.select_related('User').get(id=id)
+        canalizaciones = Canalizacion.objects.filter(atencionIndividual__estudiante=id).select_related('atencionIndividual', 'atencionIndividual__estudiante')
+
         reportes_data = []
         for canalizacion in canalizaciones:
             reportes_data.append({
@@ -787,21 +787,21 @@ class canalizacionReportes(View):
                 'detalles': canalizacion.detalles,
                 'fecha': canalizacion.atencionIndividual.fecha,
             })
-        
+
         context = {
             'reportes_data': reportes_data,
             'periodos': periodos,
             'alumno': alumno,
             'alumno_id': id
         }
-        
-        return render(request, 'Canalizacion/reportes.html', context)
-    
+
+        return render(request, 'Canalizacion/Reportes.html', context)
+
     def get_ajax_response(self, request, id):
         periodo_id = request.GET.get('periodo_id')
-        
+
         if periodo_id:
-            canalizaciones = Canalizacion.objects.filter(cicloAccion_id=periodo_id, atencionIndividual__estudiante_id=id).values(
+            canalizaciones = Canalizacion.objects.filter(cicloAccion_id=periodo_id, atencionIndividual__estudiante=id).values(
                 'area',
                 'atencionIndividual__estudiante__User__first_name',
                 'atencionIndividual__estudiante__User__last_name',
@@ -811,18 +811,18 @@ class canalizacionReportes(View):
                 'detalles',
                 'atencionIndividual__fecha'
             )
-            
+
             reportes_data = list(canalizaciones)
             data = {'reportes_data': reportes_data}
             return JsonResponse(data)
-        
+
         return JsonResponse({'error': 'Periodo no válido'}, status=400)
 
 class generatePDF(View):
     def get(self, request, id):
-        alumno = get_object_or_404(Usuarios, User_id=id)
+        alumno = get_object_or_404(Usuarios, id=id)
         canalizaciones = Canalizacion.objects.filter(atencionIndividual__estudiante_id=id).select_related('atencionIndividual', 'atencionIndividual__estudiante')
-        
+
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="reporte_{alumno.User.first_name}_{alumno.User.last_name}.pdf"'
 
@@ -839,7 +839,7 @@ class generatePDF(View):
         styles = getSampleStyleSheet()
         normal_style = styles['Normal']
         normal_style.wordWrap = 'CJK'
-        
+
         header_style = styles['Normal'].clone('header')
         header_style.textColor = colors.whitesmoke
         header_style.fontName = 'Helvetica-Bold'
@@ -856,7 +856,7 @@ class generatePDF(View):
                 Paragraph('Fecha', header_style)
             ]
         ]
-        
+
         for canalizacion in canalizaciones:
             data.append([
                 Paragraph(canalizacion.area, normal_style),
@@ -874,7 +874,7 @@ class generatePDF(View):
         table = Table(data, colWidths=col_widths)
         table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), 
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
@@ -883,13 +883,13 @@ class generatePDF(View):
             ('GRID', (0, 0), (-1, -1), 1, colors.black),
             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ]))
-        
+
         elements.append(table)
-        
+
         doc.build(elements)
-        
+
         return response
-    
+
 class canalizacionIndex(View):
    def get(self, request):
       tutor = request.user
@@ -910,8 +910,8 @@ class canalizacionIndex(View):
         }
 
       return render(request, 'Canalizacion/index.html', context)
-   
-  
+
+
 class canalizacionExpedientes(View):
     def get(self, request, id):
         if request.GET.get('periodo_id'):
@@ -922,22 +922,22 @@ class canalizacionExpedientes(View):
     def get_page_response(self, request, id):
         periodos = Periodo.objects.all().order_by('-id')
         alumno = id
-        
+
         atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True)
-        
+
         TablaExpedientes = Canalizacion.objects.filter(atencionIndividual_id__in=atencion_ids).annotate(
             observacionesIndividual=F('atencionIndividual__observaciones'),
             asuntoTratarIndividual=F('atencionIndividual__asuntoTratar'),
             fechaIndividual=F('atencionIndividual__fecha'),
         )
-        
-        alumno_exp = Usuarios.objects.filter(User_id=alumno)
-        
+
+        alumno_exp = Usuarios.objects.filter(id=alumno)
+
         # Formatear las fechas antes de pasarlas al contexto usando strftime
         for exp in TablaExpedientes:
             exp.fechaIndividual = exp.fechaIndividual.strftime('%d-%m-%Y a las %H:%M')
             exp.fecha = exp.fecha.strftime('%d-%m-%Y a las %H:%M')
-        
+
         context = {
             'periodos': periodos,
             'TablaExpedientes': TablaExpedientes,
@@ -945,15 +945,15 @@ class canalizacionExpedientes(View):
             'alumno_id': alumno,
             'id': id
         }
-        
+
         return render(request, 'Canalizacion/expediente.html', context)
-    
+
     def get_ajax_response(self, request, id):
         alumno = request.GET.get('alumno')
         periodo_id = request.GET.get('periodo_id')
-        
+
         atencion_ids = AtencionIndividual.objects.filter(estudiante_id=alumno).values_list('id', flat=True)
-        
+
         if periodo_id:
             atenciones_individuales = Canalizacion.objects.filter(
                 cicloAccion_id=periodo_id,
@@ -964,7 +964,7 @@ class canalizacionExpedientes(View):
                 'atencionIndividual__asuntoTratar',
                 'atencionIndividual__fecha'
             )
-            
+
             canalizaciones = Canalizacion.objects.filter(
                 cicloAccion_id=periodo_id,
                 atencionIndividual_id__in=atencion_ids
@@ -973,21 +973,21 @@ class canalizacionExpedientes(View):
                 'detalles',
                 'fecha'
             )
-            
+
             # Formatear las fechas antes de enviarlas usando strftime
             for atencion in atenciones_individuales:
                 atencion['atencionIndividual__fecha'] = atencion['atencionIndividual__fecha'].strftime('%d-%m-%Y a las %H:%M')
             for canalizacion in canalizaciones:
                 canalizacion['fecha'] = canalizacion['fecha'].strftime('%d-%m-%Y a las %H:%M')
-            
+
             data = {
                 'atenciones_individuales': list(atenciones_individuales),
                 'canalizaciones': list(canalizaciones),
                 'id': id
             }
-            
+
             return JsonResponse(data)
-        
+
         return JsonResponse({'error': 'Periodo no válido'}, status=400)
 
 
@@ -1002,18 +1002,18 @@ class canalizacionResultadosCanalizacion(View):
         context = {
             'TablaResultados': tabla,
         }
-      else:    
+      else:
         tabla = Canalizacion.objects.select_related('atencionIndividual').filter(area=areas[user]).order_by('-fecha')
         context = {
             'TablaResultados': tabla,
         }
       return render(request,'Canalizacion/resultadosCanalizacion.html', context)
-  
-  
+
+
 def actividadTutorial(request):
     actividades = AccionTutorial.objects.filter(cicloAccion__estado=True, tutor=request.user)
     messages.success(request, '¡Datos cargados!')
-    return render(request, 'documentos/actividadTutorial.html', {"actividades":actividades})   
+    return render(request, 'documentos/actividadTutorial.html', {"actividades":actividades})
 
 
 def eliminarActividadTutorial(request,id):
@@ -1053,7 +1053,7 @@ def agregarActividadTutorial(request):
         messages.success(request, '¡Guardado con éxito!')
         return redirect('actividadTutorial')  # Redirige a la página de actividades después de guardar
 
-    return render(request, 'documentos/agregarActividad.html')  
+    return render(request, 'documentos/agregarActividad.html')
 
 def editarActividadTutorial(request, id):
     actividad = get_object_or_404(AccionTutorial, id=id)
@@ -1075,7 +1075,7 @@ def editarActividadTutorial(request, id):
 
 def infoActividadTutorial(request, id):
     actividad = get_object_or_404(AccionTutorial, cicloAccion__estado=True, tutor=request.user, id=id)
-    return render(request,'documentos/infoActividad.html', {"actividad":actividad})   
+    return render(request,'documentos/infoActividad.html', {"actividad":actividad})
 
 def infoatencionIndividual(request):
     tutor = request.user
@@ -1091,7 +1091,7 @@ def agregarAtencionIndividual(request):
         estudiante_id = request.POST.get('estudianteAtencion')
         asuntoTratar = request.POST.get('asuntoTratar')
         observaciones = request.POST.get('observaciones')
-    
+
 
         # Crear la instancia de AtencionIndividual
         AtencionIndividual.objects.create(
@@ -1099,14 +1099,14 @@ def agregarAtencionIndividual(request):
             asuntoTratar=asuntoTratar,
             observaciones=observaciones,
             cicloAccion=periodo_activo
-            
+
         )
 
         cambioEstado=Usuarios.objects.get(id=estudiante_id)
         cambioEstado.estado= 2
         cambioEstado.save()
 
-        
+
         # cambioEstado.save()
 
         messages.success(request, '¡Atención individual registrada con éxito!')
@@ -1115,7 +1115,7 @@ def agregarAtencionIndividual(request):
     # Filtrar estudiantes que pertenecen al grupo del tutor actual y que son de tipo 'estudiante'
     tutor = request.user
     estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
-    
+
     return render(request, 'documentos/registrarAtencion.html', {'estudiantes': estudiantes})
 
 
@@ -1124,7 +1124,7 @@ def editarAtencionIndividual(request, id):
     tutor = request.user
     estudiantes = Usuarios.objects.filter(tipo__tipo='estudiante', grupo=tutor.usuarios.grupo)
 
-    
+
     if request.method == 'POST':
         atencion.asuntoTratar = request.POST.get('asuntoTratar')
         atencion.observaciones = request.POST.get('observaciones')
@@ -1141,7 +1141,7 @@ def eliminarAtencionIndividual(request, id):
     cambioEstado=Usuarios.objects.get(id=usuarioId)
     cambioEstado.estado= 1
     cambioEstado.save()
-    
+
     atencion.delete()
     messages.success(request, '¡Atención individual eliminada con éxito!')
     return redirect('atencionIndividual')
@@ -1165,7 +1165,7 @@ def evaluacionAcTutorial(request):
     nombre_maestro = None  # Inicializar la variable nombre_maestro
     estudiante = request.user
     grupo_estudiante = estudiante.usuarios.grupo
-    
+
 
     maestro = Usuarios.objects.filter(
                 tipo__tipo='tutor',  # Ajusta según tu modelo TipoUsuario
@@ -1176,7 +1176,7 @@ def evaluacionAcTutorial(request):
                 nombre_maestro = maestro.User.get_full_name()
     else:
                 nombre_maestro = "Tutor no encontrado"  # Manejo de caso sin maestro
-     
+
     periodo_activo = Periodo.objects.filter(estado=True).first()
 
     if not periodo_activo:
@@ -1192,7 +1192,7 @@ def evaluacionAcTutorial(request):
     if evaluacion_existente:
             messages.error(request, 'Ya has contestado la encuesta previamente.')
             return render(request, 'documentos/evaluacionAcTutorial.html', {'nombre_maestro': nombre_maestro})
-                   
+
     if request.method == 'POST':
         # Guardar la evaluación del tutor
         evaluacion = EvaluacionTutor(
@@ -1230,19 +1230,19 @@ def descargarXLSX(request):
     usuario = Usuarios.objects.get(User=tutor)
     periodo_activo = Periodo.objects.filter(estado=True).first()
     grupo= usuario.grupo
-    atenciones= AtencionIndividual.objects.filter(cicloAccion__estado=True, estudiante__grupo=grupo) 
+    atenciones= AtencionIndividual.objects.filter(cicloAccion__estado=True, estudiante__grupo=grupo)
     actividad = AccionTutorial.objects.filter(tutor=tutor, cicloAccion=periodo_activo)
 # Cargar el archivo base
     path_archivo_base = os.path.join(settings.BASE_DIR, 'mainApp', 'data', 'basePlanAccion.xlsx')
     # Cargar el archivo base
     wb = load_workbook(filename=path_archivo_base, read_only=False)
     ws = wb.active
-    
+
     if periodo_activo:
         ws['F6'] = f"{periodo_activo.periodo} {periodo_activo.anio}"
     else:
         ws['F6'] = "No hay periodo activo"
-        
+
     ws['C5'] = f"{tutor.first_name} {tutor.last_name}"
     ws['C6'] = usuario.grupo
 
@@ -1255,7 +1255,7 @@ def descargarXLSX(request):
     calibri_10_font = Font(name='Calibri', size=10)
     calibri_10_font_bold = Font(name='Calibri', size=10, bold=True)
     gray_fill = PatternFill(start_color='D8D8D8', end_color='D8D8D8', fill_type='solid')
-    
+
     # Rellenar las filas con los datos de 'actividad'
     row_num = 10
     inserted_rows_count = 0
@@ -1272,15 +1272,15 @@ def descargarXLSX(request):
         ws.cell(row=row_num, column=4).value = act.actividades
         ws.cell(row=row_num, column=5).value = act.recursos
         ws.cell(row=row_num, column=6).value = act.evidencias
-        
+
         # Aplicar bordes y fuente a cada celda en la fila actual
         for col in range(2, 7):
             cell = ws.cell(row=row_num, column=col)
             cell.border = thin_border
             cell.font = calibri_10_font
-        
+
         row_num += 1
-        
+
 
         # Calcular alumnos_atencion_row y atencion_start_row
     alumnos_atencion_row = max(row_num, 24) + inserted_rows_count -10
@@ -1299,7 +1299,7 @@ def descargarXLSX(request):
     for col in range(1, 4):
         cell = ws.cell(row=merge_start_row, column=col)
         cell.border = thin_border
-    
+
     num_cell = ws.cell(row=alumnos_atencion_row, column=1)
     num_cell.value = "No."
     num_cell.font = calibri_10_font_bold
@@ -1334,7 +1334,7 @@ def descargarXLSX(request):
     for col in range(5, 7):
         cell = ws.cell(row=alumnos_atencion_row, column=col)
         cell.border = thin_border
-            
+
         # Rellenar las filas con los datos de 'atenciones'
     for idx, atencion in enumerate(atenciones, start=1):
             # Numeración continua en la columna 1
@@ -1354,7 +1354,7 @@ def descargarXLSX(request):
             for col in range(2, 4):
                 merged_cell = ws.cell(row=atencion_start_row, column=col)
                 merged_cell.border = thin_border
-            
+
             # Llenar datos en las columnas restantes
             asunto_cell = ws.cell(row=atencion_start_row, column=4)
             asunto_cell.value = atencion.asuntoTratar
@@ -1373,7 +1373,7 @@ def descargarXLSX(request):
                 merged_cell.border = thin_border
 
             atencion_start_row += 1
-            
+
     ws.insert_rows(atencion_start_row + 2)
 
     # Encabezados en la fila insertada
@@ -1404,22 +1404,22 @@ def descargarXLSX(request):
 
         ob_cell = ws.cell(row=atencion_start_row + 2 + i, column=4)
         ob_cell.border = thin_border
-    
+
     # Crear un objeto BytesIO para guardar el archivo modificado en memoria
     with BytesIO() as in_memory_fp:
         wb.save(in_memory_fp)
         in_memory_fp.seek(0)
-        
+
         # Crear la respuesta HTTP
         response = HttpResponse(in_memory_fp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = 'attachment; filename=8.- FOR-06-01-B_r1 Plan de Accion Tutorial.xlsx'
 
-    return response 
+    return response
 
 
 def descargarReporte(request):
-
-    wb = load_workbook(filename='mainApp/data/baseReportePlanAccion.xlsx')
+    path_archivo_base_dos = os.path.join(settings.BASE_DIR, 'mainApp', 'data', 'baseReportePlanAccion.xlsx')
+    wb = load_workbook(filename=path_archivo_base_dos, read_only=False)
     ws = wb.active
 
     tutor = request.user
@@ -1430,16 +1430,16 @@ def descargarReporte(request):
 
 
     noProgramadas= AtencionIndividual. objects.filter(cicloAccion=periodo_activo, estudiante__grupo=grupo_usuario_logueado).count()
-    
- 
+
+
     dificultadCierre = CierreTutorias.objects.filter(tutor=tutor, cicloAccion=periodo_activo).values_list('cierreTutorias', flat=True)
 
-    
-    
-    
+
+
+
     area_P = "Pedagogía"
     motivos = Canalizacion.objects.filter(
-        area=area_P, 
+        area=area_P,
         cicloAccion=periodo_activo,
         atencionIndividual__estudiante__grupo=grupo_usuario_logueado
     ).values_list('motivo', flat=True)
@@ -1448,7 +1448,7 @@ def descargarReporte(request):
 
     area_Psi = "Psicología"
     motivo_psi = Canalizacion.objects.filter(
-        area=area_Psi, 
+        area=area_Psi,
         cicloAccion=periodo_activo,
         atencionIndividual__estudiante__grupo=grupo_usuario_logueado
     ).values_list('motivo', flat=True)
@@ -1456,7 +1456,7 @@ def descargarReporte(request):
 
     area_B = "Becas"
     motivo_B = Canalizacion.objects.filter(
-        area=area_B, 
+        area=area_B,
         cicloAccion=periodo_activo,
         atencionIndividual__estudiante__grupo=grupo_usuario_logueado
     ).values_list('motivo', flat=True)
@@ -1464,7 +1464,7 @@ def descargarReporte(request):
 
     area_E = "Enfermería"
     motivo_E = Canalizacion.objects.filter(
-        area=area_E, 
+        area=area_E,
         cicloAccion=periodo_activo,
         atencionIndividual__estudiante__grupo=grupo_usuario_logueado
     ).values_list('motivo', flat=True)
@@ -1472,7 +1472,7 @@ def descargarReporte(request):
 
     area_I = "Incubadora"
     motivo_I = Canalizacion.objects.filter(
-        area=area_I, 
+        area=area_I,
         cicloAccion=periodo_activo,
         atencionIndividual__estudiante__grupo=grupo_usuario_logueado
     ).values_list('motivo', flat=True)
@@ -1481,7 +1481,7 @@ def descargarReporte(request):
 
     area_BT = "Bolsa de Trabajo"
     motivo_BT = Canalizacion.objects.filter(
-        area=area_BT, 
+        area=area_BT,
         cicloAccion=periodo_activo,
         atencionIndividual__estudiante__grupo=grupo_usuario_logueado
     ).values_list('motivo', flat=True)
@@ -1489,7 +1489,7 @@ def descargarReporte(request):
 
     area_AA = "Asesor Académico"
     motivo_AA = Canalizacion.objects.filter(
-        area=area_AA, 
+        area=area_AA,
         cicloAccion=periodo_activo,
         atencionIndividual__estudiante__grupo=grupo_usuario_logueado
     ).values_list('motivo', flat=True)
@@ -1501,23 +1501,23 @@ def descargarReporte(request):
     AsuntoOrientacion = 'Orientación'
     AsuntoAdministrativa = 'Administrativa'
     AsuntoOtra = 'Otra'
-    
+
     count_Asesoria = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAsesoria).count()
     count_Diciplina = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoDiciplina).count()
     count_Orientacion = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOrientacion).count()
     count_Administrativa = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAdministrativa).count()
     count_Otra = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOtra).count()
-    
-    
-    
+
+
+
     observaciones_Asesoria = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAsesoria).values_list('observaciones', flat=True)
     observaciones_Diciplina = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoDiciplina).values_list('observaciones', flat=True)
     observaciones_Orientacion = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOrientacion).values_list('observaciones', flat=True)
     observaciones_Administrativa = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoAdministrativa).values_list('observaciones', flat=True)
     observaciones_Otra = AtencionIndividual.objects.filter(estudiante__grupo=grupo_usuario_logueado, cicloAccion=periodo_activo, asuntoTratar=AsuntoOtra).values_list('observaciones', flat=True)
-    
-    
-    Estado_Realizadas = 1   
+
+
+    Estado_Realizadas = 1
     Estado_Canalizadas = 2
     Estado_Programadas = 0
 
@@ -1549,7 +1549,7 @@ def descargarReporte(request):
     ws['A9'] = count_EstadoP
     ws['B9'] = count_EstadoR
     ws['C9'] = count_EstadoC
-    
+
     ws['A22'] = noProgramadas
 
     ws['E22'] = count_Asesoria
@@ -1557,19 +1557,19 @@ def descargarReporte(request):
     ws['E24'] = count_Orientacion
     ws['E25'] = count_Administrativa
     ws['E26'] = count_Otra
-    
+
     if dificultadCierre:
      ws['G23'] = dificultadCierre[0]
     else:
      ws['G23'] = 'No hay comentario'
-     
-     
+
+
     ws['F22'] = convert_to_string(observaciones_Asesoria)
     ws['F23'] = convert_to_string(observaciones_Diciplina)
     ws['F24'] = convert_to_string(observaciones_Orientacion)
     ws['F25'] = convert_to_string(observaciones_Administrativa)
     ws['F26'] = convert_to_string(observaciones_Otra)
-    
+
     ws['D22'] = AsuntoAsesoria
     ws['D23'] = AsuntoDiciplina
     ws['D24'] = AsuntoOrientacion
@@ -1623,7 +1623,7 @@ def descargarReporte(request):
                 break
         if not assigned:
             ws[f'L{fila}'] = ', '.join(observaciones_dict[baja.motivo])
-    
+
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Reporte.xlsx'

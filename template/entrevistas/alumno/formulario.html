@@ -49,7 +49,7 @@
                 <div class="row">
                   <div  class="col-md-6 mb-3"><br>
                     <label for="noControl" class="form-label">Número de control</label>
-                      <input type="text" class="form-control" id="noControl" name="noControl" required maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                      <input type="text" class="form-control" id="noControl" name="noControl" required maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{request.user.usuarios.noControl}}" readonly>
                       <br>
                       <label for="nombre" class="form-label">Nombre Completo</label>
                       <input type="text" class="form-control" id="nombre" name="nombre" required oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
